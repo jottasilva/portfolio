@@ -1,0 +1,400 @@
+/* Media Queries Responsividade */
+/* ------------------------------------- max 796px ------------------------------------- */
+
+@media screen and (max-width: 796px) {
+  .menu nav {
+    display: flex !important;
+    visibility: hidden;
+    justify-content: center !important;
+    position: absolute !important;
+    top: 10vh !important;
+    left: 25% !important;
+    background-color: var(--azul) !important;
+    width: 50vw !important;
+    height: 50vh !important;
+    z-index: 999 !important;
+    transition: all 0.5s ease-in-out;
+  }
+  .navMenu.show {
+    visibility: visible !important;
+  }
+  .menu nav ul {
+    display: grid !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0;
+  }
+  .menu nav ul li a {
+    display: flex !important;
+    justify-content: center;
+    color: var(--branco) !important;
+    font-size: 1rem !important ;
+    gap: 5px;
+  }
+  .menu nav ul li a:hover {
+    flex: 1;
+  }
+  #menu-mobile {
+    display: flex !important;
+  }
+  #portfolio {
+    display: flex !important;
+    height: 100vh !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .avatar {
+    width: 70% !important;
+    background-position: top !important;
+    order: -1 !important;
+  }
+  #jobs {
+    display: flex !important;
+    flex-direction: column !important;
+    animation: scroller ease-in-out;
+    animation-timeline: view();
+    animation-range: cover 0 cover 30% !important;
+  }
+  .portfolio {
+    display: grid !important;
+    width: 90vw !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+  .btwpp {
+    margin: 20px auto !important;
+  }
+  .card-design,
+  .card-front-end,
+  .card-ti {
+    width: 80% !important;
+    margin: 0 auto !important;
+    padding-bottom: 5% !important;
+    margin-bottom: 10% !important;
+  }
+  .card-design-icon,
+  .card-front-end-icon,
+  .card-ti-icon {
+    width: 100% !important;
+    background-size: 10% !important;
+  }
+  .card-design h1,
+  .card-front-end h1,
+  .card-ti h1 {
+    font-size: 2em !important;
+  }
+  .card-design p,
+  .card-front-end p,
+  .card-ti p {
+    font-size: 1em !important;
+    margin-bottom: 20px !important;
+  }
+  #portfolio .nome h1 {
+    letter-spacing: 2px !important;
+    font-size: 2.4rem !important;
+    text-align: center !important;
+  }
+  #portfolio span:last-child {
+    padding-bottom: 10px !important;
+  }
+  #portfolio .nome span {
+    text-align: center !important;
+  }
+  .oquefaco,
+  .clientes,
+  .estaodizendo,
+  .fiqueligado {
+    font-size: 2em !important;
+  }
+  #clientes {
+    display: grid !important;
+    animation: scroller ease-in-out;
+    animation-timeline: view();
+    animation-range: cover 0 cover 30% !important;
+  }
+  .fiqueligado {
+    margin: 5vh 0 !important;
+  }
+  #box-cliente {
+    width: 100% !important;
+    margin: 5px auto !important;
+  }
+  .img-cliente {
+    width: 80% !important;
+    height: 80% !important;
+    text-align: center !important;
+  }
+  .t-cliente h1 {
+    font-size: 1em !important;
+  }
+  .t-cliente p {
+    font-size: 0.9em !important;
+    text-wrap: balance !important;
+  }
+  #menu {
+    padding: 10px 0 !important;
+  }
+  #menu .menu {
+    width: 90% !important;
+  }
+  #comentarios {
+    width: 80% !important;
+  }
+  #comentario {
+    width: 100% !important;
+  }
+  .desc-coment h1 {
+    font-size: 80% !important;
+    text-wrap: balance !important;
+  }
+  #rodape {
+    flex: 1 !important;
+    padding: 50px 20px 0 20px !important;
+  }
+  #social span {
+    display: none !important;
+  }
+}
+/* ------------------------------------- max 440px ------------------------------------- */
+@media screen and (max-width: 440px) {
+  #menu nav {
+    display: none !important;
+  }
+  #portfolio {
+    display: flex !important;
+    width: 100% !important;
+  }
+  #top {
+    height: 120vh !important;
+    margin: 0 auto !important;
+  }
+  .oquefaco {
+    margin-top: 2vh !important;
+  }
+  #jobs {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .portfolio {
+    margin-top: -20% !important;
+    height: 50vh !important;
+  }
+  .avatar {
+    width: 100% !important;
+  }
+  .nome h1 {
+    font-size: 2rem !important;
+    text-align: center !important;
+  }
+  .nome {
+    margin-top: 5vh !important;
+  }
+  #portfolio .nome span {
+    font-size: 1.1rem !important;
+    text-wrap: balance !important;
+  }
+  #menu {
+    width: 100% !important;
+    padding: 10px 0 !important;
+  }
+  .card-design,
+  .card-front-end,
+  .card-ti {
+    width: 100% !important;
+    margin: 0 auto !important;
+    height: 100% !important;
+    padding-bottom: 10% !important;
+    margin-bottom: 15% !important;
+  }
+  .card-design-icon,
+  .card-front-end-icon,
+  .card-ti-icon {
+    width: 100% !important;
+    background-size: 10% !important;
+  }
+  .card-design h1,
+  .card-front-end h1,
+  .card-ti h1 {
+    font-size: 1.3em !important;
+    margin: 10px 0 !important;
+  }
+  .card-design p,
+  .card-front-end p,
+  .card-ti p {
+    font-size: 1em !important;
+    margin-bottom: 20px !important;
+  }
+  .oquefaco,
+  .clientes,
+  .estaodizendo,
+  .fiqueligado {
+    font-size: 1.5em !important;
+    margin: 20px 0 !important;
+  }
+  #clientes {
+    display: grid !important;
+    width: 85% !important;
+  }
+  #box-cliente {
+    width: 100% !important;
+    margin: 15px auto !important;
+  }
+  .img-cliente {
+    width: 80% !important;
+    height: 80% !important;
+    text-align: center !important;
+  }
+  .t-cliente h1 {
+    font-size: 1em !important;
+  }
+  .t-cliente p {
+    font-size: 0.8em !important;
+  }
+  .iconLinkedin,
+  .iconInsta,
+  .iconCurriculum {
+    width: 10vw !important;
+  }
+  .label {
+    font-size: 0.6em !important;
+  }
+  #comentarios {
+    display: grid !important;
+    width: 80% !important;
+    margin-bottom: 10vh !important;
+    margin-top: 5vh !important;
+  }
+  #comentario {
+    margin: 0 auto !important;
+    width: 100% !important;
+  }
+  #menu .menu {
+    width: 84% !important;
+  }
+  #rodape {
+    flex: 1 !important;
+    padding: 0 30px !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+  }
+  #social {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+  #subfooter {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+  }
+  #rodape .iconr {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  #social span {
+    display: none;
+  }
+}
+/* ------------------------------------- max 1600px ------------------------------------- */
+
+@media screen and (min-width: 1600px) {
+  #jobs {
+    width: 80vw !important;
+  }
+  #top{
+    margin-bottom: 10vh !important;
+  }
+  .avatar {
+    width: 25vw !important;
+    height: auto !important;
+    background-position: top !important;
+    background-size: 24vw !important;
+  }
+  .card-front-end-icon,
+  .card-design-icon,
+  .card-ti-icon {
+    background-size: 3vw !important;
+  }
+  #clientes {
+    width: 80% !important;
+  }
+  #comentarios {
+    width: 80% !important;
+  }
+  #rodape {
+    width: 30% !important;
+  }
+  .menu {
+    width: 80% !important;
+  }
+}
+/* ------------------------------------- max 1024px ------------------------------------- */
+
+@media screen and (max-width: 1024px) {
+  #jobs {
+    width: 80vw !important;
+  }
+  .portfolio h1{
+    font-size: 3rem !important;
+  }
+  .menu {
+    width: 80vw !important;
+  }
+  .portfolio {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-top: -4vh !important;
+  }
+  
+  #portfolio {
+    width: 80vw !important;
+  }
+  .avatar {
+    height: 40vh !important;
+    background-position: center left !important;
+  }
+  .nome {
+    flex: 1;
+    margin: 0 auto;
+  }
+  #clientes {
+    width: 80vw !important;
+  }
+  #comentarios {
+    width: 80vw !important;
+  }
+  #rodape {
+    flex: 1;
+    padding: 50px 20px 0 20px;
+  }
+  #social span {
+    text-wrap: nowrap;
+  }
+}
+/*Configuração de Telas Mobile Min 1080px */
+@media screen and (min-height: 1080px) {
+  #portfolio {
+    height: 55vh !important;
+  }
+
+  .portfolio {
+    width: 80vw !important;
+    height: 20vh !important;
+    padding: 0 !important;
+  }
+  .card-design-icon,
+  .card-front-end-icon,
+  .card-ti-icon {
+    height: 5vh !important;
+  }
+  .card-design,
+  .card-front-end,
+  .card-ti {
+    height: 22vh !important;
+  }
+  #clientes{
+    width: 70vw !important;
+  }
+}

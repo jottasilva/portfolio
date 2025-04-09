@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Cousine&family=Montserrat:wght@100;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;1,100;1,300;1,400&display=swap');
+:root{
+  /* Variaveis */
+  --branco:#FFFFFF;
+  --preto:#000000;
+  --azul:#38BEEF;
+  --amarelo:#F2C81C;
+  --verde:#111F25;
+  --verde-preto:#0A1316;
+  --verde-wpp:#25D366;
+  --cinza-claro:#B2B2B2;
+  --cizan-dark:#757575;
+  --logo:url('../imgs/logo.svg');
+  --avatar:url('../imgs/avatar.png'); 
+  --bgTop:url('../imgs/bgTop.svg');
+  --wpp:url('../imgs/wpp.svg');
+  --btwpp:url('../imgs/btwpp.svg');
+  --iconGraphic:url('../imgs/iconeDesigner.svg');
+  --iconFrontEnd:url('../imgs/iconFrontEnd.svg');
+  --iconTi:url('../imgs/iconTi.svg');
+  --bgBottom:url('../imgs/bgBottom.svg');
+  --clienteBankai:url('../imgs/bankai.jpg');
+  --avatarComent:url('../imgs/avatarComent.jpg');
+  --iconLinkedin:url('../imgs/iconLinkedin.svg');
+  --iconInsta:url('../imgs/iconInsta.svg');
+  --iconCv:url('../imgs/iconCv.svg');
+  --gotop:url('../imgs/rocket.svg');
+  --iconCertificados:url('../imgs/iconeCertificado.svg');
+  --iconLN:url('../imgs/iconLN.svg');
+  --iconGITHUB:url('../imgs/iconGITHUB.svg');
+}

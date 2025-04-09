@@ -1,0 +1,155 @@
+#content-skills {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 60px 0;
+}
+#content-skills div:nth-child(1) {
+  flex: 3;
+}
+#content-skills div:nth-child(2) {
+  flex: 2;
+
+}
+
+#content-skills h1 {
+  color: var(--azul);
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 5.1vh;
+  text-align: left;
+}
+#content-skills h3 {
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1px;
+  margin: 20px 0;
+}
+#content-skills ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#content-skills ul li {
+  margin: 20px 0;
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  width: 30vw;
+  padding:50px;
+}
+.bubble {
+  animation: float ease-in-out infinite;
+  transition: all 0.5s ease-in-out;
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+
+.bubble:hover {
+  scale: 1.3;
+  filter: none; 
+}
+.bubble1 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/angular-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble2 {
+  width: 55px;
+  height: 55px;
+  background: url("../imgs/skills-icons/django-icon.png") no-repeat center
+    center;
+    background-size: contain;
+}
+.bubble3 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/css-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble4 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/docker-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble5 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/flutter-icon.png") no-repeat center;
+}
+.bubble6 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/git-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble7 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/go-programming-language-icon.png")
+    no-repeat center;
+    background-size: contain;
+}
+.bubble8 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/html-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble9 {
+  width: 55px;
+  height: 55px;
+  background: url("../imgs/skills-icons/javascript-programming-language-icon.png")
+    no-repeat center;
+    background-size: cover;
+}
+.bubble10 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/python-programming-language-icon.png")
+    no-repeat center;
+    background-size: contain;
+}
+.bubble11 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/painting-icon.png") no-repeat center;
+  background-size: contain;
+}
+.bubble12 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/vue-js-icon.png") no-repeat center;
+}
+.bubble13 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/mysql-icon.png") no-repeat center;
+}
+.bubble14 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/nextjs-icon.png") no-repeat center;
+}
+.bubble15 {
+  width: 45px;
+  height: 45px;
+  background: url("../imgs/skills-icons/bootstrap-4-icon.png") no-repeat center;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+}

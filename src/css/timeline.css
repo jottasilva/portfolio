@@ -1,0 +1,129 @@
+
+.title {
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.5rem, 5rem, 3.5rem);
+  color: #00d8ff;
+  letter-spacing: 5px;
+  margin-bottom: -10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #ccc;
+  font-style: italic;
+  font-size: clamp(1rem, 5rem, 1rem);
+  margin-bottom: 60px;
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 80vw;
+  margin: auto;
+  padding: 40px 0;
+}
+
+.timeline-container::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  background-color: #00d8ff;
+  top: 150px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.timeline-item {
+  width: 50%;
+  padding: 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-item .content {
+  padding: 20px;
+}
+.timeline-item .content h3 {
+  letter-spacing: 4px;
+  font-family: "Roboto", sans-serif;
+}
+.timeline-item.left {
+  left: 0;
+  text-align: right;
+  padding: 0 20px;
+  color:white;
+  text-wrap: balance;
+}
+
+.timeline-item.right {
+  left: 50%;
+  text-align: left;
+  padding: 0 20px;
+  text-wrap: balance;
+}
+.timeline-item.right ul {
+  
+  padding: 0;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  width: 10px;
+  height: 10px;
+  background-color: #00d8ff;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.timeline-item:nth-child(7)::before {
+  width: 30px;
+  height: 30px;
+}
+.timeline-item.left:nth-of-type(5):before {
+  content: "";
+  background: url("../imgs/capelo.svg") no-repeat center center;
+  background-color: #00d8ff;
+  background-size:70%;
+  right: -15px;
+}
+
+.timeline-item.right::before {
+  left: -5px;
+}
+.timeline-item.left::before {
+  right: -5px;
+}
+
+.timeline-item.right::before {
+  left: -5px;
+}
+
+.timeline-item h3 {
+  color: #00d8ff;
+  margin-bottom: 5px;
+}
+.timeline-item ul {
+  color: white;
+}
+.timeline-item small {
+  color: #aaa;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.timeline-item ul {
+  list-style: none;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+  .timeline-container {
+    max-width: 100%;
+    margin: auto;
+
+  }
+}
