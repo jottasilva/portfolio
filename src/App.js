@@ -1,44 +1,36 @@
 /* eslint-disable no-unused-vars */
 import "./css/style.css";
-import { SocialIcon } from "react-social-icons";
-/* importação de imagem */
+import "./css/modal.css";
 import "./js/script";
 import logo from "./imgs/logo.svg";
 import jrsn from "./imgs/avatar.png";
-import bgWebp from "./imgs/bgTop.svg";
-import wpp from "./imgs/wpp.svg";
-import btwpp from "./imgs/btwpp.svg";
-import iconGraphics from "./imgs/iconeDesigner.svg";
-import iconFrontEnd from "./imgs/iconFrontEnd.svg";
-import iconTi from "./imgs/iconTi.svg";
-import bgBottom from "./imgs/bgBottom.svg";
-import clienteBankai from "./imgs/bankai.jpg";
-import avatarComent from "./imgs/avatarComent.jpg";
-import iconLinkedin from "./imgs/iconLinkedin.svg";
-import iconInsta from "./imgs/iconInsta.svg";
-import iconCv from "./imgs/iconCv.svg";
-import gotop from "./imgs/rocket.svg";
-import iconeCertificado from "./imgs/iconeCertificado.svg";
-import iconLN from "./imgs/iconLN.svg";
-import iconGITHUB from "./imgs/iconGITHUB.svg";
 import { useEffect, useState } from "react";
 import Timeline from "./components/timeline";
 import Skills from "./components/skills";
 import Portfolio from "./components/portfolio.tsx";
 import Jobs from "./components/jobs.tsx";
+import PortfolioCategories from "./components/clients.tsx";
+import Footer from "./components/footer.tsx";
+import Modal from "./components/contactmodal.tsx";
 export default function App() {
   const [visible, setVisible] = useState(false);
-
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const menum = () => {
     /* Menu Mobile */
     document.querySelector(".navMenu").classList.toggle("show");
   };
-
-  const btCloseOrc = () => {
-    setVisible(false);
-  };
   const toggleOrc = () => {
-    setVisible((current) => !current);
+    setIsContactModalOpen(true);
+  };
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setIsContactModalOpen(false);
+      }
+    };
+  }, []);
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
   };
   document.title = "JRSN DESIGNER";
   return (
@@ -53,37 +45,8 @@ export default function App() {
         </head>
         <body>
           <div /* Topo */ id="top">
-            {visible && (
-              <div id="bx_orcamento">
-                <div id="btCloseOrc" onClick={btCloseOrc}>
-                  X
-                </div>
-                <h1>Vamos Lá!</h1>
-                {/* Box Orçamento */}
-                <div>
-                  <span>Nome Completo :</span>
-                  <input type="text" id="nome" />
-                </div>
-                <div>
-                  <span>Me Diga seu E-mail :</span>
-                  <input type="email" id="email" />
-                </div>
-                <div>
-                  <span>Agora, seu Contato :</span>
-                  <input type="text" id="contato" />
-                </div>
-                <div>
-                  <span>Descreva sua ideia,com o maximo de Detalhes.</span>
-                  <textarea id="descricao"></textarea>
-                </div>
-                <div>
-                  <input
-                    type="submit"
-                    className="enviaorc"
-                    value={"Pedir Orçamento"}
-                  />
-                </div>
-              </div>
+            {isContactModalOpen && (
+              <Modal isOpen={isContactModalOpen} onClose={closeContactModal} />
             )}
             <div /* Menu */ id="menu">
               <div className="menu">
@@ -106,9 +69,13 @@ export default function App() {
                       <a href="#clientes">CLIENTES</a>
                     </li>
                     <li>
-                      <a onClick={toggleOrc} href="#orcamento">
+                      <div
+                        className="demo-button"
+                        onClick={toggleOrc}
+                        href="#orcamento"
+                      >
                         ORÇAMENTO
-                      </a>
+                      </div>
                     </li>
                   </ul>
                 </nav>
@@ -121,84 +88,16 @@ export default function App() {
           </div>
 
           <div id="jobs">
-            <div /* O que eu Faço ?*/ className="oquefaco">
-              <h3>O que eu faço?</h3>
-            </div>
             {/* Jobs Component */}
             <Jobs />
           </div>
           <div /* Alguns dos Meus Clientes */ className="clientes">
-            <h3>Alguns clientes.</h3>
+            <h3>Alguns Sonhos realizados.</h3>
           </div>
           <div id="clientes">
-            {/* Alguns dos Meus Clientes */}
-            <div id="box-cliente">
-              <div /* Imagem Clientes */ className="img-cliente" />
-              <div /* descrição Clientes */ className="desc-cliente">
-                <div /* Titulo */ className="t-cliente">
-                  <h1>LOGO MARCA / MEDIAS SOCIAIS</h1>
-                  <p>
-                    Desenvolvimento de Logo Marca / Mascote, Modelo de Camiseta
-                    e Material para Medias sociais.
-                  </p>
-                </div>
-                <div /*Botão cliente*/ className="bt-cliente">
-                  <a href="#cliente">ACESSAR</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="box-cliente">
-              <div /* Imagem Clientes */ className="img-cliente" />
-              <div /* descrição Clientes */ className="desc-cliente">
-                <div /* Titulo */ className="t-cliente">
-                  <h1>LOGO MARCA / MEDIAS SOCIAIS</h1>
-                  <p>
-                    Desenvolvimento de Logo Marca / Mascote, Modelo de Camiseta
-                    e Material para Medias sociais.
-                  </p>
-                </div>
-                <div /*Botão cliente*/ className="bt-cliente">
-                  <a href="#cliente">ACESSAR</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="box-cliente">
-              <div /* Imagem Clientes */ className="img-cliente" />
-              <div /* descrição Clientes */ className="desc-cliente">
-                <div /* Titulo */ className="t-cliente">
-                  <h1>LOGO MARCA / MEDIAS SOCIAIS</h1>
-                  <p>
-                    Desenvolvimento de Logo Marca / Mascote, Modelo de Camiseta
-                    e Material para Medias sociais.
-                  </p>
-                </div>
-                <div /*Botão cliente*/ className="bt-cliente">
-                  <a href="#cliente">ACESSAR</a>
-                </div>
-              </div>
-            </div>
-
-            <div id="box-cliente">
-              <div /* Imagem Clientes */ className="img-cliente" />
-              <div /* descrição Clientes */ className="desc-cliente">
-                <div /* Titulo */ className="t-cliente">
-                  <h1>LOGO MARCA / MEDIAS SOCIAIS</h1>
-                  <p>
-                    Desenvolvimento de Logo Marca / Mascote, Modelo de Camiseta
-                    e Material para Medias sociais.
-                  </p>
-                </div>
-                <div /*Botão cliente*/ className="bt-cliente">
-                  <a href="#cliente">ACESSAR</a>
-                </div>
-              </div>
-            </div>
-            <div className="carregarClientes">Carregar Mais</div>
-            {/* Alguns dos Meus Clientes */}
+            {/* Portfolio Categories Component */}
+            <PortfolioCategories />
           </div>
-
           <div id="skills">
             {/* Skills */}
             <Skills />
@@ -209,58 +108,7 @@ export default function App() {
             <Timeline />
           </div>
 
-          <div /* Fique Ligado. ?*/ className="fiqueligado"></div>
-          <section id="subfooter">
-            <footer id="rodape">
-              {/*Rodape, Redes*/}
-              <div /*Redes sociais */ id="social">
-                <div>
-                  <SocialIcon
-                    className="iconr"
-                    bgColor="#444444"
-                    network="linkedin"
-                    style={{ height: 40, width: 40 }}
-                  />
-                  <span>Visite meu Linkedin</span>
-                </div>
-                <div>
-                  <SocialIcon
-                    className="iconr"
-                    bgColor="#444444"
-                    network="instagram"
-                    style={{ height: 40, width: 40 }}
-                  />
-                  <span>Me Siga no Instagram</span>
-                </div>
-                <div>
-                  <SocialIcon
-                    className="iconr"
-                    bgColor="#444444"
-                    network="dropbox"
-                    style={{ height: 40, width: 40 }}
-                  />
-                  <span>Baixe meu Curriculo</span>
-                </div>
-                <div>
-                  <SocialIcon
-                    className="iconr"
-                    bgColor="#444444"
-                    url="http://localhost:3000/#jobs"
-                    style={{ height: 40, width: 40 }}
-                  />
-                  <span>Cursos e Certificados</span>
-                </div>
-              </div>
-            </footer>
-          </section>
-          <div className="copyright">
-            <b>JRSN.DEV</b>© 2025 all rights reserved.
-          </div>
-          <a href="#top">
-            <div /* botão voltar ao topo #gotop */ id="gotop">
-              
-            </div>
-          </a>
+          <Footer />
         </body>
       </html>
     </div>

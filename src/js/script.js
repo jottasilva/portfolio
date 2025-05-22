@@ -5,8 +5,9 @@ window.addEventListener("scroll", function () {
 });
 //Configuração de Botao voltar ao Topo
 window.addEventListener("scroll", function () {
-  const gotop = document.querySelector("#gotop");
-  gotop.classList.toggle("show", window.scrollY > window.screen.height / 1);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };  
 });
 
 
