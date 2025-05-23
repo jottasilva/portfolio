@@ -4,7 +4,7 @@
     position: fixed !important;
     top: 0 !important;
     left: -100% !important; 
-    width: 200px !important;
+    width: 60vw !important;
     height: 100vh !important;
     background-color: rgba(20, 20, 20, 0.9);
     backdrop-filter: blur(50px);
@@ -52,7 +52,40 @@
     text-decoration: none !important;
     transition: color 0.2s ease !important;
   }
-  
+  .hamburguer {
+    content: "";
+    border-top: 5px #fff solid;
+    width: 28px;
+    transition: all 0.3s ease-in-out;
+   }
+   
+   .hamburguer::before,
+   .hamburguer::after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 5px;
+    margin-top: 6px;
+    background-color: var(--branco);
+    transition: all 0.3s ease-in-out;
+   }
+   
+   .hamburguer.active {
+    border-top: 5px red solid;
+    transform: rotate(45deg);
+   }
+   
+   .hamburguer.active::before {
+    background-color: red;
+    transform: rotate(-90deg);
+    margin-top: -4px;
+   }
+   
+   .hamburguer.active::after {
+    background-color: red;
+    transform: rotate(90deg);
+    margin-top: -5px;
+   }
   .menu nav ul li a:hover {
     color: #00bcd4 !important;
   }
@@ -60,6 +93,13 @@
   #menu-mobile {
     display: flex !important;
     z-index: 1000 !important;
+  }
+  #menu{
+    padding-top: 0 !important;
+    width:100% !important;
+  }
+  .menu{
+    width: 90vw !important;
   }
   .menu-overlay {
     position: fixed;

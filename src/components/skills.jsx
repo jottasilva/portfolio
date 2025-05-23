@@ -86,6 +86,9 @@ const Skills = () => {
                         <div class="skill-item mysql">
                             <div class="skill-icon"></div>
                         </div>
+                        <div class="skill-item tailwindcss">
+                            <div class="skill-icon"></div>
+                        </div>
                         <div class="skill-item bootstrap">
                             <div class="skill-icon"></div>
                         </div>

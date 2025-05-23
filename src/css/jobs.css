@@ -257,6 +257,7 @@
   @media (max-width: 768px) {
     .services-section{
       max-width: 90vw;
+      margin-top: 50px;
     }
     .services-grid {
       display: flex;

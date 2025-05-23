@@ -23,7 +23,7 @@
     padding: 10px 20px;
     cursor: pointer;
     font-size: 12px;
-    font-weight: 600;
+    font-size: clamp(0.5rem, 2vw, 0.8rem);
     letter-spacing: 1px;
     transition: all 0.3s ease;
   }
@@ -87,11 +87,11 @@
   }
   
   .portfolio-content h3 {
-    color: #00b4ff;
-    font-size: 1.1rem;
+    color: #ffffff;
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
     font-family: 'Lato', sans-serif;
     margin-bottom: 10px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
   }
   
   .portfolio-content p {
@@ -105,23 +105,26 @@
   .acessar-btn {
     background-color: transparent;
     color: #00b4ff;
-    border: 1px solid #00b4ff;
     padding: 8px 15px;
     border-radius: 4px;
+    outline: none;
     cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
     text-align: center;
     transition: all 0.3s ease;
-    text-transform: uppercase;
     align-self: flex-start;
   }
-  
-  .acessar-btn:hover {
-    background-color: #00b4ff;
-    color: #000;
+  .acessar-btn::before {
+    content: '→';
+    color: #ffffff;
+    margin-right: 5px;
+    width: 50px;
+    transition: all 0.3s ease;
   }
-  
+  .acessar-btn:hover::before {
+    color: #00b4ff;
+  }
+ 
   .load-more-container {
     display: flex;
     justify-content: center;
@@ -149,10 +152,12 @@
     .portfolio-grid {
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
-    
     .category-tab {
       padding: 8px 15px;
-      font-size: 12px;
+    }
+    .category-tabs {
+      flex-direction: row;
+      gap: 15px;
     }
   }
   
@@ -162,7 +167,7 @@
     }
     
     .category-tabs {
-      flex-direction: column;
-      gap: 5px;
+      flex-direction: row;
+      gap: 15px;
     }
   }

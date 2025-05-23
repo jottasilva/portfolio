@@ -2,8 +2,6 @@
 import "./css/style.css";
 import "./css/modal.css";
 import "./js/script";
-import logo from "./imgs/logo.svg";
-import jrsn from "./imgs/avatar.png";
 import { useEffect, useState } from "react";
 import Timeline from "./components/timeline";
 import Skills from "./components/skills";
@@ -13,11 +11,11 @@ import PortfolioCategories from "./components/clients.tsx";
 import Footer from "./components/footer.tsx";
 import Modal from "./components/contactmodal.tsx";
 export default function App() {
-  const [visible, setVisible] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const menum = () => {
     /* Menu Mobile */
     document.querySelector(".navMenu").classList.toggle("show");
+    document.querySelector(".hamburguer").classList.toggle("active"); // Adicione esta linha
   };
   const toggleOrc = () => {
     setIsContactModalOpen(true);

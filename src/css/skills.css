@@ -180,34 +180,31 @@
 }
 
 .skill-item:nth-child(4n+1) {
-  border-color: rgba(0, 188, 212, 0.2);
+  border-color: rgba(196, 12, 12, 0.2);
 }
 
 .skill-item:nth-child(4n+2) {
-  border-color: rgba(76, 175, 80, 0.2);
+  border-color: rgba(17, 133, 98, 0.2);
 }
 
 .skill-item:nth-child(4n+3) {
-  border-color: rgba(255, 152, 0, 0.2);
+  border-color: rgba(255, 72, 0, 0.2);
 }
 
 .skill-item:nth-child(4n+4) {
-  border-color: rgba(233, 30, 99, 0.2);
+  border-color: rgba(30, 152, 233, 0.2);
 }
 
 .skill-item:nth-child(4n+1):hover {
-  border-color: #00bcd4;
-  box-shadow: 0 15px 30px rgba(0, 188, 212, 0.3);
+  border-color: rgba(140, 205, 248, 0.2);
 }
 
 .skill-item:nth-child(4n+2):hover {
   border-color: #4caf50;
-  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
 }
 
 .skill-item:nth-child(4n+3):hover {
   border-color: #ff9800;
-  box-shadow: 0 15px 30px rgba(255, 152, 0, 0.3);
 }
 
 .skill-item:nth-child(4n+4):hover {
@@ -316,75 +313,9 @@
   border-radius: 50%;
 }
 
-.django .skill-icon {
-  background: linear-gradient(45deg, #092e20, #0f4b3a);
-  border-radius: 50%;
-}
 
-.html5 .skill-icon {
-  background: linear-gradient(45deg, #e34f26, #f16529);
-  border-radius: 50%;
-}
 
-.docker .skill-icon {
-  background: linear-gradient(45deg, #2496ed, #0db7ed);
-  border-radius: 50%;
-}
 
-.electron .skill-icon {
-  background: linear-gradient(45deg, #47848f, #2f3241);
-  border-radius: 50%;
-}
-
-.ionic .skill-icon {
-  background: linear-gradient(45deg, #3880ff, #4e8eff);
-  border-radius: 50%;
-}
-
-.nextjs .skill-icon {
-  background: linear-gradient(45deg, #000000, #333333);
-  border-radius: 50%;
-}
-
-.vuejs .skill-icon {
-  background: linear-gradient(45deg, #4fc08d, #41b883);
-  border-radius: 50%;
-}
-
-.css3 .skill-icon {
-  background: linear-gradient(45deg, #1572b6, #33a9dc);
-  border-radius: 50%;
-}
-
-.python .skill-icon {
-  background: linear-gradient(45deg, #3776ab, #ffd343);
-  border-radius: 50%;
-}
-
-.logic-apps .skill-icon {
-  background: linear-gradient(45deg, #0078d4, #00bcf2);
-  border-radius: 50%;
-}
-
-.mysql .skill-icon {
-  background: linear-gradient(45deg, #4479a1, #00618a);
-  border-radius: 50%;
-}
-
-.notion .skill-icon {
-  background: linear-gradient(45deg, #000000, #2f3437);
-  border-radius: 50%;
-}
-
-.bootstrap .skill-icon {
-  background: linear-gradient(45deg, #7952b3, #563d7c);
-  border-radius: 50%;
-}
-
-.go .skill-icon {
-  background: linear-gradient(45deg, #00add8, #00a29c);
-  border-radius: 50%;
-}
 
 
 .angular {
@@ -428,7 +359,7 @@
 
 
 .mysql  {
-  content: url('../imgs/skills-icons/django-icon.png');
+  content: url('../imgs/skills-icons/mysql-icon.png');
 }
 
 

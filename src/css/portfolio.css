@@ -363,7 +363,7 @@
 /* Smartphones */
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 100vh;
+    min-height:80vh;
     padding: 80px 0 40px;
   }
 
@@ -423,7 +423,9 @@
 /* Smartphones pequenos */
 @media (max-width: 480px) {
   .hero-section {
-    padding: 60px 0 30px;
+    height: 110vh;
+    padding: 60px 0 30px 0 ;
+
   }
 
   .container-portfolio {

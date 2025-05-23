@@ -204,7 +204,7 @@ const PortfolioCategories = () => {
             <div className="portfolio-content">
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-              <button className="acessar-btn">ACESSAR</button>
+              <section className="acessar-btn">Conhecer agora</section>
             </div>
           </div>
         ))}
