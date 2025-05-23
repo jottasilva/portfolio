@@ -42,7 +42,7 @@ const Portfolio = () => {
                 </svg>
                 Visite meu LinkedIn
               </a>
-              <a href="#portfolio" className="btn-secondary">
+              <a href="#jobs" className="btn-secondary">
                 <svg
                   width="20"
                   height="20"
