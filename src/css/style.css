@@ -42,10 +42,11 @@ body::-webkit-scrollbar-thumb {
 body {
   background: var(--bgBottom) no-repeat var(--preto);
   background-position: center bottom;
+  
 }
 #top {
   flex: 1;
-  background: var(--bgTop) no-repeat;
+  background:url("../imgs/bgTop2.png") no-repeat;
   background-size: cover;
   background-position: center top;
   width: 100%;
