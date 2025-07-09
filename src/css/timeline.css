@@ -172,7 +172,7 @@ body {
 }
 
 .timeline-description li::before {
-  content: '▶';
+  content: ' ';
   color: #00bcd4;
   position: absolute;
   left: -20px;
