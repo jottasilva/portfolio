@@ -25,6 +25,17 @@ const Skills = () => {
                         <p class="category-description">
                             Especializado em criar interfaces modernas e responsivas usando
                             <span class="tech-highlight">Angular</span>,
+                            <span class="tech-highlight">React JS</span>,
+                            <span class="tech-highlight">Express JS</span>,
+                            <span class="tech-highlight">Node JS</span>,
+                            <span class="tech-highlight">Firebase</span>,
+                            <span class="tech-highlight">Supabase</span>,
+                            <span class="tech-highlight">Laravel</span>,
+                            <span class="tech-highlight">Spring Boot</span>,
+                            <span class="tech-highlight">Flask</span>,
+                            <span class="tech-highlight">Adonis JS</span>,
+                            <span class="tech-highlight">Angular</span>,
+                          <span class="tech-highlight">Nest JS</span>,
                             <span class="tech-highlight">Vue.js</span> e
                             <span class="tech-highlight">Next.js</span>. 
                             Experiência sólida em HTML5, CSS3 e frameworks como Bootstrap.
