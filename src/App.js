@@ -15,7 +15,7 @@ export default function App() {
   const menum = () => {
     /* Menu Mobile */
     document.querySelector(".navMenu").classList.toggle("show");
-    document.querySelector(".hamburguer").classList.toggle("active"); // Adicione esta linha
+    document.querySelector(".hamburguer").classList.toggle("active"); 
   };
   const toggleOrc = () => {
     setIsContactModalOpen(true);
