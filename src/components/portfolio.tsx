@@ -31,7 +31,7 @@ const Portfolio = () => {
               <span className="hobby-emoji">👨‍🍳</span>
             </div>
             <div className="hero-cta">
-              <a href="#" className="btn-primary">
+              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
                 <svg
                   width="20"
                   height="20"
