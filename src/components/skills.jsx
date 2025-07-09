@@ -25,17 +25,15 @@ const Skills = () => {
                         <p class="category-description">
                             Especializado em criar interfaces modernas e responsivas usando
                             <span class="tech-highlight">Angular</span>,
+                            <span class="tech-highlight">Ember JS</span>,
                             <span class="tech-highlight">React JS</span>,
-                            <span class="tech-highlight">Express JS</span>,
-                            <span class="tech-highlight">Node JS</span>,
-                            <span class="tech-highlight">Firebase</span>,
-                            <span class="tech-highlight">Supabase</span>,
-                            <span class="tech-highlight">Laravel</span>,
-                            <span class="tech-highlight">Spring Boot</span>,
-                            <span class="tech-highlight">Flask</span>,
-                            <span class="tech-highlight">Adonis JS</span>,
-                            <span class="tech-highlight">Angular</span>,
-                          <span class="tech-highlight">Nest JS</span>,
+                            <span class="tech-highlight">Flutter / Dart</span>,
+                            <span class="tech-highlight"> Svelte JS</span>,
+                            <span class="tech-highlight">Preact JS</span>,
+                            <span class="tech-highlight">Foundation</span>,
+                            <span class="tech-highlight">Tailwind CSS</span>,
+                            <span class="tech-highlight">Bootstrap</span>,
+                            <span class="tech-highlight">PrimeVue</span>,
                             <span class="tech-highlight">Vue.js</span> e
                             <span class="tech-highlight">Next.js</span>. 
                             Experiência sólida em HTML5, CSS3 e frameworks como Bootstrap.
@@ -47,6 +45,17 @@ const Skills = () => {
                         <p class="category-description">
                             Desenvolvo APIs robustas e escaláveis com
                             <span class="tech-highlight">Python</span>,
+                             <span class="tech-highlight">React JS</span>,
+                            <span class="tech-highlight">Express JS</span>,
+                            <span class="tech-highlight">Node JS</span>,
+                            <span class="tech-highlight">Firebase</span>,
+                            <span class="tech-highlight">Supabase</span>,
+                            <span class="tech-highlight">Laravel</span>,
+                            <span class="tech-highlight">Spring Boot</span>,
+                            <span class="tech-highlight">Flask</span>,
+                            <span class="tech-highlight">Adonis JS</span>,
+                            <span class="tech-highlight">Angular</span>,
+                            <span class="tech-highlight">Nest JS</span>,
                             <span class="tech-highlight">Django</span> e
                             <span class="tech-highlight">Go</span>.
                             Experiência em bancos de dados MySQL e integração de sistemas.
