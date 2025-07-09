@@ -13,7 +13,7 @@ const Timeline = () => {
         <div class="timeline">
             <div class="timeline-item">
                 <div class="timeline-content">
-                    <div class="timeline-arrow"></div>
+                    
                     <div class="timeline-date">Desenvolvedor | 01/2012 - Atual</div>
                     <h3 class="timeline-title">Desenvolvedor FullStack</h3>
                     <div class="timeline-company">Freelancer & Empresas</div>
