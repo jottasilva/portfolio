@@ -19,60 +19,104 @@ const Skills = () => {
             </div>
 
             <div class="skills-content">
-                <div class="skills-text">
-                    <div class="skill-category">
-                        <h3 class="category-title">Front-end Development</h3>
-                        <p class="category-description">
-                            Especializado em criar interfaces modernas e responsivas usando
-                            <span class="tech-highlight">Angular</span>,
-                            <span class="tech-highlight">Ember JS</span>,
-                            <span class="tech-highlight">React JS</span>,
-                            <span class="tech-highlight">Flutter / Dart</span>,
-                            <span class="tech-highlight"> Svelte JS</span>,
-                            <span class="tech-highlight">Preact JS</span>,
-                            <span class="tech-highlight">Foundation</span>,
-                            <span class="tech-highlight">Tailwind CSS</span>,
-                            <span class="tech-highlight">Bootstrap</span>,
-                            <span class="tech-highlight">PrimeVue</span>,
-                            <span class="tech-highlight">Vue.js</span> e
-                            <span class="tech-highlight">Next.js</span>. 
-                            Experiência sólida em HTML5, CSS3 e frameworks como Bootstrap.
-                        </p>
-                    </div>
+  <div class="skills-text">
+    
+    <div class="skill-category">
+      <h3 class="category-title">Front-end Development</h3>
+      <p class="category-description">
+        Experiência sólida no desenvolvimento de interfaces modernas, acessíveis e responsivas utilizando 
+        <span class="tech-highlight">HTML5</span>, 
+        <span class="tech-highlight">CSS3</span>, 
+        <span class="tech-highlight">JavaScript</span> e
+        frameworks como 
+        <span class="tech-highlight">React JS</span>, 
+        <span class="tech-highlight">Angular</span>, 
+        <span class="tech-highlight">Vue.js</span>, 
+        <span class="tech-highlight">Svelte</span>,
+        <span class="tech-highlight">Next.js</span>,
+        <span class="tech-highlight">Nuxt.js</span>,
+        <span class="tech-highlight">Ember JS</span> e 
+        <span class="tech-highlight">Preact</span>.  
+        Utilização de ferramentas modernas de estilização como 
+        <span class="tech-highlight">Tailwind CSS</span>, 
+        <span class="tech-highlight">Sass</span>, 
+        <span class="tech-highlight">Bootstrap</span>,
+        <span class="tech-highlight">Foundation</span> e 
+        <span class="tech-highlight">PrimeVue</span>.
+        Experiência com <span class="tech-highlight">Flutter</span> para interfaces mobile.
+      </p>
+    </div>
 
-                    <div class="skill-category">
-                        <h3 class="category-title">Back-end Development</h3>
-                        <p class="category-description">
-                            Desenvolvo APIs robustas e escaláveis com
-                            <span class="tech-highlight">Python</span>,
-                             <span class="tech-highlight">React JS</span>,
-                            <span class="tech-highlight">Express JS</span>,
-                            <span class="tech-highlight">Node JS</span>,
-                            <span class="tech-highlight">Firebase</span>,
-                            <span class="tech-highlight">Supabase</span>,
-                            <span class="tech-highlight">Laravel</span>,
-                            <span class="tech-highlight">Spring Boot</span>,
-                            <span class="tech-highlight">Flask</span>,
-                            <span class="tech-highlight">Adonis JS</span>,
-                            <span class="tech-highlight">Angular</span>,
-                            <span class="tech-highlight">Nest JS</span>,
-                            <span class="tech-highlight">Django</span> e
-                            <span class="tech-highlight">Go</span>.
-                            Experiência em bancos de dados MySQL e integração de sistemas.
-                        </p>
-                    </div>
+    <div class="skill-category">
+      <h3 class="category-title">Back-end Development</h3>
+      <p class="category-description">
+        Desenvolvimento de sistemas robustos, APIs REST e GraphQL utilizando 
+        <span class="tech-highlight">Node.js</span>, 
+        <span class="tech-highlight">Express</span>, 
+        <span class="tech-highlight">NestJS</span>, 
+        <span class="tech-highlight">Python</span>, 
+        <span class="tech-highlight">Django</span>, 
+        <span class="tech-highlight">Flask</span>, 
+        <span class="tech-highlight">Laravel (PHP)</span>, 
+        <span class="tech-highlight">Spring Boot (Java)</span>, 
+        <span class="tech-highlight">Go (Golang)</span> e 
+        <span class="tech-highlight">AdonisJS</span>.  
+        Integração com serviços como 
+        <span class="tech-highlight">Firebase</span>, 
+        <span class="tech-highlight">Supabase</span> e 
+        <span class="tech-highlight">AWS Lambda</span>.
+      </p>
+    </div>
 
-                    <div class="skill-category">
-                        <h3 class="category-title">DevOps & Mobile</h3>
-                        <p class="category-description">
-                            Containerização com
-                            <span class="tech-highlight">Docker</span>,
-                            desenvolvimento mobile com
-                            <span class="tech-highlight">Ionic</span> e
-                            aplicações desktop com <span class="tech-highlight">Electron</span>.
-                        </p>
-                    </div>
-                </div>
+    <div class="skill-category">
+      <h3 class="category-title">Design Gráfico & Modelagem 3D</h3>
+      <p class="category-description">
+        Criação de identidades visuais, materiais gráficos e modelagem 3D com domínio de ferramentas como 
+        <span class="tech-highlight">Adobe Illustrator</span>, 
+        <span class="tech-highlight">Photoshop</span>, 
+        <span class="tech-highlight">Figma</span>, 
+        <span class="tech-highlight">CorelDRAW</span>, 
+        <span class="tech-highlight">Canva</span>, 
+        <span class="tech-highlight">Blender</span>, 
+        <span class="tech-highlight">Fusion 360</span> e 
+        <span class="tech-highlight">Tinkercad</span>.  
+        Modelagem para impressão 3D, mockups e protótipos visuais de produtos e interfaces.
+      </p>
+    </div>
+
+    <div class="skill-category">
+      <h3 class="category-title">Banco de Dados</h3>
+      <p class="category-description">
+        Projetos com bancos relacionais e não-relacionais, incluindo 
+        <span class="tech-highlight">MySQL</span>, 
+        <span class="tech-highlight">PostgreSQL</span>, 
+        <span class="tech-highlight">SQLite</span>, 
+        <span class="tech-highlight">MongoDB</span>, 
+        <span class="tech-highlight">Firebase Realtime Database</span> e 
+        <span class="tech-highlight">Redis</span>.  
+        Experiência em modelagem de dados, otimização de queries e estruturação de bases escaláveis.
+      </p>
+    </div>
+
+    <div class="skill-category">
+      <h3 class="category-title">DevOps & Mobile</h3>
+      <p class="category-description">
+        Experiência com ambientes de desenvolvimento e implantação utilizando 
+        <span class="tech-highlight">Docker</span>, 
+        <span class="tech-highlight">Git</span>, 
+        <span class="tech-highlight">GitHub Actions</span>, 
+        <span class="tech-highlight">CI/CD</span> e 
+        <span class="tech-highlight">Linux</span>.  
+        Desenvolvimento mobile com 
+        <span class="tech-highlight">Flutter</span> e 
+        <span class="tech-highlight">Ionic</span>, além de aplicações desktop com 
+        <span class="tech-highlight">Electron</span>.
+      </p>
+    </div>
+
+  </div>
+</div>
+
 
                 <div class="skills-grid">
                     <div class="skills-container">
