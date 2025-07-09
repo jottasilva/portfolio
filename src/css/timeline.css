@@ -121,12 +121,12 @@ body {
   display: inline-block;
   background: linear-gradient(45deg, #00bcd4, #4caf50);
   color: #fff;
-  padding: 8px 16px;
+  padding: 8px 20px;
   border-radius: 25px;
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 15px;
-  letter-spacing: 1px;
+  letter-spacing: 1.3px;
 }
 
 .timeline-item:nth-child(2) .timeline-date { background: linear-gradient(45deg, #4caf50, #8bc34a); }
