@@ -21,7 +21,7 @@
 }
 /* Skills Showcase */
 .skills-showcase {
- margin-top: 3rem;
+ margin-top: 2rem;
  opacity: 0;
  transform: translateY(30px);
  animation: fadeInUp 0.8s ease forwards;
