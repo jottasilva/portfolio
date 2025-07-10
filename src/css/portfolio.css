@@ -122,11 +122,8 @@
 
 .achievement-item {
  text-align: center;
- background: rgba(255, 255, 255, 0.1);
  border-radius: 12px;
  padding: 1.5rem;
- backdrop-filter: blur(10px);
- border: 1px solid rgba(255, 255, 255, 0.2);
  transition: all 0.3s ease;
  position: relative;
  overflow: hidden;
@@ -135,7 +132,6 @@
 
 .achievement-item:hover {
  transform: translateY(-5px);
- background: rgba(255, 255, 255, 0.15);
  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
