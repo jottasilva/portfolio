@@ -12,41 +12,20 @@ const Portfolio = () => {
    "Especialista em UX/UI e desenvolvimento moderno."
  ];
 
- const skills = [
-   { name: "React/Next.js", level: 95, color: "#61DAFB" },
-   { name: "Node.js", level: 90, color: "#339933" },
-   { name: "Python", level: 85, color: "#3776AB" },
-   { name: "Design/Figma", level: 88, color: "#F24E1E" },
-   { name: "TypeScript", level: 92, color: "#3178C6" }
- ];
-
  const achievements = [
    { 
      number: "50+", 
      label: "Projetos Concluídos",
-     icon: (
-       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-       </svg>
-     )
    },
    { 
      number: "3+", 
      label: "Anos de Experiência",
-     icon: (
-       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-       </svg>
-     )
+     
    },
    { 
      number: "100%", 
      label: "Satisfação do Cliente",
-     icon: (
-       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-       </svg>
-     )
+    
    }
  ];
 
