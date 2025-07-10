@@ -226,18 +226,7 @@
  position: relative;
 }
 
-.profile-avatar::before {
- content: '';
- position: absolute;
- top: -3px;
- left: -3px;
- right: -3px;
- bottom: -3px;
- background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f093fb);
- border-radius: 50%;
- z-index: -1;
- animation: rotate 3s linear infinite;
-}
+
 
 @keyframes profilePulse {
  0%, 100% { transform: scale(1); }
