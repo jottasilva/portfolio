@@ -75,8 +75,6 @@ const Portfolio = () => {
              <span className="hobby-emoji">👨‍🍳</span>
            </div>
 
-          
-
            <div className="hero-cta">
              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
                <svg
