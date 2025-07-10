@@ -117,13 +117,12 @@
 .achievements-grid {
  display:flex;
  gap: 1.5rem;
- margin-top: 1rem;
 }
 
 .achievement-item {
  text-align: center;
  border-radius: 12px;
- padding: 11rem;
+ padding: 1rem;
  transition: all 0.3s ease;
  position: relative;
  overflow: hidden;
