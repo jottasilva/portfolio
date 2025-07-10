@@ -75,18 +75,7 @@ const Portfolio = () => {
              <span className="hobby-emoji">👨‍🍳</span>
            </div>
 
-           {/* Achievements Section */}
-           <div className="achievements-section">
-             <div className="achievements-grid">
-               {achievements.map((achievement, index) => (
-                 <div key={index} className="achievement-item">
-                   <div className="achievement-icon">{achievement.icon}</div>
-                   <div className="achievement-number">{achievement.number}</div>
-                   <div className="achievement-label">{achievement.label}</div>
-                 </div>
-               ))}
-             </div>
-           </div>
+          
 
            <div className="hero-cta">
              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
