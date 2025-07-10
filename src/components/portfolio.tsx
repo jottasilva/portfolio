@@ -53,12 +53,6 @@ const Portfolio = () => {
    <div>
      {/* Box Portfolio */}
      <section className="hero-section">
-       <div className="floating-elements">
-         <div className="floating-element">💻</div>
-         <div className="floating-element">🎨</div>
-         <div className="floating-element">🚀</div>
-         <div className="floating-element">⚡</div>
-       </div>
        <div className="container-portfolio">
          <div className="hero-content">
            <h1 className="hero-name">
@@ -80,25 +74,7 @@ const Portfolio = () => {
            </div>
 
            {/* Skills Showcase */}
-           <div className="skills-showcase">
-             <h3 className="skills-title">Principais Tecnologias</h3>
-             <div className="skills-grid">
-               {skills.map((skill, index) => (
-                 <div key={index} className="skill-item">
-                   <div className="skill-name">{skill.name}</div>
-                   <div className="skill-bar">
-                     <div 
-                       className="skill-progress" 
-                       style={{ 
-                         width: isVisible ? `${skill.level}%` : '0%', 
-                         backgroundColor: skill.color 
-                       }}
-                     ></div>
-                   </div>
-                 </div>
-               ))}
-             </div>
-           </div>
+           
 
            {/* Achievements Section */}
            <div className="achievements-section">
