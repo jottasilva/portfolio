@@ -79,6 +79,10 @@ export default function App() {
                 </nav>
               </div>
             </div>
+            {/* Estatisticas*/}
+            <div id="stats">
+              <StatisticsComponent />
+            </div>
             <div id="portfolio">
               {/* Portfolio Component */}
               <Portfolio />
