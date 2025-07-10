@@ -2,7 +2,7 @@ import React from 'react';
 import { Briefcase, Star, TrendingUp, Users } from 'lucide-react';
 import './statistics.css';
 
-const Statistics: React.FC = () => {
+const Statistics = () => {
   const stats = [
     {
       icon: <Briefcase className="stat-icon-svg" />,
