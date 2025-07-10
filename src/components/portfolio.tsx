@@ -9,7 +9,8 @@ const Portfolio = () => {
    "Desenvolvedor Full-Stack, Designer Gráfico e apaixonado por tecnologia.",
    "Criando experiências digitais únicas e memoráveis.",
    "Transformando ideias em soluções inovadoras.",
-   "Especialista em UX/UI e desenvolvimento moderno."
+   "Especialista em UX/UI e desenvolvimento moderno.",
+  "Modelagem 3D."
  ];
 
  const achievements = [
