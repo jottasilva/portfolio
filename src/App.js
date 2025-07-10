@@ -81,7 +81,7 @@ export default function App() {
             </div>
             {/* Estatisticas*/}
             <div id="stats">
-              <StatisticsComponent />
+              <Statistics />
             </div>
             <div id="portfolio">
               {/* Portfolio Component */}
