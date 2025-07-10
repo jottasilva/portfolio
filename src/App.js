@@ -8,6 +8,7 @@ import Skills from "./components/skills";
 import Portfolio from "./components/portfolio.tsx";
 import Jobs from "./components/jobs.tsx";
 import PortfolioCategories from "./components/clients.tsx";
+import Statistics from "./components/stats.tsx";
 import Footer from "./components/footer.tsx";
 import Modal from "./components/contactmodal.tsx";
 export default function App() {
