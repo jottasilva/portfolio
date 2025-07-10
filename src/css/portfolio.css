@@ -6,6 +6,7 @@
   position: relative;
   overflow: hidden;
   padding: 40px 0 80px 0;
+  margin-bottom:2rem;
 }
 .container-portfolio {
   max-width: 75vw;
@@ -98,7 +99,7 @@
 
 /* Achievements Section */
 .achievements-section {
- margin-top: 3rem;
+ margin-top: 2rem;
  opacity: 0;
  transform: translateY(30px);
  animation: fadeInUp 0.8s ease forwards;
@@ -122,7 +123,7 @@
 .achievement-item {
  text-align: center;
  border-radius: 12px;
- padding: 1.5rem;
+ padding: 11rem;
  transition: all 0.3s ease;
  position: relative;
  overflow: hidden;
