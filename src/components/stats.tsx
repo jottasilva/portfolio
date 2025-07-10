@@ -28,9 +28,7 @@ const StatisticsComponent = () => {
   return (
     <div className="py-16 px-8">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl font-bold text-white text-center mb-12">
-          O que eu <span className="text-cyan-400">já realizei?</span>
-        </h2>
+       
         
         <div className="flex flex-wrap justify-center items-center gap-12 lg:gap-16">
           {stats.map((stat, index) => (
