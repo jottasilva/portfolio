@@ -14,11 +14,11 @@ const Portfolio = () => {
 
  const achievements = [
    { 
-     number: "50+", 
+     number: "20+", 
      label: "Projetos Concluídos",
    },
    { 
-     number: "3+", 
+     number: "5+", 
      label: "Anos de Experiência",
      
    },
@@ -74,9 +74,6 @@ const Portfolio = () => {
              <span className="hobby-emoji">🎮</span> e um ótimo cozinheiro{" "}
              <span className="hobby-emoji">👨‍🍳</span>
            </div>
-
-           {/* Skills Showcase */}
-           
 
            {/* Achievements Section */}
            <div className="achievements-section">
