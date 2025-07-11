@@ -103,8 +103,8 @@ body {
 }
 .logo {
   /* STYLE LOGO MENU */
-  width: 160px;
-  height: 56px;
+  width: 130px;
+  height: 36px;
   background: var(--logo) no-repeat center center;
   background-size: cover;
   transition: all 0.5s ease-in-out;
