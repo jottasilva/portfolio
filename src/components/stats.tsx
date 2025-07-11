@@ -1,26 +1,32 @@
 import React from 'react';
-import { Briefcase, Star, TrendingUp, Users } from 'lucide-react';
+import { FaDesktop, FaStar, FaChartLine, FaUsers } from 'react-icons/fa';
 import '../css/statistics.css';
 
+interface StatItem {
+  icon: React.ReactNode;
+  value: string;
+  label: string;
+}
+
 const Statistics = () => {
-  const stats = [
+  const stats: StatItem[] = [
     {
-      icon: <Briefcase className="stat-icon-svg" />,
+      icon: <FaDesktop className="stat-icon-svg" />,
       value: '30+',
       label: 'Projetos Realizados'
     },
     {
-      icon: <Star className="stat-icon-svg" />,
+      icon: <FaStar className="stat-icon-svg" />,
       value: '100%',
       label: 'Satisfação dos Clientes'
     },
     {
-      icon: <TrendingUp className="stat-icon-svg" />,
+      icon: <FaChartLine className="stat-icon-svg" />,
       value: '4+',
       label: 'Anos de Experiência'
     },
     {
-      icon: <Users className="stat-icon-svg" />,
+      icon: <FaUsers className="stat-icon-svg" />,
       value: '25+',
       label: 'Clientes Satisfeitos'
     }
@@ -28,14 +34,31 @@ const Statistics = () => {
 
   return (
     <section className="statistics-section">
+      <div className="floating-elements">
+        {[...Array(9)].map((_, index) => (
+          <div 
+            key={index} 
+            className="floating-element"
+            style={{ animationDelay: `${index * 0.5}s` }}
+          />
+        ))}
+      </div>
+      
       <div className="statistics-container">
-        <h2 className="statistics-title">
-          O que eu <span className="highlight">já realizei?</span>
-        </h2>
+        <div className="statistics-title">
+          <h2>O que eu <span className="highlight">já realizei?</span></h2>
+          <p className="subtitle">
+            Cada número representa uma conquista, cada projeto uma história de sucesso construída com dedicação e expertise.
+          </p>
+        </div>
         
         <div className="statistics-grid">
           {stats.map((stat, index) => (
-            <div key={index} className="stat-item">
+            <div 
+              key={index} 
+              className="stat-item"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
               <div className="stat-icon">
                 {stat.icon}
               </div>
