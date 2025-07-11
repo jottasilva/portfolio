@@ -190,7 +190,11 @@ body {
   background-size: 90% !important;
   transition: all 0.5s linear;
 }
-
+#stats{
+  margin: 0 auto;
+  max-width: 95vw;
+  padding-top: 120px;
+}
 #jobs {
   margin: 0 auto;
   max-width: 95vw;
