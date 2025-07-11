@@ -156,16 +156,10 @@
             position: relative;
             padding:1px 8px;
             border-radius: 6px;
-            background: rgba(0, 245, 255, 0.1);
             transition: all 0.3s ease;
             display: inline-block;
         }
 
-        .tech-highlight:hover {
-            background: rgba(0, 245, 255, 0.2);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 245, 255, 0.2);
-        }
 
         /* Grid de skills completamente redesenhado */
         .skills-grid {
