@@ -2,7 +2,6 @@
 .statistics-section {
   padding: 6rem 2rem;
   position: relative;
-  min-height:80vh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -226,6 +225,7 @@
 @media (max-width: 1024px) {
   .statistics-section {
     padding: 5rem 1.5rem;
+    margin-top:30vh;
   }
   
   .statistics-grid {
@@ -237,7 +237,6 @@
   .statistics-section {
     padding: 4rem 1rem;
     min-height: auto;
-    margin-top:50px;
   }
   
   .statistics-title {
