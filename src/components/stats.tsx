@@ -46,7 +46,7 @@ const Statistics = () => {
       
       <div className="statistics-container">
         <div className="statistics-title">
-          <h2>O que eu <span className="highlight">já realizei?</span></h2>
+          <h2>Projetos e <span className="highlight">Conquistas</span></h2>
           <p className="subtitle">
             Cada número representa uma conquista, cada projeto uma história de sucesso construída com dedicação e expertise.
           </p>
