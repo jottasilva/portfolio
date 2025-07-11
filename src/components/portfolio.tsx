@@ -63,7 +63,7 @@ const Portfolio = () => {
 
            <div className="hero-cta">
              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
-          <?xml version="1.0" encoding="UTF-8"?>
+  
 <svg id="Camada_1" data-name="Camada 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 81.38 82.02">
   <defs>
     <style>
