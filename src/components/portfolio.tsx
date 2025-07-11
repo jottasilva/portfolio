@@ -13,22 +13,7 @@ const Portfolio = () => {
   "Modelagem 3D."
  ];
 
- const achievements = [
-   { 
-     number: "20+", 
-     label: "Projetos Concluídos",
-   },
-   { 
-     number: "5+", 
-     label: "Anos de Experiência",
-     
-   },
-   { 
-     number: "100%", 
-     label: "Satisfação do Cliente",
-    
-   }
- ];
+
 
  useEffect(() => {
    setIsVisible(true);
