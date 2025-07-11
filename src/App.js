@@ -81,15 +81,15 @@ export default function App() {
               </div>
             </div>
             {/* Estatisticas*/}
-            <div id="stats">
-              <Statistics />
-            </div>
+            
             <div id="portfolio">
               {/* Portfolio Component */}
               <Portfolio />
             </div>
           </div>
-
+          <div id="stats">
+              <Statistics />
+            </div>
           <div id="jobs">
             {/* Jobs Component */}
             <Jobs />
