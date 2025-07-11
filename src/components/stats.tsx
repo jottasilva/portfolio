@@ -1,6 +1,6 @@
 import React from 'react';
 import { Briefcase, Star, TrendingUp, Users } from 'lucide-react';
-import './statistics.css';
+import '../css/statistics.css';
 
 const Statistics = () => {
   const stats = [
