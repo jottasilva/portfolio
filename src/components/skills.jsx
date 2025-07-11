@@ -14,7 +14,7 @@ const Skills = () => {
         
         <div class="container">
             <div class="skills-header">
-                <h2 class="skills-title">Minhas Habilidades</h2>
+                <h1 class="skills-title">Minhas Habilidades</h1>
                 <p class="skills-subtitle">
                     Desenvolvedor full-stack com expertise em tecnologias modernas e paixão por criar soluções inovadoras que transformam ideias em realidade
                 </p>
