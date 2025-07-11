@@ -154,7 +154,7 @@
             font-weight: 600;
             margin: 0 4px;
             position: relative;
-            padding: 2px 8px;
+            padding:1px 8px;
             border-radius: 6px;
             background: rgba(0, 245, 255, 0.1);
             transition: all 0.3s ease;
