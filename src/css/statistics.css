@@ -19,6 +19,7 @@
 
 .statistics-title {
   text-align: center;
+  width:100%;
   margin-bottom: 4rem;
   animation: fadeInUp 0.8s ease-out;
 }
@@ -66,8 +67,8 @@
 }
 
 .statistics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  justify-content:space-around;
   gap: 2rem;
   margin-top: 3rem;
 }
