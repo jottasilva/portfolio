@@ -1,16 +1,17 @@
 /* Statistics.css */
 .statistics-section {
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
   position: relative;
-  max-height: 80vh;
+  min-height:80vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
   overflow: hidden;
 }
 
+
 .statistics-container {
-  max-width: 90vw;
+  max-width: 80vw;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -18,16 +19,19 @@
 
 .statistics-title {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   animation: fadeInUp 0.8s ease-out;
 }
 
 .statistics-title h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -52,8 +56,8 @@
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  color: #64748b;
+  font-size: 1.2rem;
+  color: #94a3b8;
   font-weight: 400;
   max-width: 600px;
   margin: 0 auto;
@@ -62,28 +66,23 @@
 }
 
 .statistics-grid {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
+  margin-top: 3rem;
 }
 
 .stat-item {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
   animation: fadeInUp 0.8s ease-out;
-  min-width: 200px;
-  flex: 0 1 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .stat-item::before {
@@ -104,13 +103,13 @@
 
 .stat-item:hover {
   transform: translateY(-8px);
-  border-color: rgba(6, 182, 212, 0.5);
-  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.1);
 }
 
 .stat-icon {
-  width: 70px;
-  height: 70px;
+  width: 80px;
+  height: 80px;
   margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
@@ -130,13 +129,13 @@
   content: '';
   position: absolute;
   inset: 3px;
-  background: white;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   border-radius: 50%;
 }
 
 .stat-icon-svg {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   color: #06b6d4;
   position: relative;
   z-index: 1;
@@ -148,18 +147,21 @@
 }
 
 .stat-value {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 900;
   line-height: 1;
   margin-bottom: 0.5rem;
-  color: #1e293b;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: countUp 1.5s ease-out 0.8s both;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .stat-label {
-  font-size: 0.9rem;
-  color: #64748b;
+  font-size: 1rem;
+  color: #94a3b8;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -246,43 +248,28 @@
 }
 
 /* Responsividade */
-@media (max-width: 1200px) {
-  .statistics-grid {
-    gap: 1.5rem;
-  }
-  
-  .stat-item {
-    min-width: 180px;
-    padding: 1.8rem 1.3rem;
-  }
-}
-
 @media (max-width: 1024px) {
   .statistics-section {
-    padding: 3rem 1.5rem;
+    padding: 5rem 1.5rem;
   }
   
   .statistics-grid {
     gap: 1.5rem;
-  }
-  
-  .stat-item {
-    min-width: 160px;
   }
 }
 
 @media (max-width: 768px) {
   .statistics-section {
-    padding: 2.5rem 1rem;
-    max-height: none;
+    padding: 4rem 1rem;
+    min-height: auto;
   }
   
   .statistics-title {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
   }
   
   .statistics-title h2 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
   
   .subtitle {
@@ -290,43 +277,39 @@
   }
   
   .statistics-grid {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   
   .stat-item {
-    min-width: 250px;
-    max-width: 300px;
-    width: 100%;
     padding: 2rem 1.5rem;
   }
   
   .stat-value {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
   
   .stat-icon {
-    width: 65px;
-    height: 65px;
+    width: 70px;
+    height: 70px;
   }
   
   .stat-icon-svg {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (max-width: 480px) {
   .statistics-section {
-    padding: 2rem 1rem;
+    padding: 3rem 1rem;
   }
   
   .statistics-title h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
   
   .stat-item {
-    min-width: 200px;
     padding: 1.5rem 1rem;
   }
   
