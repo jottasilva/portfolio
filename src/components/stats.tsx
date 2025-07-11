@@ -13,7 +13,7 @@ const Statistics = () => {
     {
       icon: <FaDesktop className="stat-icon-svg" />,
       value: '30+',
-      label: 'Projetos Realizados'
+      label: 'Projetos Realizados nos últimos 2 anos'
     },
     {
       icon: <FaStar className="stat-icon-svg" />,
