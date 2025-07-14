@@ -36,7 +36,7 @@ body {
 }
 
 .skills-title {
-    font-size: clamp(4rem, 15vw, 9rem);
+    font-size: clamp(2rem, 8vw, 5rem);
     font-weight: 900;
     background: linear-gradient(135deg, #00f5ff 0%, #00d4ff 25%, #0099ff 50%, #6366f1 75%, #8b5cf6 100%);
     -webkit-background-clip: text;
