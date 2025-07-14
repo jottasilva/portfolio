@@ -1,6 +1,5 @@
 import React from "react";
-import "../css/skills.css";
-
+import "./Skills.css"; 
 const Skills = () => {
   return (
     <div className="skills-section">
@@ -124,6 +123,7 @@ const Skills = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };
