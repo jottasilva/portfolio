@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../css/Timeline.css';
+import '../css/timeline.css';
 
 const Timeline: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
