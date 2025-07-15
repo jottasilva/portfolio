@@ -68,7 +68,7 @@
 
 /* Content Area */
 .timeline-content-area {
-  max-width: 72rem;
+  max-width: 80vw;
   margin: 0 auto;
   padding: 0 1.5rem 5rem 1.5rem;
 }
