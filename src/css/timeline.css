@@ -313,7 +313,7 @@
 /* Tablet Responsive Design */
 @media (min-width: 768px) {
   .timeline-header {
-    padding: 4rem 1.5rem;
+    padding:2rem 1rem;
   }
   
   .timeline-title {
@@ -332,7 +332,7 @@
   .timeline-nav {
     gap: 0.5rem;
     padding: 0.5rem;
-    max-width: 60vw;
+    max-width: 70vw;
   }
   
   .timeline-nav-btn {
