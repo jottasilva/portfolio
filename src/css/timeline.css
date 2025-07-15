@@ -331,7 +331,8 @@
   
   .timeline-nav {
     gap: 10px;
-    padding: 0.5rem;
+    text-align:center;
+    padding: 0.3rem;
     max-width: 80vw;
   }
   
