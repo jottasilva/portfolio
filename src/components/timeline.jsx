@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/timeline.css';
 
-const Timeline: React.FC = () => {
+const Timeline = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -40,7 +40,7 @@ const Timeline: React.FC = () => {
     {
       period: "09/2019 - 05/2020",
       title: "Designer Gráfico",
-      company: "19 Interesses",
+      company: "I9 Ingressos",
       description: "Foco na criação visual e desenvolvimento de materiais promocionais",
       skills: [
         "Criação de artes para impressão e itens personalizados",
