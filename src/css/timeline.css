@@ -332,12 +332,12 @@
   .timeline-nav {
     gap: 0.5rem;
     padding: 0.5rem;
-    max-width: 70vw;
+    max-width: 80vw;
   }
   
   .timeline-nav-btn {
     padding: 0.75rem 1.25rem;
-    font-size: 0.875rem;
+    font-size: 0.675rem;
   }
   
   .timeline-content-area {
