@@ -307,7 +307,7 @@
     font-size: 4rem;
   }
   .timeline-nav{
-    width:50vw;
+    max-width:50vw;
   }
   .timeline-card-content {
     padding: 3rem;
