@@ -88,9 +88,9 @@
 /* Services Grid */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 30px;
-  width:95vw;
+  width:80vw;
   margin-top: 60px;
 }
 
@@ -123,7 +123,7 @@
   transform: translateY(-10px);
   border-color: var(--card-color);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 
-              0 0 0 1px var(--card-color);
+  0 0 0 1px var(--card-color);
 }
 
 .service-card:hover::before {
