@@ -6,20 +6,10 @@
   overflow: hidden;
 }
 
-.statistics-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 1px 1px, rgba(6, 182, 212, 0.1) 1px, transparent 0);
-  background-size: 30px 30px;
-  opacity: 0.3;
-}
-
 .statistics-container {
   position: relative;
   z-index: 1;
-  width: 80vw;
-  max-width: 1200px;
+  width: 70vw;
   margin: 0 auto;
 }
 
