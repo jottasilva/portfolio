@@ -11,7 +11,7 @@ interface TimelineItem {
   bgColor: string;
 }
 
-const Timeline: React.FC = () => {
+const Timeline = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
@@ -96,11 +96,8 @@ const Timeline: React.FC = () => {
     if (index === activeIndex || isTransitioning) return;
     
     setIsTransitioning(true);
-    
-    // Add slide out animation
     setTimeout(() => {
       setActiveIndex(index);
-      // Add slide in animation
       setTimeout(() => {
         setIsTransitioning(false);
       }, 300);
@@ -113,9 +110,7 @@ const Timeline: React.FC = () => {
       handleTabChange(newIndex);
     }
   };
-
   const currentData = timelineData[activeIndex];
-
   return (
     <div className="timeline-container">
       {/* Header */}
