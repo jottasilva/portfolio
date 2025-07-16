@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/ServicesSection.css';
+import '../css/ServSection.css';
 
 interface ServiceFeature {
   text: string;
