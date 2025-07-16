@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import '../css/timeline.css';
 
-const Timeline = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+interface TimelineItem {
+  period: string;
+  title: string;
+  company: string;
+  description: string;
+  skills: string[];
+  color: string;
+  bgColor: string;
+}
+
+const Timeline: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsLoaded(true);
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
-  const timelineData = [
+  const timelineData: TimelineItem[] = [
     {
       period: "01/2012 - Atual",
       title: "Desenvolvedor FullStack",
@@ -78,16 +92,46 @@ const Timeline = () => {
     }
   ];
 
+  const handleTabChange = (index: number) => {
+    if (index === activeIndex || isTransitioning) return;
+    
+    setIsTransitioning(true);
+    
+    // Add slide out animation
+    setTimeout(() => {
+      setActiveIndex(index);
+      // Add slide in animation
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 300);
+    }, 200);
+  };
+
+  const changeSlide = (direction: number) => {
+    const newIndex = activeIndex + direction;
+    if (newIndex >= 0 && newIndex < timelineData.length) {
+      handleTabChange(newIndex);
+    }
+  };
+
+  const currentData = timelineData[activeIndex];
+
   return (
     <div className="timeline-container">
       {/* Header */}
       <div className="timeline-header">
-        <h1 className="timeline-title">
-          Timeline
-        </h1>
-        <p className="timeline-subtitle">
-          alguns pontos da minha trajetória...
-        </p>
+        <div className="timeline-header-content">
+          <div className="timeline-badge">
+            <span className="timeline-badge-text">Jornada Profissional</span>
+          </div>
+          <h1 className="timeline-title">
+            <span className="timeline-title-main">Minha</span>
+            <span className="timeline-title-accent">Trajetória</span>
+          </h1>
+          <p className="timeline-subtitle">
+            Explorando os marcos da minha carreira e evolução profissional
+          </p>
+        </div>
       </div>
 
       {/* Timeline Navigation */}
@@ -96,14 +140,15 @@ const Timeline = () => {
           {timelineData.map((item, index) => (
             <button
               key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`timeline-nav-btn ${activeIndex === index ? 'active' : ''}`}
+              onClick={() => handleTabChange(index)}
+              className={`timeline-nav-btn ${activeIndex === index ? 'active' : ''} ${isTransitioning ? 'transitioning' : ''}`}
               style={{
                 backgroundColor: activeIndex === index ? item.color : 'transparent',
                 boxShadow: activeIndex === index ? `0 0 20px ${item.color}40` : 'none'
               }}
+              disabled={isTransitioning}
             >
-              {item.period.split(' - ')[0]}
+              <span className="timeline-nav-btn-text">{item.period.split(' - ')[0]}</span>
             </button>
           ))}
         </div>
@@ -114,50 +159,50 @@ const Timeline = () => {
         <div className="timeline-card">
           {/* Background Gradient */}
           <div 
-            className={`timeline-bg ${timelineData[activeIndex].bgColor}`}
+            className={`timeline-bg ${isTransitioning ? 'transitioning' : ''}`}
             style={{
-              background: `linear-gradient(to bottom right, ${timelineData[activeIndex].color}33, ${timelineData[activeIndex].color}11)`
+              background: `linear-gradient(to bottom right, ${currentData.color}33, ${currentData.color}11)`
             }}
-          ></div>
+          />
           
           <div className="timeline-card-content">
             {/* Main Content */}
             <div className="timeline-grid">
               {/* Left Side - Info */}
-              <div className={`timeline-info ${isLoaded ? 'loaded' : ''}`}>
+              <div className={`timeline-info ${isLoaded ? 'loaded' : ''} ${isTransitioning ? 'transitioning' : ''}`}>
                 {/* Period Badge */}
                 <div 
                   className="timeline-period-badge"
                   style={{ 
-                    backgroundColor: `${timelineData[activeIndex].color}20`,
-                    color: timelineData[activeIndex].color,
-                    border: `1px solid ${timelineData[activeIndex].color}40`
+                    backgroundColor: `${currentData.color}20`,
+                    color: currentData.color,
+                    border: `1px solid ${currentData.color}40`
                   }}
                 >
                   <div 
                     className="timeline-period-dot"
-                    style={{ backgroundColor: timelineData[activeIndex].color }}
-                  ></div>
-                  {timelineData[activeIndex].period}
+                    style={{ backgroundColor: currentData.color }}
+                  />
+                  <span className="timeline-period-text">{currentData.period}</span>
                 </div>
 
                 {/* Title */}
                 <h2 className="timeline-job-title">
-                  {timelineData[activeIndex].title}
+                  {currentData.title}
                 </h2>
 
                 {/* Company */}
                 <div className="timeline-company">
                   <div 
                     className="timeline-company-bar"
-                    style={{ backgroundColor: timelineData[activeIndex].color }}
-                  ></div>
-                  {timelineData[activeIndex].company}
+                    style={{ backgroundColor: currentData.color }}
+                  />
+                  <span className="timeline-company-text">{currentData.company}</span>
                 </div>
 
                 {/* Description */}
                 <p className="timeline-description">
-                  {timelineData[activeIndex].description}
+                  {currentData.description}
                 </p>
 
                 {/* Progress Bar */}
@@ -165,20 +210,20 @@ const Timeline = () => {
                   <div 
                     className="timeline-progress-bar"
                     style={{ 
-                      backgroundColor: timelineData[activeIndex].color,
+                      backgroundColor: currentData.color,
                       width: `${((activeIndex + 1) / timelineData.length) * 100}%`
                     }}
-                  ></div>
+                  />
                 </div>
               </div>
 
               {/* Right Side - Skills */}
-              <div className={`timeline-skills ${isLoaded ? 'loaded' : ''}`}>
+              <div className={`timeline-skills ${isLoaded ? 'loaded' : ''} ${isTransitioning ? 'transitioning' : ''}`}>
                 <h3 className="timeline-skills-title">
                   Principais atividades
                 </h3>
                 <div className="timeline-skills-list">
-                  {timelineData[activeIndex].skills.map((skill, index) => (
+                  {currentData.skills.map((skill, index) => (
                     <div 
                       key={index}
                       className="timeline-skill-item"
@@ -187,8 +232,8 @@ const Timeline = () => {
                       <div className="timeline-skill-dot-container">
                         <div 
                           className="timeline-skill-dot"
-                          style={{ backgroundColor: timelineData[activeIndex].color }}
-                        ></div>
+                          style={{ backgroundColor: currentData.color }}
+                        />
                       </div>
                       <div className="timeline-skill-text">
                         <p>{skill}</p>
@@ -202,35 +247,36 @@ const Timeline = () => {
             {/* Bottom Navigation */}
             <div className="timeline-bottom-nav">
               <button
-                onClick={() => setActiveIndex(Math.max(0, activeIndex - 1))}
-                disabled={activeIndex === 0}
-                className={`timeline-nav-arrow ${activeIndex === 0 ? 'disabled' : ''}`}
+                onClick={() => changeSlide(-1)}
+                disabled={activeIndex === 0 || isTransitioning}
+                className={`timeline-nav-arrow ${activeIndex === 0 || isTransitioning ? 'disabled' : ''}`}
               >
                 <svg className="timeline-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                Anterior
+                <span>Anterior</span>
               </button>
 
               <div className="timeline-dots">
                 {timelineData.map((_, index) => (
                   <button
                     key={index}
-                    onClick={() => setActiveIndex(index)}
-                    className={`timeline-dot ${index === activeIndex ? 'active' : ''}`}
+                    onClick={() => handleTabChange(index)}
+                    className={`timeline-dot ${index === activeIndex ? 'active' : ''} ${isTransitioning ? 'transitioning' : ''}`}
                     style={{
-                      backgroundColor: index === activeIndex ? timelineData[activeIndex].color : '#374151'
+                      backgroundColor: index === activeIndex ? currentData.color : '#374151'
                     }}
-                  ></button>
+                    disabled={isTransitioning}
+                  />
                 ))}
               </div>
 
               <button
-                onClick={() => setActiveIndex(Math.min(timelineData.length - 1, activeIndex + 1))}
-                disabled={activeIndex === timelineData.length - 1}
-                className={`timeline-nav-arrow ${activeIndex === timelineData.length - 1 ? 'disabled' : ''}`}
+                onClick={() => changeSlide(1)}
+                disabled={activeIndex === timelineData.length - 1 || isTransitioning}
+                className={`timeline-nav-arrow ${activeIndex === timelineData.length - 1 || isTransitioning ? 'disabled' : ''}`}
               >
-                Próximo
+                <span>Próximo</span>
                 <svg className="timeline-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
