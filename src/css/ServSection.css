@@ -91,7 +91,7 @@
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 30px;
   width:80vw;
-  margin-top: 60px;
+  margin: 60px auto;
 }
 
 /* Service Card Styles */
@@ -300,8 +300,9 @@
   display: flex;
   justify-content: center;
   gap: 50px;
-  margin-top: 80px;
+  margin:80px auto;
   padding: 30px;
+  width:80vw;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 15px;
   backdrop-filter: blur(10px);
