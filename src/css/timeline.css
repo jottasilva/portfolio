@@ -652,7 +652,7 @@
   .timeline-title-accent {
     font-size: 2rem;
   }
-
+}
 /* Tablet Responsive Design */
 @media (min-width: 768px) {
   .timeline-header {
