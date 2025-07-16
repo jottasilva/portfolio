@@ -87,9 +87,6 @@ export default function App() {
               <Portfolio />
             </div>
           </div>
-          <div id="stats">
-              <Statistics />
-            </div>
           <div id="jobs">
             {/* Jobs Component */}
             <Jobs />
