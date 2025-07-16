@@ -19,7 +19,7 @@ interface StatData {
   label: string;
 }
 
-const ServicesSection: React.FC = () => {
+const Jobs = () => {
   const services: ServiceData[] = [
     {
       id: 'design',
