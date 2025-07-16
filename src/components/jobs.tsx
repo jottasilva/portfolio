@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/jobs.css';
+import './ServicesSection.css';
 
 interface ServiceFeature {
   text: string;
@@ -19,7 +19,7 @@ interface StatData {
   label: string;
 }
 
-const Jobs = () => {
+const ServicesSection: React.FC = () => {
   const services: ServiceData[] = [
     {
       id: 'design',
@@ -160,4 +160,4 @@ const Jobs = () => {
   );
 };
 
-export default Jobs;
+export default ServicesSection;
