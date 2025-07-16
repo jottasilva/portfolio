@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Timeline from "./components/timeline";
 import Skills from "./components/skills";
 import Portfolio from "./components/portfolio.tsx";
-import Jobs from "./components/jobs.tsx";
+import ServicesSection from "./components/jobs.tsx";
 import PortfolioCategories from "./components/clients.tsx";
 import Statistics from "./components/stats.tsx";
 import Footer from "./components/footer.tsx";
@@ -89,7 +89,7 @@ export default function App() {
           </div>
           <div id="jobs">
             {/* Jobs Component */}
-            <Jobs />
+            <ServicesSection />
           </div>
           <div /* Alguns dos Meus Clientes */ className="clientes">
             <h3>Alguns Sonhos realizados.</h3>
