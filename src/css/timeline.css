@@ -95,7 +95,7 @@
   background-color: rgba(17, 24, 39, 0.5);
   backdrop-filter: blur(40px);
   border-radius: 9999px;
-  padding: 0.25rem;
+  padding: .5rem;
   border: 1px solid #1f2937;
   flex-wrap: wrap;
   max-width: 95vw;
@@ -171,7 +171,8 @@
 .timeline-nav-btn-text {
   position: relative;
   z-index: 2;
-      font-size: medium;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 /* Content Area */
