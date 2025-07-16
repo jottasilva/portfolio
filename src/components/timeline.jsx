@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../css/timeline.css';
 
-interface TimelineItem {
-  period: string;
-  title: string;
-  company: string;
-  description: string;
-  skills: string[];
-  color: string;
-  bgColor: string;
-}
-
 const Timeline = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,7 +13,7 @@ const Timeline = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const timelineData: TimelineItem[] = [
+  const timelineData = [
     {
       period: "01/2012 - Atual",
       title: "Desenvolvedor FullStack",
@@ -92,7 +82,7 @@ const Timeline = () => {
     }
   ];
 
-  const handleTabChange = (index: number) => {
+  const handleTabChange = (index) => {
     if (index === activeIndex || isTransitioning) return;
     
     setIsTransitioning(true);
@@ -104,13 +94,15 @@ const Timeline = () => {
     }, 200);
   };
 
-  const changeSlide = (direction: number) => {
+  const changeSlide = (direction) => {
     const newIndex = activeIndex + direction;
     if (newIndex >= 0 && newIndex < timelineData.length) {
       handleTabChange(newIndex);
     }
   };
+  
   const currentData = timelineData[activeIndex];
+  
   return (
     <div className="timeline-container">
       {/* Header */}
