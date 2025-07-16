@@ -109,12 +109,8 @@ const Timeline = () => {
       <div className="timeline-header">
         <div className="timeline-header-content">
           <div className="timeline-badge">
-            <span className="timeline-badge-text">Jornada Profissional</span>
+            <span className="timeline-badge-text">MINHA TRAJETÓRIA</span>
           </div>
-          <h1 className="timeline-title">
-            <span className="timeline-title-main">Minha</span>
-            <span className="timeline-title-accent">Trajetória</span>
-          </h1>
           <p className="timeline-subtitle">
             Explorando os marcos da minha carreira e evolução profissional
           </p>
