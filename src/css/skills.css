@@ -74,6 +74,7 @@ body {
 /* Layout principal melhorado */
 .skills-content {
     display: grid;
+    width: 80vw;
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     margin-bottom: 100px;
