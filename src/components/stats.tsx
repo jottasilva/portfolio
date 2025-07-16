@@ -1,73 +1,133 @@
-import React from 'react';
-import { FaDesktop, FaStar, FaChartLine, FaUsers } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { Monitor, Star, TrendingUp, Users, Target, Rocket } from 'lucide-react';
 import '../css/statistics.css';
-
-interface StatItem {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}
-
 const Statistics = () => {
-  const stats: StatItem[] = [
+  const [isVisible, setIsVisible] = useState(false);
+  const [counters, setCounters] = useState({ projects: 0, satisfaction: 0, experience: 0, clients: 0 });
+  const sectionRef = useRef(null);
+
+  const stats = [
     {
-      icon: <FaDesktop className="stat-icon-svg" />,
-      value: '30+',
-      label: 'Projetos Realizados nos últimos 2 anos'
+      icon: <Monitor className="w-6 h-6" />,
+      value: 30,
+      suffix: '+',
+      label: 'Projetos Realizados',
+      key: 'projects'
     },
     {
-      icon: <FaStar className="stat-icon-svg" />,
-      value: '100%',
-      label: 'Satisfação dos Clientes'
+      icon: <Star className="w-6 h-6" />,
+      value: 100,
+      suffix: '%',
+      label: 'Satisfação dos Clientes',
+      key: 'satisfaction'
     },
     {
-      icon: <FaChartLine className="stat-icon-svg" />,
-      value: '4+',
-      label: 'Anos de Experiência'
+      icon: <TrendingUp className="w-6 h-6" />,
+      value: 4,
+      suffix: '+',
+      label: 'Anos de Experiência',
+      key: 'experience'
     },
     {
-      icon: <FaUsers className="stat-icon-svg" />,
-      value: '25+',
-      label: 'Clientes Satisfeitos'
+      icon: <Users className="w-6 h-6" />,
+      value: 25,
+      suffix: '+',
+      label: 'Clientes Satisfeitos',
+      key: 'clients'
     }
   ];
 
-  return (
-    <section className="statistics-section">
-      <div className="floating-elements">
-        {[...Array(9)].map((_, index) => (
-          <div 
-            key={index} 
-            className="floating-element"
-            style={{ animationDelay: `${index * 0.5}s` }}
-          />
-        ))}
-      </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      const animateCounters = () => {
+        stats.forEach((stat, index) => {
+          setTimeout(() => {
+            let current = 0;
+            const target = stat.value;
+            const increment = target / 50;
+            
+            const counter = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                current = target;
+                clearInterval(counter);
+              }
+              
+              setCounters(prev => ({
+                ...prev,
+                [stat.key]: Math.floor(current)
+              }));
+            }, 30);
+          }, index * 100);
+        });
+      };
       
+      animateCounters();
+    }
+  }, [isVisible]);
+
+  return (
+    <section 
+      ref={sectionRef}
+      className="statistics-section"
+    >
       <div className="statistics-container">
-        <div className="statistics-title">
-          <h2>Projetos e <span className="highlight">Conquistas</span></h2>
-          <p className="subtitle">
+        {/* Header */}
+        <div className={`statistics-header ${isVisible ? 'visible' : ''}`}>
+          <h2 className="statistics-title">
+            Projetos e <span className="highlight">Conquistas</span>
+          </h2>
+          
+          <p className="statistics-subtitle">
             Cada número representa uma conquista, cada projeto uma história de sucesso construída com dedicação e expertise.
           </p>
         </div>
-        
+
+        {/* Stats Grid */}
         <div className="statistics-grid">
           {stats.map((stat, index) => (
-            <div 
-              key={index} 
-              className="stat-item"
-              style={{ animationDelay: `${index * 0.1}s` }}
+            <div
+              key={index}
+              className={`stat-item ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="stat-icon">
                 {stat.icon}
               </div>
-              <div className="stat-content">
-                <div className="stat-value">{stat.value}</div>
-                <div className="stat-label">{stat.label}</div>
+              <div className="stat-value">
+                {counters[stat.key]}{stat.suffix}
+              </div>
+              <div className="stat-label">
+                {stat.label}
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CTA Button */}
+        <div className={`statistics-cta ${isVisible ? 'visible' : ''}`}>
+          <button className="cta-button">
+            <Target className="cta-icon-left" />
+            <span>Vamos criar sua próxima conquista?</span>
+            <Rocket className="cta-icon-right" />
+          </button>
         </div>
       </div>
     </section>
