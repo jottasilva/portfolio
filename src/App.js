@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Timeline from "./components/timeline";
 import Skills from "./components/skills";
 import Portfolio from "./components/portfolio.tsx";
-import ServicesSection from "./components/jobs.tsx";
+import ServicesSection from "./components/servicessection.tsx";
 import PortfolioCategories from "./components/clients.tsx";
 import Statistics from "./components/stats.tsx";
 import Footer from "./components/footer.tsx";
