@@ -404,6 +404,7 @@ body {
     
     .skills-content {
         gap: 60px;
+        margin:0 auto;
     }
 }
 
@@ -478,6 +479,9 @@ body {
     
     .skills-header {
         margin-bottom: 50px;
+    }
+    .skills-content {
+        margin:0 auto;
     }
     
     .skills-container {
