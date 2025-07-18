@@ -379,7 +379,7 @@
 }
 
 .stats-container {
-  max-width: 80vw;
+  max-width: 85vw;
   margin: 0 auto;
   padding: 40px 30px;
   position: relative;
@@ -396,9 +396,6 @@
 .stat-card {
   text-align: center;
   padding: 20px;
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -410,8 +407,6 @@
   font-weight: 700;
   color: #00d4ff;
   display: block;
-  margin-bottom: 8px;
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
   transition: all 0.3s ease;
 }
 
