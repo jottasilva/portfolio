@@ -389,3 +389,7 @@
     font-size: 0.85rem;
   }
 }
+.stats-bar {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
