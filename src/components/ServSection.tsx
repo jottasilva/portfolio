@@ -147,14 +147,18 @@ const ServicesSection = () => {
           ))}
         </div>
 
-        <div className="stats-bar">
-          {stats.map((stat, index) => (
-            <div key={index} className="stat-item">
-              <span className="stat-number">{stat.number}</span>
-              <span className="stat-label">{stat.label}</span>
-            </div>
-          ))}
+        <div className="stats-section">
+        <div className="stats-container">
+          <div className="stats-grid">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-card">
+                <div className="stat-number">{stat.number}</div>
+                <div className="stat-label">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
+    </div>
       </div>
     </section>
   );
