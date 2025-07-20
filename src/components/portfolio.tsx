@@ -1,7 +1,7 @@
- import React, { useState, useEffect } from "react";
- import "../css/portfolio.css";
- 
- const Portfolio = () => {
+import React, { useState, useEffect } from "react";
+import "../css/portfolio.css";
+
+const Portfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(0);
   
@@ -10,11 +10,9 @@
     "Criando experiências digitais únicas e memoráveis.",
     "Transformando ideias em soluções inovadoras.",
     "Especialista em UX/UI e desenvolvimento moderno.",
-   "Modelagem 3D."
+    "Modelagem 3D."
   ];
- 
- 
- 
+
   useEffect(() => {
     setIsVisible(true);
     const interval = setInterval(() => {
@@ -22,21 +20,21 @@
     }, 3000);
     return () => clearInterval(interval);
   }, []);
- 
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const floatingElements = document.querySelectorAll('.floating-element');
+      const floatingElements = document.querySelectorAll<HTMLElement>('.floating-element');
       floatingElements.forEach((element, index) => {
         const speed = 0.5 + (index * 0.1);
         element.style.transform = `translateY(${scrollY * speed}px) rotate(${scrollY * 0.1}deg)`;
       });
     };
- 
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
- 
+
   return (
     <div>
       {/* Box Portfolio */}
@@ -60,22 +58,21 @@
               <span className="hobby-emoji">🎮</span> e um ótimo cozinheiro{" "}
               <span className="hobby-emoji">👨‍🍳</span>
             </div>
- 
-            <div className="hero-cta">
-         <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
-          <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 20 20.16"
-  width="20"
-  height="20"
-  fill="#ffffff"
->
-  <path d="M0,20.16l1.72-5.22C-1.54,9.43,1.2,2.23,7.35.41c6.95-2.05,13.62,3.78,12.54,10.93-1.02,6.73-8.52,10.39-14.48,7.11l-5.4,1.7ZM2.54,17.65l3.12-.97c4.34,2.86,10.23.97,12.13-3.84s-1.03-10.03-5.97-11.02C5.5.55.24,6.68,2.5,12.74c.26.69.62,1.29,1.01,1.91l-.97,3.01Z"/>
-  <path d="M6.8,5.02c.12-.01.57.02.69.04.27.04.33.21.43.43.28.62.44,1.34.73,1.96.1.29-.11.58-.27.8-.14.18-.6.54-.6.75,0,.13.21.45.29.58.57.95,1.42,1.81,2.38,2.37.16.09.74.4.87.43.17.03.27-.01.39-.12.31-.29.61-.72.89-1.05.19-.16.38-.05.58.03.48.2,1.48.72,1.91,1.01.28.19.19.57.13.86-.21,1.07-1.45,1.72-2.48,1.68-.78-.03-2.62-.86-3.3-1.29-1.73-1.1-4.45-4.26-4.15-6.42.1-.7.74-1.96,1.52-2.03Z"/>
-</svg>
 
-           Mande uma Mensagem
-         </a>
+            <div className="hero-cta">
+              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20.16"
+                  width="20"
+                  height="20"
+                  fill="#ffffff"
+                >
+                  <path d="M0,20.16l1.72-5.22C-1.54,9.43,1.2,2.23,7.35.41c6.95-2.05,13.62,3.78,12.54,10.93-1.02,6.73-8.52,10.39-14.48,7.11l-5.4,1.7ZM2.54,17.65l3.12-.97c4.34,2.86,10.23.97,12.13-3.84s-1.03-10.03-5.97-11.02C5.5.55.24,6.68,2.5,12.74c.26.69.62,1.29,1.01,1.91l-.97,3.01Z"/>
+                  <path d="M6.8,5.02c.12-.01.57.02.69.04.27.04.33.21.43.43.28.62.44,1.34.73,1.96.1.29-.11.58-.27.8-.14.18-.6.54-.6.75,0,.13.21.45.29.58.57.95,1.42,1.81,2.38,2.37.16.09.74.4.87.43.17.03.27-.01.39-.12.31-.29.61-.72.89-1.05.19-.16.38-.05.58.03.48.2,1.48.72,1.91,1.01.28.19.19.57.13.86-.21,1.07-1.45,1.72-2.48,1.68-.78-.03-2.62-.86-3.3-1.29-1.73-1.1-4.45-4.26-4.15-6.42.1-.7.74-1.96,1.52-2.03Z"/>
+                </svg>
+                Mande uma Mensagem
+              </a>
               <a href="https://api.whatsapp.com/send?phone=5543991359790" className="btn-secondary">
                 <svg
                   width="20"
@@ -104,14 +101,9 @@
             <div className="profile-avatar"></div>
           </div>
         </div>
-        <div className="scroll-indicator" onClick={() => document.getElementById('jobs')?.scrollIntoView({ behavior: 'smooth' })}>
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M7.41 8.84L12 13.42l4.59-4.58L18 10.25l-6 6-6-6z" />
-          </svg>
-        </div>
       </section>
     </div>
   );
- };
- 
- export default Portfolio;
+};
+
+export default Portfolio;

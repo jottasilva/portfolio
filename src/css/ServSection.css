@@ -1,7 +1,7 @@
 /* Services Section Styles */
 .services-section {
   min-height: 100vh;
-  padding: 80px 0;
+  padding: 80px 20px;
   position: relative;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: white;
@@ -20,20 +20,12 @@
   animation: float 20s ease-in-out infinite;
 }
 
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-20px) rotate(180deg); 
-  }
-}
-
 .container {
-  max-width: 100vw;
+  max-width: 1200px; /* Mudança: era 100vw */
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 2; /* Mudança: aumentei o z-index */
+  padding: 0 20px;
 }
 
 /* Header Styles */
@@ -55,7 +47,7 @@
 }
 
 .section-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
   background: linear-gradient(135deg, #00d4ff, #00ff88);
   -webkit-background-clip: text;
@@ -72,7 +64,7 @@
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
-  height: 4px;
+  height: 2px;
   background: linear-gradient(90deg, #00d4ff, #00ff88);
   border-radius: 2px;
 }
@@ -88,9 +80,10 @@
 /* Services Grid */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Mudança: minmax menor */
   gap: 30px;
-  width:80vw;
+  width: 100%; /* Mudança: era 80vw */
+  max-width: 1200px;
   margin: 60px auto;
 }
 
@@ -118,6 +111,7 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .service-card:hover::before {
   opacity: 1;
 }
@@ -213,6 +207,7 @@
   overflow: hidden;
   cursor: pointer;
   font-size: 0.9rem;
+  text-decoration: none;
 }
 
 .service-button::before {
@@ -244,6 +239,7 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 1; /* Mudança: z-index menor que o container */
 }
 
 .floating-element {
@@ -287,8 +283,6 @@
   }
 }
 
-
-
 .stat-item {
   text-align: center;
   min-width: 120px;
@@ -308,70 +302,16 @@
   line-height: 1.2;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .services-section {
-    padding: 60px 15px;
-  }
-  
-  .section-header {
-    margin-bottom: 60px;
-  }
-  
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 40px;
-  }
-  
-  .service-card {
-    padding: 30px 20px;
-  }
-  
-
-  
-  .stat-item {
-    min-width: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .service-card {
-    padding: 25px 15px;
-  }
-  
-  .service-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
-  }
-  
-  .service-icon svg {
-    width: 30px;
-    height: 30px;
-  }
-  
-  .service-title {
-    font-size: 1.3rem;
-  }
-  
-  .service-description {
-    font-size: 0.9rem;
-  }
-  
-  .service-features li {
-    font-size: 0.85rem;
-  }
-}
+/* Stats Section */
 .stats-section {
   margin: 80px 0;
   padding: 0 20px;
   position: relative;
-  z-index: 10;
+  z-index: 2;
 }
 
 .stats-container {
-  max-width: 85vw;
+  max-width: 1200px; /* Mudança: era 85vw */
   margin: 0 auto;
   padding: 40px 30px;
   position: relative;
@@ -392,7 +332,6 @@
   position: relative;
   overflow: hidden;
 }
-
 
 .stat-number {
   font-size: 3rem;
@@ -419,8 +358,35 @@
   color: #ffffff;
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
+  .services-section {
+    padding: 60px 15px;
+    margin-top:170px; 
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .section-header {
+    margin-bottom: 60px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 40px;
+  }
+  
+  .service-card {
+    padding: 30px 20px;
+  }
+  
+  .stat-item {
+    min-width: auto;
+  }
+  
   .stats-section {
     margin: 60px 0;
     padding: 0 15px;
@@ -449,6 +415,38 @@
 }
 
 @media (max-width: 480px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .service-card {
+    padding: 25px 15px;
+  }
+  
+  .service-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .service-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .service-title {
+    font-size: 1.3rem;
+  }
+  
+  .service-description {
+    font-size: 0.9rem;
+  }
+  
+  .service-features li {
+    font-size: 0.85rem;
+  }
+  
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 15px;
@@ -458,4 +456,3 @@
     font-size: 2rem;
   }
 }
-
