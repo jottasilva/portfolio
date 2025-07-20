@@ -86,7 +86,6 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
-  padding: 0 1rem;
 }
 
 .timeline-nav {
@@ -124,7 +123,7 @@
   position: relative;
   padding: 0.5rem 0.75rem;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: 0.5rem;
   font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
@@ -171,7 +170,7 @@
 .timeline-nav-btn-text {
   position: relative;
   z-index: 2;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
@@ -658,7 +657,7 @@
   
   .timeline-nav-container {
     margin-bottom: 3rem;
-    padding:2px 0.5rem;
+    padding:1px 0.5rem;
   }
   
   .timeline-nav {

@@ -88,10 +88,9 @@ const ServicesSection = () => {
   ];
 
   const stats: StatData[] = [
-    { number: '13+', label: 'Anos de Experiência' },
-    { number: '200+', label: 'Projetos Concluídos' },
-    { number: '50+', label: 'Clientes Satisfeitos' },
-    { number: '24/7', label: 'Suporte Disponível' }
+    { number: '7+', label: 'Anos de Experiência' },
+    { number: '121+', label: 'Projetos Concluídos' },
+    { number: '36+', label: 'Clientes Satisfeitos' }
   ];
 
   const handleServiceClick = (serviceId: string): void => {
