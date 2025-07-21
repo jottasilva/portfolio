@@ -96,7 +96,7 @@ export default function App() {
           </div>
           <div id="clientes">
             {/* Portfolio Categories Component */}
-            <PortfolioCategories />
+            
           </div>
           <div id="skills">
             {/* Skills */}
