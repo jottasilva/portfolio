@@ -1,166 +1,299 @@
-import React from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import '../css/ServSection.css';
 
-interface ServiceFeature {
-  text: string;
-}
-
-interface ServiceData {
-  id: string;
-  icon: JSX.Element;
+interface PortfolioItem {
+  id: number;
   title: string;
   description: string;
-  features: ServiceFeature[];
-  color: string;
+  image: string;
+  tags: string[];
+  link?: string;
 }
 
-interface StatData {
-  number: string;
-  label: string;
+interface PortfolioCategories {
+  sites: PortfolioItem[];
+  aplicativos: PortfolioItem[];
+  identidade: PortfolioItem[];
+  testes: PortfolioItem[];
 }
 
-const ServicesSection = () => {
-  const services: ServiceData[] = [
-    {
-      id: 'design',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-          <line x1="7" y1="2" x2="7" y2="22"></line>
-          <line x1="17" y1="2" x2="17" y2="22"></line>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <line x1="2" y1="7" x2="7" y2="7"></line>
-          <line x1="2" y1="17" x2="7" y2="17"></line>
-          <line x1="17" y1="17" x2="22" y2="17"></line>
-          <line x1="17" y1="7" x2="22" y2="7"></line>
-        </svg>
-      ),
-      title: 'Designer Gráfico',
-      description: 'Criação de identidades visuais marcantes que conectam marcas ao seu público-alvo através de design estratégico e impactante.',
-      features: [
-        { text: 'Identidade visual e branding completo' },
-        { text: 'Material gráfico para redes sociais' },
-        { text: 'Cartões de visita e papelaria' },
-        { text: 'Banners e material promocional' },
-        { text: 'Embalagens e rótulos' }
-      ],
-      color: '#00d4ff'
-    },
-    {
-      id: 'development',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <polyline points="16,18 22,12 16,6"></polyline>
-          <polyline points="8,6 2,12 8,18"></polyline>
-        </svg>
-      ),
-      title: 'Desenvolvimento FullStack',
-      description: 'Desenvolvimento completo de aplicações web e mobile com tecnologias modernas, focando em performance, usabilidade e escalabilidade.',
-      features: [
-        { text: 'Websites e aplicações web responsivas' },
-        { text: 'Aplicativos mobile multiplataforma' },
-        { text: 'APIs e integrações de sistemas' },
-        { text: 'E-commerce e plataformas digitais' },
-        { text: 'Automação de processos' }
-      ],
-      color: '#00ff88'
-    },
-    {
-      id: 'support',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-          <line x1="8" y1="21" x2="16" y2="21"></line>
-          <line x1="12" y1="17" x2="12" y2="21"></line>
-        </svg>
-      ),
-      title: 'Suporte Técnico',
-      description: 'Especialista em manutenção e configuração de sistemas, oferecendo suporte técnico completo para empresas e usuários individuais.',
-      features: [
-        { text: 'Manutenção de computadores e notebooks' },
-        { text: 'Configuração e instalação de softwares' },
-        { text: 'Suporte remoto e presencial' },
-        { text: 'Backup e recuperação de dados' },
-        { text: 'Consultoria em tecnologia' }
-      ],
-      color: '#ff6b6b'
-    }
-  ];
+type CategoryKey = 'todos' | 'sites' | 'aplicativos' | 'identidade' | 'testes';
 
-  const stats: StatData[] = [
-    { number: '7+', label: 'Anos de Experiência' },
-    { number: '121+', label: 'Projetos Concluídos' },
-    { number: '36+', label: 'Clientes Satisfeitos' }
-  ];
+const PortfolioCategories = () => {
+  const [activeCategory, setActiveCategory] = useState<CategoryKey>('todos');
+  const [visibleItems, setVisibleItems] = useState<Record<CategoryKey, number>>({
+    todos: 8,
+    sites: 4,
+    aplicativos: 4,
+    identidade: 4,
+    testes: 4
+  });
 
-  const handleServiceClick = (serviceId: string): void => {
-    console.log(`Navegando para serviço: ${serviceId}`);
-    // Implementar navegação ou modal aqui
+  const portfolioItems: PortfolioCategories = {
+    sites: [
+      {
+        id: 1,
+        title: 'WEBSITE CORPORATIVO',
+        description: 'Site responsivo moderno com painel admin, SEO otimizado e performance superior.',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop',
+        tags: ['React', 'TypeScript', 'SEO'],
+        link: '#'
+      },
+      {
+        id: 2,
+        title: 'E-COMMERCE AVANÇADO',
+        description: 'Loja virtual completa com pagamentos integrados, gestão de estoque e analytics.',
+        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
+        tags: ['Next.js', 'Stripe', 'MongoDB'],
+        link: '#'
+      },
+      {
+        id: 3,
+        title: 'LANDING PAGE CONVERSÃO',
+        description: 'Página otimizada para campanhas com A/B testing e métricas de conversão.',
+        image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=250&fit=crop',
+        tags: ['React', 'Analytics', 'A/B Test'],
+        link: '#'
+      },
+      {
+        id: 4,
+        title: 'PORTAL DE NOTÍCIAS',
+        description: 'Blog corporativo com CMS headless, newsletter e sistema de comentários.',
+        image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=250&fit=crop',
+        tags: ['Gatsby', 'CMS', 'GraphQL'],
+        link: '#'
+      },
+    ],
+    aplicativos: [
+      {
+        id: 5,
+        title: 'APP MULTIPLATAFORMA',
+        description: 'Aplicativo nativo para iOS/Android com sincronização em tempo real.',
+        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop',
+        tags: ['React Native', 'Firebase', 'Redux'],
+        link: '#'
+      },
+      {
+        id: 6,
+        title: 'DASHBOARD ANALYTICS',
+        description: 'Painel interativo com visualizações D3.js e dados em tempo real.',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
+        tags: ['D3.js', 'WebSocket', 'Charts'],
+        link: '#'
+      },
+      {
+        id: 7,
+        title: 'SISTEMA DELIVERY',
+        description: 'Plataforma completa para entregas com rastreamento GPS e notificações.',
+        image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=250&fit=crop',
+        tags: ['Node.js', 'Socket.io', 'Maps API'],
+        link: '#'
+      },
+      {
+        id: 8,
+        title: 'CRM INTELIGENTE',
+        description: 'Sistema de gestão com IA para automação e análise preditiva.',
+        image: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&h=250&fit=crop',
+        tags: ['AI/ML', 'Python', 'API Rest'],
+        link: '#'
+      },
+    ],
+    identidade: [
+      {
+        id: 9,
+        title: 'BRANDING COMPLETO',
+        description: 'Identidade visual moderna com logomark, guidelines e assets digitais.',
+        image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop',
+        tags: ['Illustrator', 'Branding', 'Guidelines'],
+        link: '#'
+      },
+      {
+        id: 10,
+        title: 'DESIGN SYSTEM',
+        description: 'Sistema de design escalável com componentes reutilizáveis e tokens.',
+        image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop',
+        tags: ['Figma', 'Tokens', 'Components'],
+        link: '#'
+      },
+      {
+        id: 11,
+        title: 'MATERIAL DIGITAL',
+        description: 'Templates para redes sociais, apresentações e campanhas digitais.',
+        image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=250&fit=crop',
+        tags: ['After Effects', 'Social Media', 'Templates'],
+        link: '#'
+      },
+      {
+        id: 12,
+        title: 'MASCOTE 3D',
+        description: 'Personagem corporativo em 3D com animações para marketing digital.',
+        image: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=250&fit=crop',
+        tags: ['Blender', '3D', 'Animation'],
+        link: '#'
+      },
+    ],
+    testes: [
+      {
+        id: 13,
+        title: 'UX/UI RESEARCH',
+        description: 'Análise completa de experiência com heatmaps, testes de usuário e métricas.',
+        image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=250&fit=crop',
+        tags: ['UX Research', 'Heatmaps', 'User Testing'],
+        link: '#'
+      },
+      {
+        id: 14,
+        title: 'PERFORMANCE AUDIT',
+        description: 'Otimização completa com Lighthouse, Core Web Vitals e monitoramento.',
+        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop',
+        tags: ['Lighthouse', 'Core Web Vitals', 'Performance'],
+        link: '#'
+      },
+      {
+        id: 15,
+        title: 'SECURITY TESTING',
+        description: 'Auditoria de segurança com penetration testing e implementação de proteções.',
+        image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop',
+        tags: ['Security', 'Penetration Test', 'OWASP'],
+        link: '#'
+      },
+      {
+        id: 16,
+        title: 'A/B OPTIMIZATION',
+        description: 'Testes comparativos avançados com statistical significance e ROI tracking.',
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
+        tags: ['A/B Testing', 'Statistics', 'Conversion'],
+        link: '#'
+      },
+    ],
+  };
+
+  const getAllItems = useCallback((): PortfolioItem[] => {
+    return Object.values(portfolioItems).flat();
+  }, []);
+
+  const itemsToDisplay = useMemo(() => {
+    const items = activeCategory === 'todos' 
+      ? getAllItems()
+      : portfolioItems[activeCategory] || [];
+    return items.slice(0, visibleItems[activeCategory]);
+  }, [activeCategory, visibleItems, getAllItems]);
+
+  const hasMoreItems = useMemo(() => {
+    const totalItems = activeCategory === 'todos' 
+      ? getAllItems().length
+      : portfolioItems[activeCategory]?.length || 0;
+    return visibleItems[activeCategory] < totalItems;
+  }, [activeCategory, visibleItems, getAllItems]);
+
+  const loadMore = useCallback(() => {
+    setVisibleItems(prev => ({
+      ...prev,
+      [activeCategory]: prev[activeCategory] + 4
+    }));
+  }, [activeCategory]);
+
+  const handleCategoryChange = useCallback((category: CategoryKey) => {
+    setActiveCategory(category);
+  }, []);
+
+  const categoryLabels: Record<CategoryKey, string> = {
+    todos: 'TODOS',
+    sites: 'SITES',
+    aplicativos: 'APLICATIVOS',
+    identidade: 'IDENTIDADE VISUAL',
+    testes: 'TESTES'
   };
 
   return (
-    <section className="services-section">
-      <div className="background-pattern"></div>
-      
-      <div className="floating-elements">
-        <div className="floating-element"></div>
-        <div className="floating-element"></div>
-        <div className="floating-element"></div>
-      </div>
-
-      <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">O que eu faço?</h2>
-          <p className="section-subtitle">
-            Transformo ideias em soluções digitais completas, combinando design, tecnologia e estratégia para criar experiências únicas e impactantes.
-          </p>
+    <div className="portfolio-container">
+      <div className="portfolio-wrapper">
+        {/* Header */}
+        <div className="portfolio-header">
+          <h1 className="portfolio-title">
+            Portfolio Digital
+          </h1>
+          <p className="portfolio-subtitle">Soluções inovadoras para o mundo digital</p>
         </div>
 
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <div 
-              key={service.id}
-              className="service-card"
-              style={{ '--card-color': service.color } as React.CSSProperties}
+        {/* Category Tabs */}
+        <div className="category-tabs">
+          {(Object.keys(categoryLabels) as CategoryKey[]).map((category) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryChange(category)}
+              className={`category-tab ${activeCategory === category ? 'active' : ''}`}
             >
-              <div className="service-icon">
-                {service.icon}
+              {categoryLabels[category]}
+            </button>
+          ))}
+        </div>
+
+        {/* Portfolio Grid */}
+        <div className="portfolio-grid">
+          {itemsToDisplay.map((item, index) => (
+            <div
+              key={item.id}
+              className="portfolio-card"
+              style={{
+                animationDelay: `${index * 100}ms`
+              }}
+            >
+              {/* Image */}
+              <div className="card-image">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="image"
+                />
+                <div className="image-overlay" />
+                
+                {/* Overlay Button */}
+                <div className="overlay-button-container">
+                  <button className="overlay-button">
+                    Ver Projeto
+                  </button>
+                </div>
               </div>
-              <h3 className="service-title">{service.title}</h3>
-              <p className="service-description">{service.description}</p>
-              <ul className="service-features">
-                {service.features.map((feature, featureIndex) => (
-                  <li key={featureIndex}>{feature.text}</li>
-                ))}
-              </ul>
-              <button 
-                className="service-button"
-                onClick={() => handleServiceClick(service.id)}
-              >
-                Saiba mais
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14m-7-7l7 7-7 7"/>
-                </svg>
-              </button>
+
+              {/* Content */}
+              <div className="card-content">
+                <h3 className="card-title">
+                  {item.title}
+                </h3>
+                <p className="card-description">
+                  {item.description}
+                </p>
+                
+                {/* Tags */}
+                <div className="tags-container">
+                  {item.tags.map((tag, tagIndex) => (
+                    <span key={tagIndex} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Button */}
+                <button className="action-button">
+                  Conhecer Projeto
+                </button>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="stats-section">
-        <div className="stats-container">
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="stat-number">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
-              </div>
-            ))}
+        {/* Load More Button */}
+        {hasMoreItems && (
+          <div className="load-more-container">
+            <button onClick={loadMore} className="load-more-button">
+              CARREGAR MAIS PROJETOS
+            </button>
           </div>
-        </div>
-    </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default ServicesSection;
+export default PortfolioCategories;
