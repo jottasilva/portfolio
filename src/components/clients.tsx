@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import '../css/ServSection.css';
+import '../css/clients.css';
 
 interface PortfolioItem {
   id: number;
