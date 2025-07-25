@@ -60,7 +60,7 @@ const Portfolio = () => {
             </div>
 
             <div className="hero-cta">
-              <a href="https://www.linkedin.com/in/jrsndev" className="btn-primary">
+              <a href="https://api.whatsapp.com/send?phone=5543991359790" className="btn-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20.16"
@@ -73,7 +73,7 @@ const Portfolio = () => {
                 </svg>
                 Mande uma Mensagem
               </a>
-              <a href="https://api.whatsapp.com/send?phone=5543991359790" className="btn-secondary">
+              <a href="https://www.linkedin.com/in/jrsndev" className="btn-secondary">
                 <svg
                   width="20"
                   height="20"
