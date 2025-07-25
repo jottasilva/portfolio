@@ -6,7 +6,8 @@
 }
 
 .portfolio-wrapper {
-  max-width: 80rem;
+  width: 85vw;
+  max-width: 85vw;
   margin: 0 auto;
   padding: 3rem 1rem;
 }
@@ -72,8 +73,8 @@
 /* Portfolio Grid */
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
   margin-bottom: 3rem;
 }
 
@@ -258,13 +259,20 @@
 }
 
 /* Responsive Design */
+/* Mobile - 1 coluna */
 @media (max-width: 640px) {
+  .portfolio-wrapper {
+    width: 85vw;
+    padding: 2rem 0.5rem;
+  }
+  
   .portfolio-title {
     font-size: 2.5rem;
   }
   
   .category-tabs {
     gap: 0.25rem;
+    padding: 0 0.5rem;
   }
   
   .category-tab {
@@ -305,19 +313,36 @@
   }
 }
 
-@media (min-width: 641px) and (max-width: 1024px) {
+/* Tablet pequeno - 1 coluna */
+@media (min-width: 641px) and (max-width: 880px) {
+  .portfolio-wrapper {
+    width: 85vw;
+    padding: 2.5rem 1rem;
+  }
+  
   .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .card-image {
     height: 11rem;
   }
+  
+  .portfolio-title {
+    font-size: 2.75rem;
+  }
 }
 
-@media (min-width: 1025px) {
+/* Tablet grande e desktop pequeno - 2 colunas */
+@media (min-width: 881px) {
+  .portfolio-wrapper {
+    width: 85vw;
+    padding: 3rem 1rem;
+  }
+  
   .portfolio-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
   }
   
