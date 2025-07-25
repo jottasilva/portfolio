@@ -1,4 +1,3 @@
-
 /* Timeline Container */
 .timeline-container {
   min-height: 100vh;
@@ -13,6 +12,7 @@
   padding: 2rem 1rem;
   position: relative;
 }
+
 .timeline-header-content {
   max-width: 800px;
   margin: 0 auto;
@@ -86,6 +86,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  padding: 0 1rem;
 }
 
 .timeline-nav {
@@ -94,12 +95,18 @@
   background-color: rgba(17, 24, 39, 0.5);
   backdrop-filter: blur(40px);
   border-radius: 9999px;
-  padding: .5rem;
+  padding: 0.5rem;
   border: 1px solid #1f2937;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   max-width: 95vw;
   overflow-x: auto;
   position: relative;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.timeline-nav::-webkit-scrollbar {
+  display: none;
 }
 
 .timeline-nav::before {
@@ -134,6 +141,7 @@
   min-width: fit-content;
   overflow: hidden;
   z-index: 1;
+  flex-shrink: 0;
 }
 
 .timeline-nav-btn::before {
@@ -623,14 +631,26 @@
   opacity: 0.7;
 }
 
-/* Mobile Responsive Design */
+/* RESPONSIVE DESIGN */
+
+/* Mobile pequeno (até 480px) */
 @media (max-width: 480px) {
   .timeline-header {
-    padding: 1.5rem 0.5rem;
+    padding: 1rem 0.5rem;
+  }
+  
+  .timeline-badge {
+    padding: 0.375rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .timeline-badge-text {
+    font-size: 0.75rem;
   }
   
   .timeline-title {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
   }
   
   .timeline-title-main {
@@ -638,17 +658,216 @@
   }
   
   .timeline-title-accent {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+  
+  .timeline-subtitle {
+    font-size: 0.875rem;
+    padding: 0 1rem;
+  }
+  
+  .timeline-nav-container {
+    padding: 0 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .timeline-nav {
+    gap: 0.125rem;
+    padding: 0.375rem;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .timeline-nav-btn {
+    padding: 0.375rem 0.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+  }
+  
+  .timeline-nav-btn-text {
+    font-size: 0.7rem;
+  }
+  
+  .timeline-nav-btn:hover:not(.active) {
+    transform: none;
+  }
+  
+  .timeline-nav-btn.active {
+    transform: scale(1.02);
+  }
+  
+  .timeline-content-area {
+    width: 95%;
+    padding: 0 0.5rem 1.5rem 0.5rem;
+  }
+  
+  .timeline-card {
+    border-radius: 0.75rem;
+  }
+  
+  .timeline-card-content {
+    padding: 1rem;
+  }
+  
+  .timeline-grid {
+    gap: 1.5rem;
+  }
+  
+  .timeline-job-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .timeline-company {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .timeline-description {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-skills-title {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .timeline-skill-text p {
+    font-size: 0.8rem;
+  }
+  
+  .timeline-bottom-nav {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  
+  .timeline-nav-arrow {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .timeline-nav-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+  
+  .timeline-dots {
+    order: 0;
+    width: 100%;
+    justify-content: center;
   }
 }
-/* Tablet Responsive Design */
-@media (min-width: 768px) {
+
+/* Mobile médio (481px - 640px) */
+@media (min-width: 481px) and (max-width: 640px) {
   .timeline-header {
-    padding:2rem 1rem;
+    padding: 1.5rem 0.75rem;
   }
   
   .timeline-title {
-    font-size: 3rem;
+    font-size: 2.25rem;
+  }
+  
+  .timeline-nav-container {
+    padding: 0 0.75rem;
+  }
+  
+  .timeline-nav {
+    gap: 0.1875rem;
+    padding: 0.4375rem;
+  }
+  
+  .timeline-nav-btn {
+    padding: 0.4375rem 0.625rem;
+  }
+  
+  .timeline-nav-btn-text {
+    font-size: 0.75rem;
+  }
+  
+  .timeline-content-area {
+    padding: 0 0.75rem 2rem 0.75rem;
+  }
+  
+  .timeline-card-content {
+    padding: 1.25rem;
+  }
+  
+  .timeline-job-title {
+    font-size: 1.5rem;
+  }
+  
+  .timeline-company {
+    font-size: 0.9375rem;
+  }
+  
+  .timeline-skill-text p {
+    font-size: 0.875rem;
+  }
+}
+
+/* Tablet pequeno (641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+  .timeline-header {
+    padding: 2rem 1rem;
+  }
+  
+  .timeline-title {
+    font-size: 2.75rem;
+  }
+  
+  .timeline-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90vw;
+  }
+  
+  .timeline-content-area {
+    max-width: 90vw;
+    padding: 0 1rem 2.5rem 1rem;
+  }
+  
+  .timeline-card-content {
+    padding: 1.75rem;
+  }
+  
+  .timeline-job-title {
+    font-size: 1.875rem;
+  }
+  
+  .timeline-company {
+    font-size: 1.0625rem;
+  }
+  
+  .timeline-description {
+    font-size: 1rem;
+  }
+  
+  .timeline-skill-text p {
+    font-size: 0.9375rem;
+  }
+  
+  .timeline-bottom-nav {
+    flex-wrap: nowrap;
+  }
+  
+  .timeline-dots {
+    order: 0;
+  }
+}
+
+/* Tablet grande (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .timeline-header {
+    padding: 3rem 1rem;
+  }
+  
+  .timeline-title {
+    font-size: 3.25rem;
   }
   
   .timeline-subtitle {
@@ -657,32 +876,29 @@
   
   .timeline-nav-container {
     margin-bottom: 3rem;
-    padding:1px 0.5rem;
   }
   
   .timeline-nav {
-    gap: 6px;
-    text-align:center;
-    padding: 0.3rem;
-    max-width: 90vw;
+    max-width: 85vw;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .timeline-nav-btn {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.5rem;
+    padding: 0.5rem 0.875rem;
   }
   
   .timeline-content-area {
-    max-width: 90vw;
-    padding: 0 1.5rem 3rem 1.5rem;
+    max-width: 85vw;
+    padding: 0 1.25rem 3rem 1.25rem;
   }
   
   .timeline-card {
-    border-radius: 1.5rem;
+    border-radius: 1.25rem;
   }
   
   .timeline-card-content {
-    padding: 2rem;
+    padding: 2.25rem;
   }
   
   .timeline-grid {
@@ -698,7 +914,7 @@
   }
   
   .timeline-description {
-    font-size: 1rem;
+    font-size: 1.0625rem;
   }
   
   .timeline-skills-title {
@@ -706,38 +922,22 @@
   }
   
   .timeline-skill-text p {
-    font-size: 0.95rem;
-  }
-  
-  .timeline-bottom-nav {
-    margin-top: 2.5rem;
-    flex-wrap: nowrap;
-  }
-  
-  .timeline-nav-arrow {
-    padding: 0.75rem 1.25rem;
     font-size: 1rem;
-  }
-  
-  .timeline-nav-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin: 0 0.5rem;
-  }
-  
-  .timeline-dots {
-    order: 0;
   }
 }
 
-/* Desktop Responsive Design */
-@media (min-width: 1024px) {
+/* Desktop (1025px+) */
+@media (min-width: 1025px) {
   .timeline-header {
-    padding: 5rem 1.5rem;
+    padding: 4rem 1.5rem;
   }
   
   .timeline-title {
     font-size: 4rem;
+  }
+  
+  .timeline-subtitle {
+    font-size: 1.25rem;
   }
   
   .timeline-nav-container {
@@ -746,6 +946,8 @@
   
   .timeline-nav {
     max-width: 80vw;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .timeline-nav-btn {
@@ -753,8 +955,12 @@
   }
   
   .timeline-content-area {
-    max-width: 85vw;
-    padding: 0 1.5rem 5rem 1.5rem;
+    max-width: 80vw;
+    padding: 0 1.5rem 4rem 1.5rem;
+  }
+  
+  .timeline-card {
+    border-radius: 1.5rem;
   }
   
   .timeline-card-content {
@@ -812,11 +1018,32 @@
   }
   
   .timeline-skill-text p {
-    font-size: 1rem;
+    font-size: 1.125rem;
   }
   
   .timeline-bottom-nav {
     margin-top: 3rem;
     padding-top: 2rem;
+  }
+}
+
+/* Scroll indicator para mobile */
+@media (max-width: 640px) {
+  .timeline-nav-container::after {
+    content: '← Deslize →';
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #6b7280;
+    opacity: 0.7;
+    animation: fadeInOut 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
   }
 }
