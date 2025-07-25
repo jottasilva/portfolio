@@ -211,7 +211,7 @@ const PortfolioCategories = () => {
         {/* Header */}
         <div className="portfolio-header">
           <h1 className="portfolio-title">
-            Portfolio Digital
+           Algumas soluções...
           </h1>
           <p className="portfolio-subtitle">Soluções inovadoras para o mundo digital</p>
         </div>
