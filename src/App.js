@@ -91,9 +91,6 @@ export default function App() {
             {/* Jobs Component */}
             <ServicesSection />
           </div>
-          <div /* Alguns dos Meus Clientes */ className="clientes">
-            <h3>Alguns Sonhos realizados.</h3>
-          </div>
           <div id="clientes">
             {/* Portfolio Categories Component */}
             <PortfolioCategories/>
