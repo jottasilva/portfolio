@@ -3,8 +3,6 @@
   min-height: 100vh;
   padding: 80px 20px;
   position: relative;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  color: white;
   overflow: hidden;
 }
 
