@@ -8,20 +8,8 @@
   overflow: hidden;
 }
 
-.background-pattern {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.03;
-  background-image: radial-gradient(circle at 25% 25%, #00d4ff 0%, transparent 50%),
-                    radial-gradient(circle at 75% 75%, #00ff88 0%, transparent 50%);
-  animation: float 20s ease-in-out infinite;
-}
-
 .container {
-  max-width: 1200px; /* Mudança: era 100vw */
+  max-width: 1400px; /* Mudança: era 100vw */
   margin: 0 auto;
   position: relative;
   z-index: 2; /* Mudança: aumentei o z-index */
