@@ -12,7 +12,7 @@ body {
 }
 
 .skills-section {
-    padding: 120px 0;
+    padding-top: 120px;
     position: relative;
     min-height: 100vh;
     display: flex;
