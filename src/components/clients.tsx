@@ -35,7 +35,7 @@ const PortfolioCategories = () => {
         id: 1,
         title: 'WEBSITE E-COMMERCE MAÇONARIA',
         description: 'Site responsivo moderno com painel admin, SEO otimizado e performance superior. sistema de venda de artigos relacionados',
-        image: '../imgs/macon.png',
+        image: 'https://i.imgur.com/PSdflS7.png',
         tags: ['React', 'TypeScript', 'Stripe','Django', 'PrimeVue', 'Vite','UX/IU','Integração Com sistemas de pagamento'],
         link: 'https://ecomerce-rho-lyart.vercel.app/'
       },
@@ -43,7 +43,7 @@ const PortfolioCategories = () => {
         id: 2,
         title: 'MICRO-SAAS',
         description: 'Sitema de informações via Whatsapp Relacionados a Minha cidade, onde usuários se cadastram e obtem informações relevantes como horarios de atendimentos de estabelecimentos, plantões, serviços e muito mais',
-        image: '../imgs/saas.png',
+        image: 'https://i.imgur.com/Nda9Gyk.png',
         tags: ['Vue.js', 'ReactJS', 'Django','PrimeVue'],
         link: 'https://infozap.vercel.app/'
       },
@@ -51,7 +51,7 @@ const PortfolioCategories = () => {
         id: 3,
         title: 'EASY CONTRATO',
         description: 'Sistema de Geração de contratos Prédefinidos, com opção de ediçoes de cláusulas e geração de PDF',
-        image: '../imgs/contract.png',
+        image: 'https://i.imgur.com/i2piaWe.png',
         tags: ['React', 'Supabase', 'ViteJS','LocalStorage'],
         link: 'https://easycontrato.vercel.app/'
       },
@@ -59,7 +59,7 @@ const PortfolioCategories = () => {
         id: 4,
         title: 'SISTEMA DE PERSONALIZAÇÃO E VENDA DE CAPINHAS DE CELULAR',
         description: 'Sistema de personalização de capinhas de celular, integrado com E-Comerce para finalização de pedidos',
-        image: '../imgs/case.png',
+        image: 'https://i.imgur.com/T6ShnuY.png',
         tags: ['ViteJs','Django','LocalStorage','Supabase','PrimeVue','UX/UI','Python'],
         link: '#'
       },
@@ -69,7 +69,7 @@ const PortfolioCategories = () => {
         id: 5,
         title: 'SISTEMA WEB DE GERENCIAMENTO DE CHURRASCARIA',
         description: 'Sistema desenvolvido excluisivamente e direcionado para Churrascaria, com todas as opções de gerenciamento necessários para atendimento ao cliente.',
-        image: '../imgs/churras.png',
+        image: 'https://i.imgur.com/sX6T2xx.png',
         tags: ['ViteJS', 'Firebase','Supabase','Django','Stripe','UX/UI'],
         link: 'https://churras-manager-69.lovable.app/'
       }
