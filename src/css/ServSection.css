@@ -1,7 +1,6 @@
 /* Services Section Styles */
 .services-section {
   min-height: 100vh;
-  padding: 80px 20px;
   position: relative;
   overflow: hidden;
 }
@@ -69,7 +68,6 @@
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Mudança: minmax menor */
   gap: 30px;
   width: 100%; /* Mudança: era 80vw */
-  max-width: 1200px;
   margin: 60px auto;
 }
 
