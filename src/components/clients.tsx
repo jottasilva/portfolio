@@ -33,138 +33,46 @@ const PortfolioCategories = () => {
     sites: [
       {
         id: 1,
-        title: 'WEBSITE CORPORATIVO',
-        description: 'Site responsivo moderno com painel admin, SEO otimizado e performance superior.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop',
-        tags: ['React', 'TypeScript', 'SEO'],
-        link: '#'
+        title: 'WEBSITE E-COMMERCE MAÇONARIA',
+        description: 'Site responsivo moderno com painel admin, SEO otimizado e performance superior. sistema de venda de artigos relacionados',
+        image: '../imgs/macon.png',
+        tags: ['React', 'TypeScript', 'Stripe','Django', 'PrimeVue', 'Vite','UX/IU','Integração Com sistemas de pagamento'],
+        link: 'https://ecomerce-rho-lyart.vercel.app/'
       },
       {
         id: 2,
-        title: 'E-COMMERCE AVANÇADO',
-        description: 'Loja virtual completa com pagamentos integrados, gestão de estoque e analytics.',
-        image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
-        tags: ['Next.js', 'Stripe', 'MongoDB'],
-        link: '#'
+        title: 'MICRO-SAAS',
+        description: 'Sitema de informações via Whatsapp Relacionados a Minha cidade, onde usuários se cadastram e obtem informações relevantes como horarios de atendimentos de estabelecimentos, plantões, serviços e muito mais',
+        image: '../imgs/saas.png',
+        tags: ['Vue.js', 'ReactJS', 'Django','PrimeVue'],
+        link: 'https://infozap.vercel.app/'
       },
       {
         id: 3,
-        title: 'LANDING PAGE CONVERSÃO',
-        description: 'Página otimizada para campanhas com A/B testing e métricas de conversão.',
-        image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=250&fit=crop',
-        tags: ['React', 'Analytics', 'A/B Test'],
-        link: '#'
+        title: 'EASY CONTRATO',
+        description: 'Sistema de Geração de contratos Prédefinidos, com opção de ediçoes de cláusulas e geração de PDF',
+        image: '../imgs/contract.png',
+        tags: ['React', 'Supabase', 'ViteJS','LocalStorage'],
+        link: 'https://easycontrato.vercel.app/'
       },
       {
         id: 4,
-        title: 'PORTAL DE NOTÍCIAS',
-        description: 'Blog corporativo com CMS headless, newsletter e sistema de comentários.',
-        image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=250&fit=crop',
-        tags: ['Gatsby', 'CMS', 'GraphQL'],
+        title: 'SISTEMA DE PERSONALIZAÇÃO E VENDA DE CAPINHAS DE CELULAR',
+        description: 'Sistema de personalização de capinhas de celular, integrado com E-Comerce para finalização de pedidos',
+        image: '../imgs/case.png',
+        tags: ['ViteJs','Django','LocalStorage','Supabase','PrimeVue','UX/UI','Python'],
         link: '#'
       },
     ],
     aplicativos: [
       {
         id: 5,
-        title: 'APP MULTIPLATAFORMA',
-        description: 'Aplicativo nativo para iOS/Android com sincronização em tempo real.',
-        image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=250&fit=crop',
-        tags: ['React Native', 'Firebase', 'Redux'],
-        link: '#'
-      },
-      {
-        id: 6,
-        title: 'DASHBOARD ANALYTICS',
-        description: 'Painel interativo com visualizações D3.js e dados em tempo real.',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
-        tags: ['D3.js', 'WebSocket', 'Charts'],
-        link: '#'
-      },
-      {
-        id: 7,
-        title: 'SISTEMA DELIVERY',
-        description: 'Plataforma completa para entregas com rastreamento GPS e notificações.',
-        image: 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=250&fit=crop',
-        tags: ['Node.js', 'Socket.io', 'Maps API'],
-        link: '#'
-      },
-      {
-        id: 8,
-        title: 'CRM INTELIGENTE',
-        description: 'Sistema de gestão com IA para automação e análise preditiva.',
-        image: 'https://images.unsplash.com/photo-1553484771-371a605b060b?w=400&h=250&fit=crop',
-        tags: ['AI/ML', 'Python', 'API Rest'],
-        link: '#'
-      },
-    ],
-    identidade: [
-      {
-        id: 9,
-        title: 'BRANDING COMPLETO',
-        description: 'Identidade visual moderna com logomark, guidelines e assets digitais.',
-        image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop',
-        tags: ['Illustrator', 'Branding', 'Guidelines'],
-        link: '#'
-      },
-      {
-        id: 10,
-        title: 'DESIGN SYSTEM',
-        description: 'Sistema de design escalável com componentes reutilizáveis e tokens.',
-        image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=250&fit=crop',
-        tags: ['Figma', 'Tokens', 'Components'],
-        link: '#'
-      },
-      {
-        id: 11,
-        title: 'MATERIAL DIGITAL',
-        description: 'Templates para redes sociais, apresentações e campanhas digitais.',
-        image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&h=250&fit=crop',
-        tags: ['After Effects', 'Social Media', 'Templates'],
-        link: '#'
-      },
-      {
-        id: 12,
-        title: 'MASCOTE 3D',
-        description: 'Personagem corporativo em 3D com animações para marketing digital.',
-        image: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=400&h=250&fit=crop',
-        tags: ['Blender', '3D', 'Animation'],
-        link: '#'
-      },
-    ],
-    testes: [
-      {
-        id: 13,
-        title: 'UX/UI RESEARCH',
-        description: 'Análise completa de experiência com heatmaps, testes de usuário e métricas.',
-        image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=250&fit=crop',
-        tags: ['UX Research', 'Heatmaps', 'User Testing'],
-        link: '#'
-      },
-      {
-        id: 14,
-        title: 'PERFORMANCE AUDIT',
-        description: 'Otimização completa com Lighthouse, Core Web Vitals e monitoramento.',
-        image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop',
-        tags: ['Lighthouse', 'Core Web Vitals', 'Performance'],
-        link: '#'
-      },
-      {
-        id: 15,
-        title: 'SECURITY TESTING',
-        description: 'Auditoria de segurança com penetration testing e implementação de proteções.',
-        image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=250&fit=crop',
-        tags: ['Security', 'Penetration Test', 'OWASP'],
-        link: '#'
-      },
-      {
-        id: 16,
-        title: 'A/B OPTIMIZATION',
-        description: 'Testes comparativos avançados com statistical significance e ROI tracking.',
-        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
-        tags: ['A/B Testing', 'Statistics', 'Conversion'],
-        link: '#'
-      },
+        title: 'SISTEMA WEB DE GERENCIAMENTO DE CHURRASCARIA',
+        description: 'Sistema desenvolvido excluisivamente e direcionado para Churrascaria, com todas as opções de gerenciamento necessários para atendimento ao cliente.',
+        image: '../imgs/churras.png',
+        tags: ['ViteJS', 'Firebase','Supabase','Django','Stripe','UX/UI'],
+        link: 'https://churras-manager-69.lovable.app/'
+      }
     ],
   };
 
