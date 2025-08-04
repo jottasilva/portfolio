@@ -195,15 +195,12 @@ body {
   max-width: 95vw;
   padding-top: 120px;
 }
-#jobs {
-  margin: 0 auto;
-  max-width: 100vw;
-  padding-top: 120px;
-}
+
 .jobs {
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
+   max-width: 100vw;
   animation: scroller ease-in-out;
   animation-timeline: view();
   animation-range: cover 0% cover 50%;
