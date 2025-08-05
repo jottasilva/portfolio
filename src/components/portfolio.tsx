@@ -4,6 +4,9 @@ import "../css/portfolio.css";
 const Portfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentText, setCurrentText] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
   
   const rotatingTexts = [
     "Desenvolvedor Full-Stack, Designer Gráfico e apaixonado por tecnologia.",
@@ -13,12 +16,41 @@ const Portfolio = () => {
     "Modelagem 3D."
   ];
 
+  // Efeito de digitação (typewriter)
+  useEffect(() => {
+    const currentFullText = rotatingTexts[currentText];
+    let timeoutId: NodeJS.Timeout;
+
+    if (isTyping) {
+      // Digitando
+      if (displayText.length < currentFullText.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(currentFullText.slice(0, displayText.length + 1));
+        }, 50); // Velocidade da digitação
+      } else {
+        // Terminou de digitar, aguarda antes de apagar
+        timeoutId = setTimeout(() => {
+          setIsTyping(false);
+        }, 2000); // Tempo de pausa após digitar
+      }
+    } else {
+      // Apagando
+      if (displayText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, 30); // Velocidade de apagar (mais rápida)
+      } else {
+        // Terminou de apagar, muda para próximo texto
+        setCurrentText((prev) => (prev + 1) % rotatingTexts.length);
+        setIsTyping(true);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayText, isTyping, currentText, rotatingTexts]);
+
   useEffect(() => {
     setIsVisible(true);
-    const interval = setInterval(() => {
-      setCurrentText((prev) => (prev + 1) % rotatingTexts.length);
-    }, 3000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -44,8 +76,11 @@ const Portfolio = () => {
             <h1 className="hero-name">
               <span>Jefferson Silva</span>
             </h1>
-            <h2 className="hero-title">
-              {rotatingTexts[currentText]}
+            <h2 className="hero-title typewriter-container">
+              <span className="typewriter-text">
+                {displayText}
+                <span className="cursor">|</span>
+              </span>
             </h2>
             <p className="hero-description">
               Sou especializado em dar vida a ideias por meio de soluções
