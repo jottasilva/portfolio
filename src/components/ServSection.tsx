@@ -89,14 +89,29 @@ const ServicesSection = () => {
 
   const stats: StatData[] = [
     { number: '7+', label: 'Anos de Experiência' },
-    { number: '121+', label: 'Projetos Concluídos' },
+    { number: '57+', label: 'Projetos Concluídos' },
     { number: '36+', label: 'Clientes Satisfeitos' }
   ];
 
-  const handleServiceClick = (serviceId: string): void => {
-    console.log(`Navegando para serviço: ${serviceId}`);
-    // Implementar navegação ou modal aqui
+const handleServiceClick = (serviceId: string): void => {
+  const phone = "5543991359790";
+  // Mapeando ID para nome amigável
+  const serviceNames: Record<string, string> = {
+    development: "Desenvolvimento",
+    support: "Suporte",
+    design: "Design"
   };
+
+  const serviceName = serviceNames[serviceId] || "Serviço";
+
+  const message = `Olá, quero saber sobre ${serviceName}.`;
+  const encodedMessage = encodeURIComponent(message);
+  window.open(
+    `https://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`,
+    "_blank"
+  );
+};
+
 
   return (
     <section className="services-section">
