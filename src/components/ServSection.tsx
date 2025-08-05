@@ -97,9 +97,9 @@ const handleServiceClick = (serviceId: string): void => {
   const phone = "5543991359790";
   // Mapeando ID para nome amigável
   const serviceNames: Record<string, string> = {
-    development: "Desenvolvimento",
-    support: "Suporte",
-    design: "Design"
+    development: "Desenvolvimento Web/Mobile/Desktop",
+    support: "Suporte em T.I",
+    design: "Designer Gráfico"
   };
 
   const serviceName = serviceNames[serviceId] || "Serviço";
