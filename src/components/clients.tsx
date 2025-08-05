@@ -17,7 +17,7 @@ interface PortfolioCategories {
   testes: PortfolioItem[];
 }
 
-type CategoryKey = 'todos' | 'sites' | 'aplicativos' | 'identidade' | 'testes';
+type CategoryKey = 'todos' | 'sites' | 'aplicativos' | 'identidade' ;
 
 const PortfolioCategories = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('todos');
@@ -74,6 +74,8 @@ const PortfolioCategories = () => {
         link: 'https://churras-manager-69.lovable.app/'
       }
     ],
+    identidade: [],
+    testes: []
   };
 
   const getAllItems = useCallback((): PortfolioItem[] => {
@@ -105,12 +107,17 @@ const PortfolioCategories = () => {
     setActiveCategory(category);
   }, []);
 
+  const handleProjectClick = useCallback((link?: string) => {
+    if (link && link !== '#') {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
+  }, []);
+
   const categoryLabels: Record<CategoryKey, string> = {
     todos: 'TODOS',
     sites: 'SITES',
     aplicativos: 'APLICATIVOS',
-    identidade: 'IDENTIDADE VISUAL',
-    testes: 'TESTES'
+    identidade: 'IDENTIDADE VISUAL'
   };
 
   return (
@@ -158,7 +165,15 @@ const PortfolioCategories = () => {
                 
                 {/* Overlay Button */}
                 <div className="overlay-button-container">
-                  <button className="overlay-button">
+                  <button 
+                    className="overlay-button"
+                    onClick={() => handleProjectClick(item.link)}
+                    disabled={!item.link || item.link === '#'}
+                    style={{
+                      opacity: (!item.link || item.link === '#') ? 0.5 : 1,
+                      cursor: (!item.link || item.link === '#') ? 'not-allowed' : 'pointer'
+                    }}
+                  >
                     Ver Projeto
                   </button>
                 </div>
@@ -183,7 +198,15 @@ const PortfolioCategories = () => {
                 </div>
 
                 {/* Action Button */}
-                <button className="action-button">
+                <button 
+                  className="action-button"
+                  onClick={() => handleProjectClick(item.link)}
+                  disabled={!item.link || item.link === '#'}
+                  style={{
+                    opacity: (!item.link || item.link === '#') ? 0.5 : 1,
+                    cursor: (!item.link || item.link === '#') ? 'not-allowed' : 'pointer'
+                  }}
+                >
                   Conhecer Projeto
                 </button>
               </div>
