@@ -61,7 +61,7 @@ Se o visitante estiver perguntando de um tópico que pertence a uma seção do s
       return NextResponse.json({ response: '[SISTEMA]: Alerta crítico - Cota de Tokens da rede Groq temporariamente esgotada.' });
     }
     if (response.status === 401) {
-      return NextResponse.json({ response: '[SISTEMA]: Credenciais de acesso Groq inválidas.' });
+      return NextResponse.json({ response: '[SISTEMA]: Link neural temporariamente offline. Tentando restabelecer conexão tática...' });
     }
 
     const responseText = await response.text();
