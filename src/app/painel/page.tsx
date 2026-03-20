@@ -21,6 +21,7 @@ export default function PainelDashboard() {
   const [visitStats, setVisitStats] = useState<{ total: number; uniqueVisitors: number; topCities: { city: string; count: number }[] }>({ total: 0, uniqueVisitors: 0, topCities: [] });
   const [recentVisits, setRecentVisits] = useState<any[]>([]);
   const [filterText, setFilterText] = useState('');
+  const [chatError, setChatError] = useState(false);
 
   // Form States
   const [editId, setEditId] = useState<string | null>(null);
@@ -44,7 +45,13 @@ export default function PainelDashboard() {
       }
       if (activeTab === 'overview' || activeTab === 'chat') {
         const chats = await appwriteService.getChatMessages();
-        setChatMessages(chats);
+        if (chats && (chats as any).error === 'collection_missing') {
+          setChatMessages([]);
+          setChatError(true);
+        } else {
+          setChatMessages(chats);
+          setChatError(false);
+        }
       }
       if (activeTab === 'overview') {
         const [stats, visits] = await Promise.all([
@@ -338,7 +345,16 @@ export default function PainelDashboard() {
           {/* Chat Messages List */}
           {activeTab === 'chat' && !loading && (
             <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
-              {chatMessages.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm' })}>Nenhum log de chat registrado.</p>}
+              
+              {chatError && (
+                <div className={css({ bg: 'rgba(255,152,0,0.1)', p: 5, rounded: 'xl', borderLeft: '3px solid #ff9800', mb: 2 })}>
+                  <p className={css({ color: '#ff9800', fontWeight: 'bold', fontSize: 'sm', mb: 1 })}>⚠️ Configuração Pendente no Appwrite</p>
+                  <p className={css({ color: 'gray.300', fontSize: 'xs' })}>A coleção <code className={css({ color: 'primary' })}>{'chat_messages'}</code> não foi encontrada no banco <code className={css({ color: 'primary' })}>{'main'}</code>.</p>
+                  <p className={css({ color: 'gray.400', fontSize: 'xs', mt: 1 })}>Para ativar os logs, crie a coleção no seu Appwrite Dashboard com os atributos: <code className={css({ color: 'secondary' })}>{'prompt'}</code> (string) e <code className={css({ color: 'secondary' })}>{'response'}</code> (string/textarea).</p>
+                </div>
+              )}
+
+              {chatMessages.length === 0 && !chatError && <p className={css({ color: 'gray.500', fontSize: 'sm' })}>Nenhum log de chat registrado.</p>}
               {chatMessages.map((m) => (
                 <div key={m.$id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' })}>
                   <div className={css({ flex: 1, pr: 4 })}>

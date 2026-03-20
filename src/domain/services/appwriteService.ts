@@ -255,7 +255,10 @@ export const appwriteService = {
         Query.limit(50)
       ]);
       return resp.documents;
-    } catch { return []; }
+    } catch (error: any) { 
+      if (error.code === 404) return { error: 'collection_missing' } as any;
+      return []; 
+    }
   },
 
   async deleteChatMessage(id: string) {
