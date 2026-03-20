@@ -13,7 +13,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Jefferson Silva | Sênior Full Stack & IA",
+  title: "JRSN.DEV | SÊNIOR FULL STACK",
   description: "Portfólio de Jefferson Silva - Arquitetura de Software, Automação com IA e Sistemas SaaS",
 };
 

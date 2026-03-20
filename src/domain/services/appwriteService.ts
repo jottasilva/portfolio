@@ -10,6 +10,7 @@ export const COLLECTIONS = {
   CERTIFICATIONS: 'certifications',
   ABOUT: 'about',
   EXPERIENCES: 'experiences',
+  CHAT_MESSAGES: 'chat_messages', // Adicionado para logs do terminal
 };
 
 export const appwriteService = {
@@ -67,7 +68,7 @@ export const appwriteService = {
     }
   },
 
-  async createProject(data: { title: string; description: string; image?: string; link?: string; github?: string; category: string }) {
+  async createProject(data: { title: string; description: string; image?: string; link?: string; github?: string; category: string; node?: string }) {
     try {
       return await databases.createDocument(DATABASE_ID, COLLECTIONS.PROJECTS, ID.unique(), data);
     } catch (error) {
@@ -85,7 +86,7 @@ export const appwriteService = {
     }
   },
 
-  async updateProject(id: string, data: { title: string; description: string; image?: string; link?: string; github?: string; category?: string }) {
+  async updateProject(id: string, data: { title: string; description: string; image?: string; link?: string; github?: string; category?: string; node?: string }) {
     try {
       return await databases.updateDocument(DATABASE_ID, COLLECTIONS.PROJECTS, id, data);
     } catch (error) {
@@ -230,5 +231,39 @@ export const appwriteService = {
 
       return { total, uniqueVisitors, topCities };
     } catch { return { total: 0, uniqueVisitors: 0, topCities: [] }; }
+  },
+
+  /**
+   * 8. Mensagens de Chat (Logs)
+   */
+  async sendChatMessage(data: { prompt: string; response: string }) {
+    try {
+      return await databases.createDocument(DATABASE_ID, COLLECTIONS.CHAT_MESSAGES, ID.unique(), {
+        ...data,
+        submittedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Erro ao salvar log de chat:', error);
+      throw error;
+    }
+  },
+
+  async getChatMessages() {
+    try {
+      const resp = await databases.listDocuments(DATABASE_ID, COLLECTIONS.CHAT_MESSAGES, [
+        Query.orderDesc('submittedAt'),
+        Query.limit(50)
+      ]);
+      return resp.documents;
+    } catch { return []; }
+  },
+
+  async deleteChatMessage(id: string) {
+    try {
+      return await databases.deleteDocument(DATABASE_ID, COLLECTIONS.CHAT_MESSAGES, id);
+    } catch (error) {
+      console.error('Erro ao deletar log de chat:', error);
+      throw error;
+    }
   }
 };

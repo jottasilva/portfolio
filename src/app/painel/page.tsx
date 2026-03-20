@@ -8,9 +8,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PainelDashboard() {
   const { user, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'skills' | 'messages' | 'about' | 'certifications' | 'experiences'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'projects' | 'skills' | 'messages' | 'about' | 'certifications' | 'experiences' | 'chat'>('overview');
   
   const [messages, setMessages] = useState<any[]>([]);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
   const [projects, setProjects] = useState<any[]>([]);
   const [skills, setSkills] = useState<any[]>([]);
   const [certifications, setCertifications] = useState<any[]>([]);
@@ -23,7 +24,7 @@ export default function PainelDashboard() {
 
   // Form States
   const [editId, setEditId] = useState<string | null>(null);
-  const [newProject, setNewProject] = useState({ title: '', description: '', link: '', github: '', category: 'Sistemas', image: '' });
+  const [newProject, setNewProject] = useState({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' });
   const [newSkill, setNewSkill] = useState({ name: '', category: 'Backend & APIs', value: '90%' });
   const [newCert, setNewCert] = useState({ title: '', issuer: '', date: '', link: '', category: 'Geral' });
   const [newExperience, setNewExperience] = useState({ type: 'Trabalho', title: '', institution: '', period: '', description: '', activities: '' });
@@ -40,6 +41,10 @@ export default function PainelDashboard() {
       if (activeTab === 'overview' || activeTab === 'messages') {
         const msgs = await appwriteService.getContactMessages();
         setMessages(msgs);
+      }
+      if (activeTab === 'overview' || activeTab === 'chat') {
+        const chats = await appwriteService.getChatMessages();
+        setChatMessages(chats);
       }
       if (activeTab === 'overview') {
         const [stats, visits] = await Promise.all([
@@ -103,7 +108,7 @@ export default function PainelDashboard() {
       } else {
         await appwriteService.createProject(newProject);
       }
-      setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', image: '' });
+      setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' });
       setEditId(null);
       loadData();
     } catch (error) { alert('Erro ao salvar projeto'); }
@@ -137,12 +142,13 @@ export default function PainelDashboard() {
     } catch (error) { alert('Erro ao salvar skill'); }
   };
 
-  const handleDelete = async (type: 'project' | 'skill' | 'cert' | 'experience', id: string) => {
+  const handleDelete = async (type: 'project' | 'skill' | 'cert' | 'experience' | 'chat', id: string) => {
     if (!confirm('Tem certeza?')) return;
     try {
       if (type === 'project') await appwriteService.deleteProject(id);
       else if (type === 'skill') await appwriteService.deleteSkill(id);
       else if (type === 'cert') await appwriteService.deleteCertification(id);
+      else if (type === 'chat') await appwriteService.deleteChatMessage(id);
       else await appwriteService.deleteExperience(id);
       loadData();
     } catch (error) { alert('Erro ao deletar'); }
@@ -162,6 +168,7 @@ export default function PainelDashboard() {
           {[
             { id: 'overview', label: 'Visão Geral' },
             { id: 'messages', label: 'Mensagens' },
+            { id: 'chat', label: 'Conversas AI' },
             { id: 'projects', label: 'Projetos' },
             { id: 'skills', label: 'Habilidades' },
             { id: 'about', label: 'Sobre' },
@@ -194,7 +201,7 @@ export default function PainelDashboard() {
       <div className={css({ flex: 1, p: 10, overflowY: 'auto' })}>
         <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className={css({ fontFamily: 'headline', fontSize: '3xl', fontWeight: 'bold', color: 'white', mb: 8 })}>{
-             activeTab === 'overview' ? 'Visão Geral' : activeTab === 'messages' ? 'Mensagens' : activeTab === 'projects' ? 'Projetos' : activeTab === 'skills' ? 'Habilidades' : activeTab === 'about' ? 'Sobre' : activeTab === 'certifications' ? 'Certificações' : 'Trajetória'
+             activeTab === 'overview' ? 'Visão Geral' : activeTab === 'messages' ? 'Mensagens' : activeTab === 'chat' ? 'Conversas AI' : activeTab === 'projects' ? 'Projetos' : activeTab === 'skills' ? 'Habilidades' : activeTab === 'about' ? 'Sobre' : activeTab === 'certifications' ? 'Certificações' : 'Trajetória'
           }</h1>
 
           {loading && <div className={css({ color: 'primary', fontSize: 'sm' })}>Buscando dados na Appwrite...</div>}
@@ -328,6 +335,33 @@ export default function PainelDashboard() {
             </div>
           )}
 
+          {/* Chat Messages List */}
+          {activeTab === 'chat' && !loading && (
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+              {chatMessages.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm' })}>Nenhum log de chat registrado.</p>}
+              {chatMessages.map((m) => (
+                <div key={m.$id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' })}>
+                  <div className={css({ flex: 1, pr: 4 })}>
+                    <div className={css({ display: 'flex', justifyContent: 'space-between', mb: 1 })}>
+                       <span className={css({ fontSize: 'xs', color: 'gray.500' })}>{new Date(m.submittedAt).toLocaleString('pt-BR')}</span>
+                    </div>
+                    <p className={css({ fontSize: 'xs', color: 'primary', fontWeight: 'bold', mb: 1 })}>Visitante:</p>
+                    <p className={css({ fontSize: 'sm', color: 'white', mb: 3 })}>{m.prompt}</p>
+                    
+                    <p className={css({ fontSize: 'xs', color: 'secondary', fontWeight: 'bold', mb: 1 })}>IA Response:</p>
+                    <p className={css({ fontSize: 'sm', color: 'gray.300' })}>{m.response}</p>
+                  </div>
+                  <button 
+                    onClick={() => handleDelete('chat', m.$id)} 
+                    className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs', ml: 4, height: 'fit-content' })}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Projects Management */}
           {activeTab === 'projects' && !loading && (
             <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
@@ -338,6 +372,7 @@ export default function PainelDashboard() {
                    <option value="Sistemas">Sistemas</option>
                    <option value="IA">IA & Automação</option>
                 </select>
+                <input required value={newProject.node} onChange={e=>setNewProject({...newProject, node:e.target.value})} placeholder="Subtítulo / Nó (Ex: Automação, Finanças)" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}/>
                 <textarea required value={newProject.description} onChange={e=>setNewProject({...newProject, description:e.target.value})} placeholder="Descrição" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white', h: 32 })}/>
                 <input value={newProject.link} onChange={e=>setNewProject({...newProject, link:e.target.value})} placeholder="Link do Projeto" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}/>
                 <input value={newProject.github} onChange={e=>setNewProject({...newProject, github:e.target.value})} placeholder="Link GitHub" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}/>
@@ -363,14 +398,14 @@ export default function PainelDashboard() {
                 </div>
 
                 <button type="submit" className={css({ bg: 'primary', p: 3, rounded: 'md', fontWeight: 'bold', color: 'black', cursor: 'pointer' })} disabled={uploading}>{editId ? 'Salvar Alterações' : 'Salvar'}</button>
-                {editId && <button type="button" onClick={() => { setEditId(null); setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', image: '' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: 'md', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
+                {editId && <button type="button" onClick={() => { setEditId(null); setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: 'md', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
               </form>
               <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
                   {projects.map(p => (
                     <div key={p.$id} className={css({ bg: '#141414', p: 5, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
                       <div><p className={css({ fontWeight: 'bold', color: 'white' })}>{p.title}</p></div>
                       <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(p.$id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', image: p.image || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={() => { setEditId(p.$id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', node: p.node || '', image: p.image || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
                         <button onClick={()=>handleDelete('project', p.$id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                       </div>
                     </div>

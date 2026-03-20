@@ -22,12 +22,19 @@ export async function POST(req: NextRequest) {
       req.headers.get('x-real-ip') ||
       '0.0.0.0';
 
+    // Para testes locais em localhost (desenvolvimento): 
+    // Injetamos um IP real do Brasil para que a geolocalização funcione visualmente
+    let lookupIp = ip;
+    if (ip === '127.0.0.1' || ip === '::1' || ip === '0.0.0.0') {
+      lookupIp = '200.221.2.45'; // IP público do Brasil (UOL) para simulação local
+    }
+
     // Geolocalização via ip-api.com (free, sem auth, 45req/min)
     let geoData = { city: 'Desconhecida', country: '??', region: '', timezone: '' };
-    if (ip !== '127.0.0.1' && ip !== '::1' && ip !== '0.0.0.0') {
+    if (lookupIp !== '127.0.0.1' && lookupIp !== '::1' && lookupIp !== '0.0.0.0') {
       try {
         const geoRes = await fetch(
-          `http://ip-api.com/json/${ip}?fields=city,country,regionName,timezone&lang=pt-BR`,
+          `http://ip-api.com/json/${lookupIp}?fields=city,country,regionName,timezone&lang=pt-BR`,
           { cache: 'no-store' }
         );
         if (geoRes.ok) {

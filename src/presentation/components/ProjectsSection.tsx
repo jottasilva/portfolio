@@ -39,7 +39,7 @@ export default function ProjectsSection() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos_Nós');
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(2);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -57,7 +57,7 @@ export default function ProjectsSection() {
   }, []);
 
   useEffect(() => {
-    setVisibleCount(6);
+    setVisibleCount(2);
   }, [activeCategory]);
 
   const filteredProjects = activeCategory === 'Todos_Nós'
@@ -65,7 +65,7 @@ export default function ProjectsSection() {
     : projects.filter((p: any) => p.category === activeCategory);
 
   return (
-    <section id="projects" className={css({ pt: 48, pb: 24, px: 8, maxW: '8xl', mx: 'auto' })}>
+    <section id="projects" className={css({ pt: 48, pb: 4, px: 8, maxW: '70vw', mx: 'auto' })}>
       <motion.header 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +90,7 @@ export default function ProjectsSection() {
 
       {/* Filters */}
       <div className={css({ bg: 'rgba(5,5,5,0.4)', px: 8, py: 6, borderY: '1px solid rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)', mx: -8, mb: 24 })}>
-        <div className={css({ maxW: '8xl', mx: 'auto', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' })}>
+        <div className={css({ maxW: '70vw', mx: 'auto', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' })}>
           {CATEGORIES.map(cat => (
             <button
               key={cat.value}
@@ -164,7 +164,8 @@ export default function ProjectsSection() {
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               bg: 'transparent',
-              border: '1px solid rgba(200,255,0,0.3)',
+              border: '1px solid',
+              borderColor: 'primary',
               color: 'primary',
               px: 8,
               py: 3,
@@ -172,10 +173,10 @@ export default function ProjectsSection() {
               fontWeight: 'bold',
               cursor: 'pointer',
               transition: 'all 0.3s',
-              _hover: { bg: 'primary', color: 'black', transform: 'translateY(-2px)', boxShadow: '0 0 20px rgba(200,255,0,0.1)' }
+              _hover: { bg: 'primary', color: 'black', transform: 'translateY(-2px)', boxShadow: '0 0 20px rgba(0,230,118,0.2)' }
             })}
           >
-            Carregar Mais Experiências <span>+</span>
+            Carregar Mais Projetos <span>+</span>
           </button>
         </div>
       )}

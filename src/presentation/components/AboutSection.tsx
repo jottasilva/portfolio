@@ -206,14 +206,14 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className={css({ pt: 40, pb: 24, px: { base: 6, md: 12, lg: 24 }, maxW: '8xl', mx: 'auto', position: 'relative' })}>
+    <section id="about" className={css({ pt: 40, pb: 24, px: 8, maxW: '70vw', mx: 'auto', position: 'relative' })}>
       {/* Technical About Header */}
       <motion.header
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className={css({ mb: 32, position: 'relative' })}
+        className={css({ mt: '100px', mb: { base: 20, lg: 48 }, position: 'relative' })}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4, mb: 6 })}>
           <div className={css({ h: '1px', w: 12, bg: 'primary' })}></div>
@@ -293,7 +293,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, scale: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative' }), "group")}
+          className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative', mt: { lg: '-214px' } }), "group")}
         >
           <div className={cx(css({ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.05)', bg: 'rgba(255,255,255,0.02)' }), 'glass-panel')}>
             <img

@@ -48,7 +48,7 @@ export default function SkillsSection() {
   }, []);
 
   return (
-    <section id="skills" className={css({ pt: 40, pb: 24, px: 8, maxW: '8xl', mx: 'auto' })}>
+    <section id="skills" className={css({ pt: 40, pb: 24, px: 8, maxW: '70vw', mx: 'auto' })}>
       <motion.header 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}

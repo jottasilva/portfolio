@@ -24,7 +24,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className={css({ minH: '100vh', pt: 40, pb: 24, px: 8, maxW: '7xl', mx: 'auto' })}>
+    <section id="contact" className={css({ minH: '100vh', pt: 8, pb: 24, px: 8, maxW: '70vw', mx: 'auto' })}>
       <motion.header 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,9 +38,9 @@ export default function ContactSection() {
             Protocolo: Comunicação
           </span>
         </div>
-        <h1 className={css({ fontFamily: 'headline', fontSize: { base: '5xl', md: '7xl', lg: '8xl' }, letterSpacing: 'tight', color: 'white', fontWeight: 'bold' })}>
+        <h1 className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '5xl', lg: '6xl' }, letterSpacing: 'tight', color: 'white', fontWeight: 'bold' })}>
           Inicializar <br/>
-          <span className={cx(css({ color: 'transparent', bgClip: 'text', bgGradient: 'to-r', gradientFrom: 'secondary', gradientTo: 'purple.400' }), 'neon-glow')}>
+          <span className={cx(css({ color: 'transparent', bgClip: 'text', bgGradient: 'to-r', gradientFrom: 'primary', gradientTo: 'secondary' }), 'neon-glow')}>
             Conectividade.
           </span>
         </h1>
@@ -56,7 +56,7 @@ export default function ContactSection() {
           className={css({ gridColumn: { lg: 'span 7' }, w: 'full' })}
         >
           <form onSubmit={handleSubmit} className={cx(css({ display: 'flex', flexDir: 'column', gap: 10, p: { base: 8, lg: 12 }, rounded: 'xl', position: 'relative', overflow: 'hidden', bg: 'rgba(15,15,15,0.4)', border: '1px solid rgba(255,255,255,0.02)' }), 'glass-panel')}>
-            <div className={css({ position: 'absolute', top: 0, left: 0, w: 'full', h: '2px', bgGradient: 'to-r', gradientFrom: 'transparent', gradientVia: 'secondary', gradientTo: 'transparent' })}></div>
+            <div className={css({ position: 'absolute', top: 0, left: 0, w: 'full', h: '2px', bgGradient: 'to-r', gradientFrom: 'transparent', gradientVia: 'primary', gradientTo: 'transparent' })}></div>
             
             <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)' }, gap: 8 })}>
               <div className="relative group">
@@ -118,6 +118,16 @@ export default function ContactSection() {
               <div>
                 <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary', mb: 1 })}>Certificados</span>
                 <a href="https://jrsncertificates.vercel.app/" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', fontWeight: 'medium', transition: 'colors', _hover: { color: 'primary' } })}>jrsncertificates</a>
+              </div>
+            </div>
+
+            <div className={css({ display: 'flex', alignItems: 'center', gap: 6, p: 6, rounded: 'xl', border: '1px solid rgba(255,255,255,0.03)', bg: 'rgba(20,20,20,0.3)', transition: 'all 0.3s', _hover: { bg: 'rgba(200,255,0,0.03)', borderColor: 'rgba(200,255,0,0.1)' } })}>
+              <div className={css({ w: 12, h: 12, rounded: 'lg', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.5)', color: 'primary', border: '1px solid rgba(200,255,0,0.1)' })}>
+                <span className="material-symbols-outlined text-xl">chat</span>
+              </div>
+              <div>
+                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary', mb: 1 })}>WhatsApp</span>
+                <a href="https://wa.me/5543991359790" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: 'primary' } })}>MANDAR PROMPT</a>
               </div>
             </div>
           </div>
