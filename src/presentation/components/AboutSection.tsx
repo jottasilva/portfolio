@@ -206,14 +206,14 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className={css({ pt: 40, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', position: 'relative' })}>
+    <section id="about" className={css({ pt: { base: 20, md: 40 }, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', position: 'relative' })}>
       {/* Technical About Header */}
       <motion.header
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className={css({ mt: '100px', mb: { base: 20, lg: 48 }, position: 'relative' })}
+        className={css({ mt: { base: '40px', md: '100px' }, mb: { base: 20, lg: 48 }, position: 'relative' })}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4, mb: 6 })}>
           <div className={css({ h: '1px', w: 12, bg: 'primary' })}></div>
