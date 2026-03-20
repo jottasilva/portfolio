@@ -3,7 +3,7 @@ import { css } from 'styled-system/css';
 export default function Footer() {
   return (
     <footer className={css({ bg: '#080808', w: 'full', py: 12, borderTop: '1px solid rgba(255,255,255,0.02)', mt: 24 })}>
-      <div className={css({ display: 'flex', flexDirection: { base: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', px: 8, maxW: '70vw', mx: 'auto', gap: 6 })}>
+      <div className={css({ display: 'flex', flexDirection: { base: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', gap: 6 })}>
         
         <div className={css({ display: 'flex', alignItems: 'center', gap: 3 })}>
           <img src="/logo.svg" alt="JRSN Logo" className={css({ h: 5, w: 'auto', filter: 'brightness(0.8)' })} />

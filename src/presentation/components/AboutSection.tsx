@@ -206,7 +206,7 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className={css({ pt: 40, pb: 24, px: 8, maxW: '70vw', mx: 'auto', position: 'relative' })}>
+    <section id="about" className={css({ pt: 40, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', position: 'relative' })}>
       {/* Technical About Header */}
       <motion.header
         initial={{ opacity: 0, y: 30 }}

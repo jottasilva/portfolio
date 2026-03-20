@@ -37,7 +37,7 @@ export default function Header() {
       backdropFilter: scrolled ? 'blur(16px)' : 'none',
       transition: 'all 0.3s ease'
     })}>
-      <div className={css({ maxW: '70vw', mx: 'auto', px: 8, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+      <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', px: 8, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
 
         {/* Logo Node */}
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 })}>

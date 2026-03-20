@@ -24,7 +24,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className={css({ minH: '100vh', pt: 8, pb: 24, px: 8, maxW: '70vw', mx: 'auto' })}>
+    <section id="contact" className={css({ minH: '100vh', pt: 8, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto' })}>
       <motion.header 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
