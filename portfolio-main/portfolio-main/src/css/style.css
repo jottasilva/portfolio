@@ -1,0 +1,419 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@import url(variaveis.css);
+@import url(mobile.css);
+html {
+  scroll-behavior: smooth;
+}
+
+#btCloseOrc {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 100%;
+  color: var(--branco);
+  background-color: red;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+body::-webkit-scrollbar {
+  width: 8px; 
+}
+body::-webkit-scrollbar-track {
+  background: var(--preto); 
+}
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00d4aa, #00a8cc);
+}
+body {
+  background: var(--bgBottom) no-repeat var(--preto);
+  background-position: center bottom;
+  
+}
+#top {
+  flex: 1;
+  background:url("../imgs/bgTop2.png") no-repeat;
+  background-size: cover;
+  background-position: center top;
+  width: 100%;
+  height: 80vh;
+}
+#menu.rolagem {
+  width: 100%;
+  background-color: rgba(000, 000, 000, 0.4);
+  padding: 1vh 0;
+  backdrop-filter: blur(21.5px);
+  -webkit-backdrop-filter: blur(11.5px);
+}
+#menu {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0 auto;
+  align-items: flex-end;
+  padding-top: 50px;
+  transition: all 0.5s ease-in-out;
+  z-index: 9;
+}
+#menu-mobile {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 32px;
+  height: auto;
+}
+.hamburguer {
+  content: "";
+  border-top: 4px #fff solid;
+  width: 100%;
+}
+.hamburguer::before,
+.hamburguer::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  margin-top: 5px;
+  background-color: var(--branco);
+}
+#menu .menu {
+  /* ESTILO MENU */
+  display: flex;
+  width: 75%;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+.logo {
+  /* STYLE LOGO MENU */
+  width: 130px;
+  height: 36px;
+  background: var(--logo) no-repeat center center;
+  background-size: cover;
+  transition: all 0.5s ease-in-out;
+}
+.menu nav {
+  /* MENU NAV */
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+.menu nav ul {
+  /* MENU NAV */
+  display: flex;
+  list-style: none;
+  gap:10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.menu nav ul li a {
+  /* MENU NAV */
+  text-decoration: none;
+  color: #ccc;
+  font-weight: bold;
+  padding: 8px 10px;
+  letter-spacing: 1px;
+  font-size: clamp(1rem, 2vw, 1rem);
+  font-family: "Lato", sans-serif;
+  transition: all 0.5s ease-in-out;
+}
+.menu nav ul li a:hover {
+  color: #00bcd4;
+}
+/* Configuraçoes de Box Portfolio */
+.portfolio {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 80vw;
+  height: 42vh;
+}
+.nome {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+#portfolio {
+  display: flex;
+  width: 70%;
+  margin: 0 auto;
+  padding-top: 12%;
+}
+#portfolio .nome h1 {
+  color: var(--branco);
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 5.1vh;
+  text-align: left;
+}
+#portfolio .nome span {
+  display: grid;
+  color: #ffffff;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.3em !important;
+  text-wrap: balance;
+  margin-top: 20px !important;
+  text-align: left;
+}
+.linkedin-btn {
+  color: var(--azul);
+  text-align: left;
+  width: 100%;
+}
+.linkedin-btn a {
+  color: var(--azul);
+  text-decoration: none;
+}
+.avatar {
+  background: var(--avatar) no-repeat center center;
+  background-size: 90% !important;
+  transition: all 0.5s linear;
+}
+#stats{
+  margin: 0 auto;
+  max-width: 95vw;
+  padding-top: 120px;
+}
+
+.jobs {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+   max-width: 100vw;
+  animation: scroller ease-in-out;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+  z-index: 1;
+  padding: 60px 0;
+}
+.jobs:target {
+  scroll-margin-top: 22vh;
+}
+#clientes:target {
+  scroll-margin-top: 24vh;
+}
+.clientes {
+  text-align: center;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: clamp(1rem, 2.5vw, 2rem) !important;
+  background: linear-gradient(135deg, #00bcd4, #4caf50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 5%;
+  animation: scroller ease-in-out;
+  animation-timeline: view();
+  animation-range: cover 0 cover 50%;
+}
+/* Estilização Box Clientes */
+#clientes {
+  display: flex;
+  margin: 0 auto;
+  padding: 50px 0;
+  height: auto;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  animation: scroller ease-in-out;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
+.box-portfolio{
+  display: flex;
+  flex-direction: row;
+}
+#box-cliente {
+  display: flex;
+  width: 47%;
+  height: 230px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  background-color: var(--preto);
+  transition: all 1s ease-in-out;
+}
+#box-cliente:hover {
+  transform: scale(1.15);
+}
+.img-cliente {
+  width: 100%;
+  height: 100%;
+  background: var(--clienteBankai) no-repeat center;
+  background-size: cover;
+  border-radius: 6px;
+}
+.desc-cliente {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+}
+.t-cliente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.t-cliente h1,
+.t-cliente p {
+  display: flex;
+  font-size: 80%;
+  color: var(--cinza-claro);
+  font-family: "Roboto", sans-serif;
+  padding: 5px 0;
+  flex-wrap: wrap;
+}
+.t-cliente p {
+  font-size: 0.1 !important;
+}
+.bt-cliente {
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: 40px;
+  border: 1px var(--azul) solid;
+  text-align: center;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+.bt-cliente a {
+  text-decoration: none;
+  color: var(--azul);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: clamp(.8rem, 5rem, .3rem);
+  letter-spacing: 0.5px;
+}
+
+/* Estilizações  Rodape */
+#rodape {
+  display: flex;
+  width: 80% !important;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 50px 20px 0 20px;
+}
+#desc-footer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+}
+#desc-footer h3 {
+  color: var(--branco);
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 3px;
+  font-weight: normal;
+  margin-left: 20px;
+}
+#desc-footer ul li {
+  color: var(--cinza-claro);
+  font-size: 0.8em;
+}
+#desc-footer ul li:hover {
+  color: var(--azul);
+  transition: all 0.3s linear;
+}
+#subfooter {
+  display: flex;
+  width: 100%;
+
+  padding: 20px 0;
+  height: 14vh;
+  justify-content: flex-start;
+  text-align: center;
+}
+.copyright {
+  text-align: center;
+  color: #ccc;
+  padding: 50px 0 20px 0;
+  font-size: 0.7rem;
+}
+#social {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+#social span {
+  font-size: 0.8rem;
+  color: var(--cinza-claro);
+  padding: 0 10px;
+  transition: all 0.5s linear;
+  text-wrap: nowrap;
+}
+#social span:hover {
+  color: var(--azul);
+}
+#menu nav.show {
+  visibility: visible;
+}
+/* Configurações de Animação */
+@keyframes scroller {
+  0% {
+    opacity: 0;
+    color: var(--preto);
+  }
+  20% {
+    opacity: 0;
+    color: var(--preto);
+  }
+  100% {
+    opacity: 1;
+    color: var(--branco);
+  }
+}
+@media screen and (max-width: 800px) {
+  #menu{
+    padding-top: 10px !important;
+    width:100vw !important;
+    margin: 0 auto !important;
+  }
+  .box-portfolio{
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .box-portfolio h6, .box-portfolio span{
+    text-align: center !important;
+  }
+  .box-portfolio h1{
+    width: 100% !important;
+  }
+  .linkedin-btn{
+    text-align: center !important;
+  }
+  .jobs{
+    flex-direction: column;
+  }
+
+
+ 
+  .container{
+    width: 100% !important;
+    margin-top:30px;
+  }
+}

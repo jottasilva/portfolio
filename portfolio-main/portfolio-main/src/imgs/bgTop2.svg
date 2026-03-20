@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Camada_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 3500 1000" style="enable-background:new 0 0 3500 1000;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.5;}
+	.st1{filter:url(#Adobe_OpacityMaskFilter);}
+	.st2{opacity:0.41;fill:url(#SVGID_00000138535459565006083910000013616076781117327270_);}
+</style>
+<g id="Camada_2_00000042700093610466999780000016970933937354673083_" class="st0">
+</g>
+<g id="Camada_2_00000070120786977277950400000015419134967199800450_" class="st0">
+</g>
+<defs>
+	<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-92.5" y="-48" width="3685" height="2456.7">
+		<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+	</filter>
+</defs>
+<mask maskUnits="userSpaceOnUse" x="-92.5" y="-48" width="3685" height="2456.7" id="SVGID_1_">
+	<g class="st1">
+		
+			<linearGradient id="SVGID_00000095299729530933168280000015250547820400264329_" gradientUnits="userSpaceOnUse" x1="1750" y1="1133.0083" x2="1750" y2="-47.9751">
+			<stop  offset="0" style="stop-color:#000000;stop-opacity:0"/>
+			<stop  offset="1" style="stop-color:#FFFFFF"/>
+		</linearGradient>
+		
+			<rect x="-46.2" y="-48" style="opacity:0.41;fill:url(#SVGID_00000095299729530933168280000015250547820400264329_);" width="3592.5" height="1181"/>
+	</g>
+</mask>
+<g style="opacity:0.35;mask:url(#SVGID_1_);">
+	
+		<image style="overflow:visible;" width="3648" height="5472" xlink:href="skills-icons/laptop-notepad-black-background-with-neon-light-flat-lay.jpg"  transform="matrix(4.123535e-17 -0.6734 0.6734 4.123535e-17 -92.489 2408.677)">
+	</image>
+</g>
+</svg>
