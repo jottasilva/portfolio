@@ -9,6 +9,22 @@ import { Client, Databases, ID, Permission, Role } from 'node-appwrite';
  */
 export async function POST(req: NextRequest) {
   try {
+    const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
+    const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+    const apiKey = process.env.APPWRITE_API_KEY;
+
+    if (!endpoint || !projectId || !apiKey) {
+      console.error('[/api/track] Missing Appwrite configuration:', {
+        endpoint: !!endpoint,
+        projectId: !!projectId,
+        apiKey: !!apiKey
+      });
+      return NextResponse.json(
+        { error: 'Server configuration error: Missing Appwrite setting' },
+        { status: 500 }
+      );
+    }
+
     const body = await req.json();
     const { visitorId, page, referrer } = body;
 

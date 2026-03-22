@@ -7,12 +7,20 @@ const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
 
 if (endpoint) {
     client.setEndpoint(endpoint);
-} else if (typeof window === 'undefined') {
-    client.setEndpoint('http://localhost/v1'); // Fallback apenas para builds estáticos
+} else {
+    if (typeof window !== 'undefined') {
+        console.warn('⚠️ [Appwrite] NEXT_PUBLIC_APPWRITE_ENDPOINT is undefined on client side! Falling back to SDK default (cloud.appwrite.io). Verify your production configuration.');
+    } else {
+        client.setEndpoint('http://localhost/v1'); // Fallback apenas para builds estáticos
+    }
 }
 
 if (projectId) {
     client.setProject(projectId);
+} else {
+    if (typeof window !== 'undefined') {
+        console.warn('⚠️ [Appwrite] NEXT_PUBLIC_APPWRITE_PROJECT_ID is undefined on client side!');
+    }
 }
 
 export const databases = new Databases(client);
