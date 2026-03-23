@@ -117,7 +117,7 @@ export default function Header() {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-              className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0,230,118,0.2)', p: 2, rounded: 'md', cursor: 'pointer' })}
+              className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0,230,118,0.2)', p: 2, rounded: '2px', cursor: 'pointer' })}
             >
               <span className="material-symbols-outlined" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
             </button>
@@ -172,7 +172,7 @@ export default function Header() {
               <a
                 href="#contact"
                 onClick={() => setMenuOpen(false)}
-                className={css({ mt: 'auto', textAlign: 'center', p: 3, rounded: 'lg', bg: 'primary', color: 'black', fontWeight: 'bold', fontFamily: 'label', fontSize: 'sm', cursor: 'pointer' })}
+                className={css({ mt: 'auto', textAlign: 'center', p: 3, rounded: '2px', bg: 'primary', color: 'black', fontWeight: 'bold', fontFamily: 'label', fontSize: 'sm', cursor: 'pointer' })}
               >
                 CONECTAR
               </a>

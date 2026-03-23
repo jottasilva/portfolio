@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -121,6 +121,16 @@ export default function AboutSection() {
   const [dynCerts, setDynCerts] = useState<any[]>([]);
   const [dynExps, setDynExps] = useState<any[]>([]);
 
+  const workScrollRef = useRef<HTMLDivElement>(null);
+  const eduScrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, dir: 'left' | 'right') => {
+    if (ref.current) {
+      const offset = 310; // Card width + gap
+      ref.current.scrollBy({ left: dir === 'left' ? -offset : offset, behavior: 'smooth' });
+    }
+  };
+
   useEffect(() => {
     const fetchGitHub = async () => {
       try {
@@ -159,6 +169,16 @@ export default function AboutSection() {
   }, {});
   const finalCerts = Object.values(groupedCerts);
 
+  const combinedWork = [
+    ...dynExps.filter((e: any) => e.type === 'Trabalho'),
+    ...workExperiences.filter(f => !dynExps.some((d: any) => d.title === f.title && d.type === 'Trabalho'))
+  ];
+
+  const combinedEdu = [
+    ...dynExps.filter((e: any) => e.type === 'Acadêmico'),
+    ...academicEducation.filter(f => !dynExps.some((d: any) => d.title === f.title && d.type === 'Acadêmico'))
+  ];
+
   return (
     <section id="about" className={css({ pt: { base: 20, md: 40 }, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', position: 'relative' })}>
       {/* Technical About Header */}
@@ -174,8 +194,11 @@ export default function AboutSection() {
           <span className={cx(css({ fontFamily: 'label', fontSize: 'xs', textTransform: 'uppercase', letterSpacing: '0.4em', color: 'primary' }), 'neon-glow')}>Sistema.Manifesto</span>
         </div>
         <h1 className={css({ fontFamily: 'headline', fontSize: { base: '3xl', md: '5xl', lg: '6xl' }, lineHeight: 'tight', fontWeight: 'bold', color: 'white', maxW: '7xl' })}>
-          {aboutData?.title || 'Arquitetando Sistemas'} <span className={css({ color: 'primary', fontStyle: 'italic' })}>{aboutData ? '' : 'Escaláveis'}</span>{' '}
-          <span className={css({ display: 'block', mt: 3, color: 'white', fontSize: { base: 'xl', md: '3xl', lg: '4xl' } })}>{aboutData?.subtitle || 'e Inteligência com IA.'}</span>
+          {aboutData ? aboutData.title : (
+            <>
+              Arquitetando <span className={css({ color: 'primary' })}>Sistemas</span>
+            </>
+          )}
         </h1>
         <div className={css({ mt: 8, display: 'flex', gap: 2, overflow: 'hidden' })}>
           <div className={css({ h: 1, w: 32, bg: 'rgba(0,230,118,0.2)' })}>
@@ -249,7 +272,7 @@ export default function AboutSection() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative', mt: { lg: '-214px' } }), "group")}
         >
-          <div className={cx(css({ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.05)', bg: 'rgba(255,255,255,0.02)' }), 'glass-panel')}>
+          <div className={cx(css({ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', rounded: '2px', border: '1px solid rgba(255,255,255,0.05)', bg: 'rgba(255,255,255,0.02)' }), 'glass-panel')}>
             <Image
               src={aboutData?.imageUrl || '/img-profile.png'}
               alt="Jefferson Silva"
@@ -260,7 +283,7 @@ export default function AboutSection() {
             <div className={css({ position: 'absolute', inset: 0, bgGradient: 'to-t', gradientFrom: 'black', gradientVia: 'transparent', gradientTo: 'transparent', opacity: 0.8 })}></div>
           </div>
           {/* Data Tag */}
-          <div className={cx(css({ position: { base: 'relative', md: 'absolute' }, bottom: { base: 0, md: -6 }, right: { base: 0, md: -6 }, p: { base: 5, md: 8 }, mt: { base: 4, md: 0 }, bg: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(16px)', rounded: 'xl', borderLeft: '6px solid token(colors.primary)', shadow: '2xl', transition: 'transform 0.3s', _groupHover: { transform: 'translateY(-10px)' } }), 'glass-panel')}>
+          <div className={cx(css({ position: { base: 'relative', md: 'absolute' }, bottom: { base: 0, md: -6 }, right: { base: 0, md: -6 }, p: { base: 5, md: 8 }, mt: { base: 4, md: 0 }, bg: 'rgba(10,10,10,0.92)', backdropFilter: 'blur(16px)', rounded: '2px', borderLeft: '6px solid token(colors.primary)', shadow: '2xl', transition: 'transform 0.3s', _groupHover: { transform: 'translateY(-10px)' } }), 'glass-panel')}>
             <p className={css({ fontFamily: 'headline', fontWeight: 'bold', fontSize: 'xl', color: 'white', mb: 2, textTransform: 'uppercase', letterSpacing: '0.05em' })}>{aboutData?.name || 'Jefferson S. Paulino'}</p>
             <p className={css({ fontFamily: 'body', fontSize: 'xs', color: 'primary', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 'widest' })}>{aboutData?.role || 'Sênior Full Stack & IA'}</p>
           </div>
@@ -281,16 +304,26 @@ export default function AboutSection() {
           [01] Trajetória_Profissional
         </h3>
 
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 10, pt: 4, mb: 16 })}>
-          {(dynExps.filter(e => e.type === 'Trabalho').length > 0 ? dynExps.filter(e => e.type === 'Trabalho') : workExperiences).map((job, index) => (
-            <div key={job.$id || index} className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', lg: '360px 1fr' }, gap: { base: 2, lg: 12 }, pb: 10, borderBottom: '1px solid rgba(255,255,255,0.03)' })}>
+        <div className={css({ display: 'flex', gap: 2, mb: 1, justifyContent: 'flex-end', pr: 2 })}>
+          <button onClick={() => scroll(workScrollRef, 'left')} className={css({ w: '28px', h: '28px', rounded: 'full', border: '1px solid rgba(255,255,255,0.06)', bg: 'rgba(255,255,255,0.02)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', _hover: { borderColor: 'rgba(0,230,118,0.4)', bg: 'rgba(0,230,118,0.06)', color: 'primary' }, transition: 'all 0.2s' })}>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className={css({ w: '14px', h: '14px' })}><path d="M10 12l-4-4 4-4"/></svg>
+          </button>
+          <button onClick={() => scroll(workScrollRef, 'right')} className={css({ w: '28px', h: '28px', rounded: 'full', border: '1px solid rgba(255,255,255,0.06)', bg: 'rgba(255,255,255,0.02)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', _hover: { borderColor: 'rgba(0,230,118,0.4)', bg: 'rgba(0,230,118,0.06)', color: 'primary' }, transition: 'all 0.2s' })}>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className={css({ w: '14px', h: '14px' })}><path d="M6 4l4 4-4 4"/></svg>
+          </button>
+        </div>
+
+        <div ref={workScrollRef} className={css({ display: 'flex', flexDir: 'row', gap: 4, overflowX: 'auto', pt: 2, pb: 6, mb: 16, '&::-webkit-scrollbar': { display: 'none' }, scrollbarWidth: 'none' })}>
+          {combinedWork.map((job, index) => (
+            <div key={job.$id || index} className={css({ flexShrink: 0, w: { base: '260px', md: '290px' }, display: 'flex', flexDir: 'column', gap: 3, p: 4, bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', rounded: '2px', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.04)', transform: 'translateY(-2px)' } })}>
               <div>
                 <span className={css({ fontFamily: 'label', fontSize: 'xs', color: 'primary', letterSpacing: 'wider' })}>{job.period}</span>
                 <h4 className={css({ fontFamily: 'headline', fontSize: '2xl', color: 'white', fontWeight: 'bold', mt: 1 })}>{job.title}</h4>
-                <p className={css({ fontFamily: 'body', fontSize: 'md', color: 'gray.400', mt: 1, fontWeight: 'medium' })}>{job.institution || (job as any).role}</p>
-                {job.description && <p className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.500', mt: 2, fontStyle: 'italic', maxWidth: 'xl' })}>{job.description}</p>}
+                <p className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.400', mt: 1, fontWeight: 'medium', textTransform: 'uppercase', letterSpacing: 'wider' })}>{job.institution || (job as any).role}</p>
+                {job.description && <p className={css({ fontFamily: 'body', fontSize: 'xs', color: 'gray.500', mt: 1, fontStyle: 'italic', maxWidth: 'xl' })}>{job.description}</p>}
               </div>
-              <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.300', fontFamily: 'body', fontSize: 'sm', listStyle: 'none' })}>
+              <div className={css({ h: '1px', bg: 'rgba(255,255,255,0.04)', my: 2 })} />
+              <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.400', fontFamily: 'body', fontSize: 'xs', listStyle: 'none' })}>
                 {(job.activities && typeof job.activities === 'string' ? job.activities.split('\n') : (job as any).activities || []).map((act: string, idx: number) => (
                   <li key={idx} className={css({ display: 'flex', gap: 2, lineHeight: 'relaxed' })}><span className={css({ color: 'primary' })}>▸</span> {act}</li>
                 ))}
@@ -305,16 +338,17 @@ export default function AboutSection() {
           [02] Formação_Acadêmica_&_Certificações
         </h3>
 
-        <div className={css({ display: 'flex', flexDir: 'column', gap: 10, pt: 4, mb: 16 })}>
-          {(dynExps.filter(e => e.type === 'Acadêmico').length > 0 ? dynExps.filter(e => e.type === 'Acadêmico') : academicEducation).map((edu, index) => (
-            <div key={edu.$id || index} className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', lg: '360px 1fr' }, gap: { base: 2, lg: 12 }, pb: 10, borderBottom: '1px solid rgba(255,255,255,0.03)' })}>
+        <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: '1fr 1fr' }, gap: 6, pt: 4, mb: 16 })}>
+          {combinedEdu.map((edu, index) => (
+            <div key={edu.$id || index} className={css({ display: 'flex', flexDir: 'column', gap: 4, p: 6, bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', rounded: '2px', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.04)', borderColor: 'rgba(0,230,118,0.3)', transform: 'translateY(-3px)' } })}>
               <div>
                 <span className={css({ fontFamily: 'label', fontSize: 'xs', color: 'primary', letterSpacing: 'wider' })}>{edu.period}</span>
                 <h4 className={css({ fontFamily: 'headline', fontSize: '2xl', color: 'white', fontWeight: 'bold', mt: 1 })}>{edu.title}</h4>
-                <p className={css({ fontFamily: 'body', fontSize: 'md', color: 'gray.400', mt: 1, fontWeight: 'medium' })}>{edu.institution || (edu as any).role}</p>
-                {edu.description && <p className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.500', mt: 2, fontStyle: 'italic', maxWidth: 'xl' })}>{edu.description}</p>}
+                <p className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.400', mt: 1, fontWeight: 'medium', textTransform: 'uppercase', letterSpacing: 'wider' })}>{edu.institution || (edu as any).role}</p>
+                {edu.description && <p className={css({ fontFamily: 'body', fontSize: 'xs', color: 'gray.500', mt: 1, fontStyle: 'italic', maxWidth: 'xl' })}>{edu.description}</p>}
               </div>
-              <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.300', fontFamily: 'body', fontSize: 'sm', listStyle: 'none' })}>
+              <div className={css({ h: '1px', bg: 'rgba(255,255,255,0.04)', my: 2 })} />
+              <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.400', fontFamily: 'body', fontSize: 'xs', listStyle: 'none' })}>
                 {(edu.activities && typeof edu.activities === 'string' ? edu.activities.split('\n') : (edu as any).activities || []).map((act: string, idx: number) => (
                   <li key={idx} className={css({ display: 'flex', gap: 2, lineHeight: 'relaxed' })}><span className={css({ color: 'primary' })}>▸</span> {act}</li>
                 ))}
@@ -326,7 +360,7 @@ export default function AboutSection() {
         {/* Certifications Dynamic Grid */}
         <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 6, pt: 4 })}>
           {finalCerts.map((cert: any, index: number) => (
-            <div key={index} className={css({ p: 5, bg: 'rgba(255,255,255,0.02)', rounded: 'xl', border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDir: 'column', gap: 3, transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.04)', transform: 'translateY(-2px)' } })}>
+            <div key={index} className={css({ p: 5, bg: 'rgba(255,255,255,0.02)', rounded: '2px', border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDir: 'column', gap: 3, transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.04)', transform: 'translateY(-2px)' } })}>
               <h4 className={css({ fontFamily: 'headline', fontSize: 'sm', color: 'primary', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 'wider' })}>{cert.category}</h4>
               <ul className={css({ display: 'flex', flexDir: 'column', gap: 1.5, listStyle: 'none' })}>
                 {cert.items.map((item: string, idx: number) => (

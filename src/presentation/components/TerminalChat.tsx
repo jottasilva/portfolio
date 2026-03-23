@@ -105,7 +105,7 @@ export default function TerminalChat() {
               position: 'fixed', bottom: { base: 20, md: 24 }, right: { base: 4, md: 6 },
               w: { base: 'calc(100% - 32px)', md: '400px' }, h: '500px',
               bg: 'rgba(10, 10, 10, 0.95)', border: '1px solid rgba(0, 230, 118, 0.2)',
-              rounded: 'xl', zIndex: 99, display: 'flex', flexDir: 'column',
+              rounded: '2px', zIndex: 99, display: 'flex', flexDir: 'column',
               overflow: 'hidden', backdropFilter: 'blur(10px)',
               boxShadow: '0 10px 30px rgba(0,0,0,0.8)'
             }), 'glass-panel')}
@@ -161,11 +161,11 @@ export default function TerminalChat() {
                 disabled={loading}
                 className={css({
                   flex: 1, bg: 'rgba(0,0,0,0.4)', border: '1px solid rgba(0, 230, 118, 0.1)',
-                  rounded: 'md', px: 3, py: 2, color: 'white', fontFamily: 'monospace', fontSize: '13px',
+                  rounded: '2px', px: 3, py: 2, color: 'white', fontFamily: 'monospace', fontSize: '13px',
                   _focus: { outline: 'none', borderColor: 'primary' }
                 })}
               />
-              <button type="submit" disabled={loading} className={css({ bg: 'rgba(0, 230, 118, 0.1)', color: 'primary', border: '1px solid rgba(0, 230, 118, 0.3)', px: 3, rounded: 'md', cursor: 'pointer', _hover: { bg: 'primary', color: 'black' } })}>
+              <button type="submit" disabled={loading} className={css({ bg: 'rgba(0, 230, 118, 0.1)', color: 'primary', border: '1px solid rgba(0, 230, 118, 0.3)', px: 3, rounded: '2px', cursor: 'pointer', _hover: { bg: 'primary', color: 'black' } })}>
                 <span className="material-symbols-outlined text-sm">send</span>
               </button>
             </form>

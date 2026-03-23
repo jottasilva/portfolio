@@ -70,142 +70,137 @@ export default function ContactSection() {
         className={css({ w: 'full', mb: 24 })}
       >
         <div className={css({ display: 'flex', alignItems: 'center', gap: 4, mb: 6 })}>
-          <div className={css({ h: '1px', w: 12, bg: 'rgba(139, 92, 246, 0.5)' })}></div>
-          <span className={css({ fontFamily: 'label', color: 'secondary', textTransform: 'uppercase', letterSpacing: '0.4em', fontSize: '10px', fontWeight: 'bold' })}>
+          <div className={css({ h: '1px', w: 12, bg: 'rgba(255,255,255,0.2)' })}></div>
+          <span className={css({ fontFamily: 'label', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.4em', fontSize: '13px' })}>
             Protocolo: Comunicação
           </span>
         </div>
-        <h1 id="contact-heading" className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '5xl', lg: '6xl' }, letterSpacing: 'tight', color: 'white', fontWeight: 'bold' })}>
+        <h1 id="contact-heading" className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '5xl', lg: '6xl' }, letterSpacing: 'tight', color: 'white', fontWeight: '800', lineHeight: 1 })}>
           Inicializar <br/>
-          <span className={cx(css({ color: 'transparent', bgClip: 'text', bgGradient: 'to-r', gradientFrom: 'primary', gradientTo: 'secondary' }), 'neon-glow')}>
+          <span className={css({ fontWeight: '300', color: 'rgba(255,255,255,0.6)' })}>
             Conectividade.
           </span>
         </h1>
       </motion.header>
 
-      <div className={css({ w: 'full', display: 'grid', gridTemplateColumns: { base: '1fr', lg: 'repeat(12, 1fr)' }, gap: 16, alignItems: 'start' })}>
-        {/* Contact Form Section */}
+      <div className={css({ w: 'full', display: 'grid', gridTemplateColumns: { base: '1fr', lg: 'repeat(12, 1fr)' }, gap: { base: 12, lg: 0 }, alignItems: 'start' })}>
+        
+        {/* Column 1: Pontos de Acesso */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className={css({ gridColumn: { lg: 'span 7' }, w: 'full' })}
+          transition={{ duration: 0.8 }}
+          className={css({ gridColumn: { lg: 'span 4' }, display: 'flex', flexDir: 'column', gap: 6, pr: { lg: 8 } })}
         >
-          <form onSubmit={handleSubmit} aria-label="Formulário de contato" className={cx(css({ display: 'flex', flexDir: 'column', gap: 10, p: { base: 8, lg: 12 }, rounded: 'xl', position: 'relative', overflow: 'hidden', bg: 'rgba(15,15,15,0.4)', border: '1px solid rgba(255,255,255,0.02)' }), 'glass-panel')}>
-            <div aria-live="polite" aria-atomic="true">
-              {Object.keys(errors).length > 0 && (
-                <div role="alert" className={css({ mb: 4, p: 3, rounded: 'md', bg: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)' })}>
-                  <span className={css({ color: 'red.400', fontSize: 'sm' })}>Por favor, corrija os erros abaixo.</span>
-                </div>
-              )}
-            </div>
-            <div className={css({ position: 'absolute', top: 0, left: 0, w: 'full', h: '2px', bgGradient: 'to-r', gradientFrom: 'transparent', gradientVia: 'primary', gradientTo: 'transparent' })}></div>
-            
-            <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)' }, gap: 8 })}>
-              <div className="relative group">
-                <label htmlFor="contact-name" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Identificador do Usuário</label>
-                <input 
-                  id="contact-name"
-                  type="text" 
-                  required 
-                  value={formData.name} 
-                  onChange={e=>setFormData({...formData, name: e.target.value})} 
-                  aria-describedby={errors.name ? 'name-error' : undefined}
-                  placeholder="Nome..." 
-                  className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.name ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} 
-                />
-                {errors.name && <span id="name-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.name}</span>}
-              </div>
-              <div className="relative group">
-                <label htmlFor="contact-email" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Canal de Retorno</label>
-                <input 
-                  id="contact-email"
-                  type="email" 
-                  required 
-                  value={formData.email} 
-                  onChange={e=>setFormData({...formData, email: e.target.value})} 
-                  aria-describedby={errors.email ? 'email-error' : undefined}
-                  placeholder="usuario@servidor.com" 
-                  className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.email ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} 
-                />
-                {errors.email && <span id="email-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.email}</span>}
-              </div>
+          <div>
+            <span className={css({ fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#a855f7', mb: 8, display: 'block' })}>Pontos de Acesso</span>
+            <h3 className={css({ fontFamily: 'headline', fontSize: '20px', fontWeight: 'bold', color: 'white', mb: 4, lineHeight: '1.3' })}>Acesso direto ao nó disponível para colaborações prioritárias.</h3>
+            <p className={css({ fontFamily: 'body', fontSize: '13px', color: 'gray.500', lineHeight: '1.6' })}>Criptografia ponta-a-ponta nativa para transmissões seguras. Tempo de resposta médio inferior a 24h.</p>
+          </div>
+          <p className={css({ fontFamily: 'body', fontSize: '13px', color: 'gray.500', mt: 4 })}>Projetos de alta complexidade, parcerias estratégicas e consultorias sob demanda.</p>
+          <div className={css({ mt: { lg: 'auto' }, display: 'flex', alignItems: 'center', gap: 2, pt: 8 })}>
+            <div className={css({ w: 1.5, h: 1.5, rounded: 'full', bg: '#a855f7' })} />
+            <span className={css({ fontFamily: 'label', fontSize: '10px', color: '#a855f7', letterSpacing: '0.1em' })}>Nó ativo – disponível</span>
+          </div>
+        </motion.div>
+
+        {/* Column 2: Form */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className={css({ gridColumn: { lg: 'span 5' }, borderLeft: { lg: '1px solid rgba(255,255,255,0.03)' }, borderRight: { lg: '1px solid rgba(255,255,255,0.03)' }, px: { lg: 8 }, w: 'full' })}
+        >
+          <form onSubmit={handleSubmit} aria-label="Formulário de contato" className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
+            <div className="relative group">
+              <label htmlFor="contact-name" className={css({ display: 'block', fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'gray.400', mb: 2 })}>Identificador do Usuário</label>
+              <input 
+                id="contact-name"
+                type="text" 
+                required 
+                value={formData.name} 
+                onChange={e=>setFormData({...formData, name: e.target.value})} 
+                placeholder="Nome..." 
+                className={css({ w: 'full', bg: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', rounded: '2px', py: 3, px: 4, color: 'white', fontSize: '12px', _focus: { borderColor: '#a855f7', outline: 'none' } })} 
+              />
             </div>
 
             <div className="relative group">
-              <label htmlFor="contact-message" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Dados de Transmissão</label>
+              <label htmlFor="contact-email" className={css({ display: 'block', fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'gray.400', mb: 2 })}>Canal de Retorno</label>
+              <input 
+                id="contact-email"
+                type="email" 
+                required 
+                value={formData.email} 
+                onChange={e=>setFormData({...formData, email: e.target.value})} 
+                placeholder="usuario@servidor.com" 
+                className={css({ w: 'full', bg: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', rounded: '2px', py: 3, px: 4, color: 'white', fontSize: '12px', _focus: { borderColor: '#a855f7', outline: 'none' } })} 
+              />
+            </div>
+
+            <div className="relative group">
+              <label htmlFor="contact-message" className={css({ display: 'block', fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'gray.400', mb: 2 })}>Dados de Transmissão</label>
               <textarea 
                 id="contact-message"
                 rows={5} 
                 required 
                 value={formData.message} 
                 onChange={e=>setFormData({...formData, message: e.target.value})} 
-                aria-describedby={errors.message ? 'message-error' : undefined}
                 placeholder="Descreva os detalhes..." 
-                className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.message ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })}
+                className={css({ w: 'full', bg: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', rounded: '2px', py: 3, px: 4, color: 'white', fontSize: '12px', resize: 'none', _focus: { borderColor: '#a855f7', outline: 'none' } })}
               ></textarea>
-              {errors.message && <span id="message-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.message}</span>}
             </div>
 
-            <div className={css({ pt: 4 })}>
-              <button disabled={loading} type="submit" className={css({ w: { base: 'full', md: 'auto' }, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 3, bg: 'primary', color: 'black', fontFamily: 'label', fontSize: 'xs', fontWeight: 'bold', textTransform: 'uppercase', px: 10, py: 4, rounded: 'lg', cursor: loading?'not-allowed':'pointer' })}>
-                {loading ? 'Transmitindo...' : 'Executar Transmissão'}
-              </button>
-            </div>
+            <button disabled={loading} type="submit" className={css({ w: 'full', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 3, bg: '#a855f7', color: 'black', fontFamily: 'label', fontSize: '11px', fontWeight: 'bold', textTransform: 'uppercase', py: 4, rounded: '2px', cursor: loading?'not-allowed':'pointer', transition: 'all 0.3s', _hover: { filter: 'brightness(1.1)' } })}>
+              {loading ? 'Transmitindo...' : 'Executar Transmissão'} <span className={css({ fontSize: '14px' })}>&rarr;</span>
+            </button>
           </form>
         </motion.div>
 
-        {/* Direct Contact & Socials */}
-        <motion.aside 
+        {/* Column 3: Redes */}
+        <motion.div 
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className={css({ gridColumn: { lg: 'span 5' }, display: 'flex', flexDir: 'column', gap: 12, pl: { lg: 12 } })}
+          className={css({ gridColumn: { lg: 'span 3' }, display: 'flex', flexDir: 'column', gap: 6, pl: { lg: 8 } })}
         >
+          <span className={css({ fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#a855f7', mb: 2, display: 'block' })}>Redes</span>
+          
           <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
-            <div className={css({ display: 'flex', alignItems: 'center', gap: 3 })}>
-              <span className={css({ w: 2, h: 2, rounded: 'full', bg: 'primary', animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' })}></span>
-              <h3 className={css({ fontFamily: 'headline', fontSize: 'xl', fontWeight: 'bold', color: 'white', letterSpacing: 'tight', textTransform: 'uppercase' })}>Pontos de Acesso</h3>
-            </div>
-            <p className={css({ fontFamily: 'body', color: 'gray.400', lineHeight: 'relaxed', fontSize: 'sm' })}>
-              Acesso direto ao nó disponível para colaborações prioritárias. Criptografia ponta-a-ponta nativa para transmissões seguras.
-            </p>
-          </div>
-
-          <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
-            <div className={css({ display: 'flex', alignItems: 'center', gap: 6, p: 6, rounded: 'xl', border: '1px solid rgba(255,255,255,0.03)', bg: 'rgba(20,20,20,0.3)', transition: 'all 0.3s', _hover: { bg: 'rgba(200,255,0,0.03)', borderColor: 'rgba(200,255,0,0.1)' } })}>
-              <div className={css({ w: 12, h: 12, rounded: 'lg', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.5)', color: 'primary', border: '1px solid rgba(200,255,0,0.1)' })}>
-                <span className="material-symbols-outlined text-xl">account_tree</span>
+            <div className={css({ display: 'flex', alignItems: 'center', gap: 4, p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', bg: 'rgba(255,255,255,0.01)', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.03)', borderColor: 'rgba(168, 85, 247, 0.2)' } })}>
+              <div className={css({ w: 10, h: 10, rounded: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.4)', color: '#a855f7', border: '1px solid rgba(255,255,255,0.03)' })}>
+                <span className="material-symbols-outlined text-md">account_tree</span>
               </div>
               <div>
-                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary', mb: 1 })}>LinkedIn</span>
-                <a href="https://www.linkedin.com/in/jrsndev" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', fontWeight: 'medium', transition: 'colors', _hover: { color: 'primary' } })}>jefferson-silva</a>
+                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'gray.500', mb: 1 })}>LinkedIn</span>
+                <a href="https://www.linkedin.com/in/jrsndev" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: '13px', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: '#a855f7' } })}>jefferson-silva</a>
               </div>
             </div>
 
-            <div className={css({ display: 'flex', alignItems: 'center', gap: 6, p: 6, rounded: 'xl', border: '1px solid rgba(255,255,255,0.03)', bg: 'rgba(20,20,20,0.3)', transition: 'all 0.3s', _hover: { bg: 'rgba(200,255,0,0.03)', borderColor: 'rgba(200,255,0,0.1)' } })}>
-              <div className={css({ w: 12, h: 12, rounded: 'lg', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.5)', color: 'primary', border: '1px solid rgba(200,255,0,0.1)' })}>
-                <span className="material-symbols-outlined text-xl">verified_user</span>
+            <div className={css({ display: 'flex', alignItems: 'center', gap: 4, p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', bg: 'rgba(255,255,255,0.01)', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.03)', borderColor: 'rgba(168, 85, 247, 0.2)' } })}>
+              <div className={css({ w: 10, h: 10, rounded: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.4)', color: '#a855f7', border: '1px solid rgba(255,255,255,0.03)' })}>
+                <span className="material-symbols-outlined text-md">verified_user</span>
               </div>
               <div>
-                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary', mb: 1 })}>Certificados</span>
-                <a href="https://jrsncertificates.vercel.app/" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', fontWeight: 'medium', transition: 'colors', _hover: { color: 'primary' } })}>jrsncertificates</a>
+                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'gray.500', mb: 1 })}>Certificados</span>
+                <a href="https://jrsncertificates.vercel.app/" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: '13px', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: '#a855f7' } })}>jrsncertificates</a>
               </div>
             </div>
 
-            <div className={css({ display: 'flex', alignItems: 'center', gap: 6, p: 6, rounded: 'xl', border: '1px solid rgba(255,255,255,0.03)', bg: 'rgba(20,20,20,0.3)', transition: 'all 0.3s', _hover: { bg: 'rgba(200,255,0,0.03)', borderColor: 'rgba(200,255,0,0.1)' } })}>
-              <div className={css({ w: 12, h: 12, rounded: 'lg', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.5)', color: 'primary', border: '1px solid rgba(200,255,0,0.1)' })}>
-                <span className="material-symbols-outlined text-xl">chat</span>
+            <div className={css({ display: 'flex', alignItems: 'center', gap: 4, p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', bg: 'rgba(255,255,255,0.01)', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.03)', borderColor: 'rgba(168, 85, 247, 0.2)' } })}>
+              <div className={css({ w: 10, h: 10, rounded: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.4)', color: '#a855f7', border: '1px solid rgba(255,255,255,0.03)' })}>
+                <span className="material-symbols-outlined text-md">chat</span>
               </div>
               <div>
-                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary', mb: 1 })}>WhatsApp</span>
-                <a href="https://wa.me/5543991359790" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: 'primary' } })}>MANDAR PROMPT</a>
+                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'gray.500', mb: 1 })}>WhatsApp</span>
+                <a href="https://wa.me/5543991359790" target="_blank" rel="noopener noreferrer" className={css({ fontFamily: 'headline', fontSize: '13px', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: '#a855f7' } })}>Mandar Prompt</a>
               </div>
             </div>
           </div>
-        </motion.aside>
+        </motion.div>
       </div>
     </section>
   );

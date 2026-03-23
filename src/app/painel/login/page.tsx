@@ -56,7 +56,7 @@ export default function LoginPage() {
             border: '1px solid rgba(255,255,255,0.03)',
             backdropFilter: 'blur(20px)',
             p: 8,
-            rounded: '2xl',
+            rounded: '2px',
             shadow: '2xl',
             position: 'relative',
             zIndex: 1
@@ -74,7 +74,7 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <div className={css({ bg: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)', color: '#ff4444', p: 3, rounded: 'lg', mb: 6, fontSize: 'xs', fontFamily: 'body' })}>
+          <div className={css({ bg: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)', color: '#ff4444', p: 3, rounded: '2px', mb: 6, fontSize: 'xs', fontFamily: 'body' })}>
             ⚠️ {error}
           </div>
         )}
@@ -87,7 +87,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={css({ w: 'full', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', p: 3, rounded: 'lg', color: 'white', outline: 'none', fontSize: 'sm', transition: 'all 0.3s', _focus: { borderColor: 'primary', bg: 'rgba(255,255,255,0.05)' } })}
+              className={css({ w: 'full', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', p: 3, rounded: '2px', color: 'white', outline: 'none', fontSize: 'sm', transition: 'all 0.3s', _focus: { borderColor: 'primary', bg: 'rgba(255,255,255,0.05)' } })}
               placeholder="admin@exemplo.com"
             />
           </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className={css({ w: 'full', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', p: 3, rounded: 'lg', color: 'white', outline: 'none', fontSize: 'sm', transition: 'all 0.3s', _focus: { borderColor: 'secondary', bg: 'rgba(255,255,255,0.05)' } })}
+              className={css({ w: 'full', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', p: 3, rounded: '2px', color: 'white', outline: 'none', fontSize: 'sm', transition: 'all 0.3s', _focus: { borderColor: 'secondary', bg: 'rgba(255,255,255,0.05)' } })}
               placeholder="••••••••"
             />
           </div>
@@ -113,7 +113,7 @@ export default function LoginPage() {
               bg: 'primary',
               color: 'black',
               fontWeight: 'bold',
-              rounded: 'lg',
+              rounded: '2px',
               cursor: 'pointer',
               transition: 'all 0.3s',
               fontFamily: 'headline',

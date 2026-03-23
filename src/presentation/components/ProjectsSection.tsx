@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { css, cx } from 'styled-system/css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
 import { supabaseService } from '@/domain/services/supabaseService';
@@ -10,23 +10,36 @@ import { supabaseService } from '@/domain/services/supabaseService';
 const HARDCODED_PROJECTS = [
   {
     id: '1',
-    category: 'IA',
+    category: 'Sistemas',
     node: 'Automação',
     title: 'Gerenc-AI (ZapPDV)',
-    description: 'Automação inteligente para WhatsApp que funciona como um PDV completo. Gerenciamento de pedidos, estoque e relatórios direto no chat.',
+    description: 'Automação comercial e gestão de vendas 100% integradas ao WhatsApp.\nAgente de Atendimento IA 24/7 integrado a LLMs nativos\nPainel Dashboard Analítico de Vendas e rastreio de CAC\nControle de Estoque inteligente com webhooks escaláveis\nRelatórios Financeiros e de Conversão diários automatizados\nSuporte à Multi-Operadores e controle de caixa unificado\nGeração de Links de Pagamento integrado de ponta a ponta',
     image: '/projects/gerencia.png',
     size: 'large',
-    link: 'https://gerencia.ogerente.site/'
+    link: 'https://gerencia.ogerente.site/',
+    tech: ['WhatsApp API', 'Node.js', 'LLMs', 'Subgraphs']
   },
   {
     id: '2',
     category: 'Sistemas',
     node: 'Finanças',
     title: 'Finzap',
-    description: 'Plataforma de gestão financeira minimalista para controle de receitas e despesas, ideal para substituir planilhas com eficiência.',
+    description: 'Controle financeiro projetado para pequenas empresas e investidores.\nAPIs de Conciliação Bancária automáticas e seguras\nDashboards dinâmicos de Balanço Patrimonial em tempo real\nProjeção avançada de Fluxo de Caixa e Planejamento Orçamentário\nDRE Gerencial automático com rastreio de Ponto de Equilíbrio\nGestão de Contas a Pagar/Receber com alertas via webhook\nUX de alta performance com tempos de carga inferiores a 200ms',
     image: '/projects/finzap.png',
     size: 'normal',
-    link: 'https://finzap-one.vercel.app/'
+    link: 'https://finzap-one.vercel.app/',
+    tech: ['Next.js', 'Tailwind', 'Chart.js', 'Supabase']
+  },
+  {
+    id: '3',
+    category: 'IA',
+    node: 'Plataforma',
+    title: 'CaseLab',
+    description: 'QA e Automação de Testes para ecossistemas de software escaláveis.\nIntegração ágil com esteiras de CI/CD (GitHub Actions)\nDiagnósticos Analíticos de estabilidade e carga estática\nVerificação de regressão visual e segurança via IA preditiva\nCobertura de código rastreada em tempo real por módulo\nGeração de Relatórios Técnicos homologados para auditorias\nDisparos de alertas via Slack/Teams sobre falhas críticas',
+    image: '/projects/caselab.png',
+    size: 'normal',
+    link: '#',
+    tech: ['GitHub Actions', 'Docker', 'React', 'Zod']
   }
 ];
 
@@ -40,13 +53,23 @@ export default function ProjectsSection() {
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos_Nós');
-  const [visibleCount, setVisibleCount] = useState(2);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     async function fetchProjects() {
       try {
         const projs = await supabaseService.getProjects();
-        setProjects(projs.length > 0 ? projs : HARDCODED_PROJECTS);
+        const merged = projs.map((p: any) => {
+          const fallback = (HARDCODED_PROJECTS.find(h => h.title === p.title) || {}) as any;
+          return {
+            ...fallback,
+            ...p,
+            description: p.description && p.description.length > 20 ? p.description : fallback.description,
+            image: p.image && p.image !== '' ? p.image : fallback.image,
+            tech: p.tech || fallback.tech
+          };
+        });
+        setProjects(merged.length > 0 ? merged : HARDCODED_PROJECTS);
       } catch (err) {
         console.error(err);
         setProjects(HARDCODED_PROJECTS);
@@ -58,133 +81,296 @@ export default function ProjectsSection() {
   }, []);
 
   useEffect(() => {
-    setVisibleCount(2);
+    setCurrentIndex(0); // Reset index ao trocar categoria
   }, [activeCategory]);
 
   const filteredProjects = activeCategory === 'Todos_Nós'
     ? projects
     : projects.filter((p: any) => p.category === activeCategory);
 
+  const nextSlide = () => {
+    if (filteredProjects.length <= 1) return;
+    setCurrentIndex((prev) => (prev + 1) % filteredProjects.length);
+  };
+
+  const prevSlide = () => {
+    if (filteredProjects.length <= 1) return;
+    setCurrentIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
+  };
+
+  const visibleProjects = [];
+  const len = filteredProjects.length;
+  if (len > 0) {
+    visibleProjects.push(filteredProjects[currentIndex]);
+    if (len > 1) visibleProjects.push(filteredProjects[(currentIndex + 1) % len]);
+    if (len > 2) visibleProjects.push(filteredProjects[(currentIndex + 2) % len]);
+  }
+
+  if (loading) {
+    return (
+      <div className={css({ minH: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'gray.600', fontFamily: 'label', fontSize: 'xs' })}>
+         CARREGANDO_WORKFLOWS...
+      </div>
+    );
+  }
+
   return (
-    <section id="projects" className={css({ pt: 48, pb: 4, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto' })}>
-      <motion.header 
+    <section id="projects" className={css({ pt: 40, pb: 24, px: { base: 6, md: 8 }, maxW: { base: '90vw', md: '70vw' }, mx: 'auto' })}>
+      {/* HERO / HEADER */}
+      <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(12, 1fr)' }, gap: { base: 4, md: 10 }, alignItems: 'end', mb: 16 })}
+        className={css({ mb: 10 })}
       >
-        <div className={css({ gridColumn: { md: 'span 8' } })}>
-          <span className={cx(css({ fontFamily: 'label', color: 'primary', letterSpacing: '0.25em', fontSize: 'xs', textTransform: 'uppercase', mb: 3, display: 'block' }), 'neon-glow')}>
-            SAÍDA_TERMINAL // PROJETOS_DESTAQUE
-          </span>
-          <h1 className={css({ fontFamily: 'headline', fontSize: { base: '3xl', md: '5xl', lg: '6xl' }, fontWeight: 'black', letterSpacing: 'tighter', color: 'white', lineHeight: 0.95, textTransform: 'uppercase' })}>
-            SOBREPOSIÇÃO <br /> <span className={css({ color: 'primary', fontStyle: 'italic', fontWeight: 'light', opacity: 0.9 })}>{'DE SISTEMA.'}</span>
-          </h1>
+        <div>
+          <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
+             <div className={css({ h: '1px', w: 12, bg: 'rgba(255,255,255,0.2)' })}></div>
+             <span className={css({ fontFamily: 'label', color: 'rgba(255,255,255,0.6)', textTransform: 'uppercase', letterSpacing: '0.4em', fontSize: '13px' })}>PRODUTOS // SOLUÇÕES</span>
+          </div>
         </div>
-        <div className={css({ gridColumn: { md: 'span 4' }, pb: 2 })}>
-          <p className={css({ color: 'gray.400', fontFamily: 'body', fontSize: 'sm', lineHeight: 'relaxed', maxW: 'sm', borderLeft: '2px solid', borderColor: 'primary', pl: 6 })}>
-            Workflows inteligentes e arquiteturas SaaS de alto padrão, desenhadas para eliminar gargalos e acelerar resultados.
-          </p>
-        </div>
-      </motion.header>
+      </motion.div>
 
-      {/* Filters */}
-      <div className={css({ borderY: '1px solid rgba(255,255,255,0.02)', py: 4, mx: -8, mb: 12 })}>
-        <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' })}>
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat.value}
-              onClick={() => setActiveCategory(cat.value)}
-              className={css({
-                fontFamily: 'label',
-                fontSize: 'xs',
-                letterSpacing: 'wider',
-                textTransform: 'uppercase',
-                pb: 2,
-                cursor: 'pointer',
-                borderBottom: '2px solid',
-                transition: 'all 0.3s ease',
-                borderColor: activeCategory === cat.value ? 'primary' : 'transparent',
-                color: activeCategory === cat.value ? 'white' : 'gray.500',
-                _hover: { color: 'white' }
-              })}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-       {/* Listagem Alternada Premium */}
-      <div className={css({ display: 'flex', flexDir: 'column', gap: { base: 12, lg: 20 }, pt: 10 })}>
-        {filteredProjects.slice(0, visibleCount).map((project, index) => {
-          const isEven = index % 2 === 0;
-          return (
-            <motion.div
-              key={project.id || `proj-${index}`}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', lg: 'repeat(12, 1fr)' }, gap: { base: 6, lg: 12 }, alignItems: 'center', pb: { base: 12, lg: 20 }, borderBottom: '1px solid rgba(255,255,255,0.03)' })}
-            >
-              {/* Image side */}
-              <div className={css({ gridColumn: { lg: 'span 7' }, order: { base: 1, lg: isEven ? 1 : 2 }, position: 'relative', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', aspectRatio: '16/10', boxShadow: '2xl', transition: 'transform 0.5s', _hover: { transform: 'scale(1.01)' } })} onClick={() => project.link !== '#' && window.open(project.link, '_blank')}>
-                {(project.image || project.image_url) ? (
-                  <Image src={project.image || project.image_url} alt={project.title} fill sizes="(max-width: 768px) 100vw, 60vw" className={css({ objectFit: 'cover', transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)', _hover: { transform: 'scale(1.04)' } })} />
-                ) : (
-                  <div className={css({ position: 'absolute', inset: 0, bg: 'zinc.950', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.04)' })}>
-                    <span className={css({ color: 'primary', fontWeight: 'bold', letterSpacing: '2px', fontSize: 'sm' })}>PREVIEW EM BREVE</span>
-                  </div>
-                )}
-                <div className={css({ position: 'absolute', inset: 0, bgGradient: 'to-t', gradientFrom: 'rgba(0,0,0,0.85)', gradientVia: 'rgba(0,0,0,0.2)', gradientTo: 'transparent' })} />
-              </div>
-
-              {/* Text side */}
-              <div className={css({ gridColumn: { lg: 'span 5' }, order: { base: 2, lg: isEven ? 2 : 1 }, display: 'flex', flexDir: 'column', gap: 4 })}>
-                <span className={css({ fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.3em', color: 'primary' })}>{project.category?.replace('_', ' ') || 'Geral'}</span>
-                <h3 className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white' })}>{project.title}</h3>
-                <p className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.400', lineHeight: 'relaxed' })}>{project.description}</p>
-                
-                <div className={css({ display: 'flex', alignItems: 'center', gap: 3, mt: 2 })}>
-                  <div className={css({ h: '1px', w: 10, bg: 'primary' })} />
-                  <span className={css({ fontFamily: 'label', fontSize: '9px', letterSpacing: '0.2em', color: 'gray.500', textTransform: 'uppercase' })}>{project.node}</span>
-                </div>
-
-                <a href={project.link} target="_blank" className={css({ mt: 4, alignSelf: 'start', display: 'flex', alignItems: 'center', gap: 2, fontFamily: 'label', fontSize: '12px', letterSpacing: '0.1em', color: 'primary', fontWeight: 'bold', textTransform: 'uppercase', cursor: 'pointer', _hover: { gap: 4, color: 'white' }, transition: 'all 0.3s' })}>
-                  {project.link !== '#' ? 'Ver Projeto' : 'Investigar Nó'} <span>→</span>
-                </a>
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {visibleCount < filteredProjects.length && (
-        <div className={css({ display: 'flex', justifyContent: 'center', mt: 16 })}>
+      {/* TABS (FILTROS) */}
+      <div className={css({ mb: 10, display: 'flex', gap: 3 })}>
+        {CATEGORIES.map(cat => (
           <button
-            onClick={() => setVisibleCount(prev => prev + 2)}
+            key={cat.value}
+            onClick={() => setActiveCategory(cat.value)}
             className={css({
               fontFamily: 'label',
-              fontSize: 'xs',
-              letterSpacing: '0.2em',
+              fontSize: '9px',
+              letterSpacing: 'wider',
               textTransform: 'uppercase',
-              bg: 'transparent',
-              border: '1px solid',
-              borderColor: 'primary',
-              color: 'primary',
-              px: 8,
-              py: 3,
-              rounded: 'lg',
-              fontWeight: 'bold',
+              px: 4,
+              py: 2,
               cursor: 'pointer',
-              transition: 'all 0.3s',
-              _hover: { bg: 'primary', color: 'black', transform: 'translateY(-2px)', boxShadow: '0 0 20px rgba(0,230,118,0.2)' }
+              transition: 'all 0.2s',
+              bg: activeCategory === cat.value ? 'rgba(0, 230, 118, 0.1)' : 'transparent',
+              border: '1px solid',
+              borderColor: activeCategory === cat.value ? 'rgba(0, 230, 118, 0.4)' : 'rgba(255,255,255,0.04)',
+              color: activeCategory === cat.value ? 'white' : 'gray.400',
+              _hover: { bg: 'rgba(255,255,255,0.03)', color: 'white' },
+              fontWeight: activeCategory === cat.value ? 'bold' : 'normal'
             })}
           >
-            Carregar Mais Projetos <span>+</span>
+            {cat.label}
           </button>
+        ))}
+      </div>
+      {/* PAGINATED GRID CONTAINER */}
+      {filteredProjects.length > 0 ? (
+        <div className={css({ position: 'relative' })}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex + activeCategory}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className={css({ 
+                display: 'grid', 
+                gridTemplateColumns: { base: '1fr', lg: '1fr 1fr' }, 
+                gap: '1px', 
+                bg: 'rgba(255, 255, 255, 0.04)', 
+                border: '1px solid rgba(255, 255, 255, 0.04)', 
+                overflow: 'hidden',
+                position: 'relative'
+              })}
+            >
+              {visibleProjects.map((project, index) => {
+                const isFeatured = index === 0;
+
+                return (
+                  <div
+                    key={project.id || `proj-${index}`}
+                    className={cx(
+                      css({
+                        gridColumn: isFeatured ? { lg: 'span 2' } : 'auto',
+                        display: isFeatured ? 'grid' : 'flex',
+                        gridTemplateColumns: isFeatured ? { base: '1fr', lg: '1.2fr 1fr' } : 'none',
+                        flexDir: isFeatured ? 'none' : 'column',
+                        gap: isFeatured ? { base: 6, lg: 12 } : 5,
+                        p: { base: 6, md: 10 },
+                        bg: '#080b0a', 
+                        transition: 'background 0.3s',
+                        position: 'relative',
+                        _hover: { bg: 'rgba(255,255,255,0.015)' }
+                      })
+                    )}
+                  >
+                    {isFeatured && (
+                      <div className={css({
+                        position: 'absolute',
+                        inset: 0,
+                        bg: 'radial-gradient(circle at top right, rgba(0, 230, 118, 0.03) 0%, transparent 40%)',
+                        pointerEvents: 'none'
+                      })} />
+                    )}
+
+                    <div className={css({ display: 'flex', flexDir: 'column', gap: isFeatured ? 5 : 4, zIndex: 2 })}>
+                      {isFeatured && project.node && (
+                        <span className={css({ 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: 1.5, 
+                          fontFamily: 'label', 
+                          fontSize: '9px', 
+                          color: 'primary', 
+                          bg: 'rgba(0, 230, 118, 0.08)', 
+                          border: '1px solid rgba(0, 230, 118, 0.2)', 
+                          px: 3, 
+                          py: 1, 
+                          rounded: '2px', 
+                          alignSelf: 'start',
+                          letterSpacing: '0.1em'
+                        })}>
+                          {project.node || 'AUTOMATION'}
+                        </span>
+                      )}
+
+                      {!isFeatured && (
+                        <div className={css({ display: 'flex', alignItems: 'center', gap: 2 })}>
+                          <div className={css({ w: '20px', h: '1px', bg: 'primary', opacity: 0.5 })} />
+                          <span className={css({ fontFamily: 'label', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'primary' })}>
+                            {project.category || 'Geral'}
+                          </span>
+                        </div>
+                      )}
+
+                      <h2 className={css({ 
+                        fontFamily: 'headline', 
+                        fontSize: isFeatured ? { base: '28px', md: '36px' } : '20px', 
+                        fontWeight: '800', 
+                        color: 'white', 
+                        lineHeight: '1.1' 
+                      })}>
+                        {project.title}
+                      </h2>
+
+                      <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, listStyle: 'none' })}>
+                         {(project.description || '').split('\n').map((line: string, i: number) => (
+                            <li key={i} className={css({ display: 'flex', alignItems: 'start', gap: 2, fontFamily: 'body', fontSize: '13px', color: 'gray.400', lineHeight: '1.6', maxW: isFeatured ? '400px' : 'none' })}>
+                               <span className={css({ color: 'primary', mt: 1 })}>▸</span> {line}
+                            </li>
+                         ))}
+                      </ul>
+
+                      {project.tech && (
+                        <div className={css({ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 3, pt: 3, borderTop: '1px solid rgba(255,255,255,0.02)' })}>
+                          {project.tech.map((t: string) => (
+                             <span key={t} className={css({ fontSize: '9px', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', px: 2, py: 0.5, rounded: '2px', color: 'gray.400', fontFamily: 'label', letterSpacing: '0.05em' })}>
+                               {t}
+                             </span>
+                          ))}
+                        </div>
+                      )}
+
+                      {project.link && project.link !== '#' && (
+                        <a 
+                          href={project.link} 
+                          target="_blank" 
+                          className={css({ 
+                            mt: 'auto', 
+                            pt: 4, 
+                            borderTop: '1px solid rgba(255,255,255,0.04)', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 2, 
+                            fontFamily: 'label', 
+                            fontSize: '10px', 
+                            textTransform: 'uppercase', 
+                            color: 'white', 
+                            fontWeight: 'bold', 
+                            _hover: { color: 'primary', gap: 4 }, 
+                            transition: 'all 0.3s' 
+                          })}
+                        >
+                          Ver Projeto 
+                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={css({ stroke: 'currentColor', transition: 'transform 0.2s' })}>
+                            <path d="M1 6h10M6 1l5 5-5 5" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+
+                    {isFeatured && (
+                      <div className={css({ display: 'flex', flexDir: 'column', gap: 4, zIndex: 2 })}>
+                        <div className={css({ 
+                          bg: 'rgba(20, 20, 20, 0.6)', 
+                          border: '1px solid rgba(255, 255, 255, 0.05)', 
+                          rounded: '2px', 
+                          overflow: 'hidden', 
+                          aspectRatio: '16/10', 
+                          position: 'relative', 
+                          boxShadow: '2xl' 
+                        })}>
+                          <div className={css({ h: '28px', bg: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', px: 3, gap: 1.5, borderBottom: '1px solid rgba(255,255,255,0.03)' })}>
+                            <div className={css({ w: 1.5, h: 1.5, rounded: 'full', bg: 'gray.600', opacity: 0.6 })} />
+                            <div className={css({ w: 1.5, h: 1.5, rounded: 'full', bg: 'gray.600', opacity: 0.6 })} />
+                            <div className={css({ w: 1.5, h: 1.5, rounded: 'full', bg: 'gray.600', opacity: 0.6 })} />
+                          </div>
+                          <div className={css({ position: 'relative', w: 'full', h: 'calc(100% - 28px)', overflow: 'hidden' })}>
+                            {project.image ? (
+                              <Image src={project.image} fill className={css({ objectFit: 'cover' })} alt={project.title} />
+                            ) : (
+                              <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', h: 'full', color: 'gray.700', fontFamily: 'label', fontSize: '11px' })}>
+                                PREVIEW_NÓ
+                              </div>
+                            )}
+                            <div className={css({ position: 'absolute', inset: 0, bg: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' })} />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Slider Navigation */}
+          {filteredProjects.length > 1 && (
+            <div className={css({ display: 'flex', gap: 1.5, mt: 4, justifyContent: 'flex-end' })}>
+              <button 
+                onClick={prevSlide}
+                className={css({ 
+                  p: 1.5, 
+                  rounded: '2px', 
+                  border: '1px solid rgba(255, 255, 255, 0.04)', 
+                  bg: 'rgba(255, 255, 255, 0.01)', 
+                  color: 'white', 
+                  cursor: 'pointer', 
+                  _hover: { bg: 'primary', color: 'black', borderColor: 'primary' }, 
+                  transition: 'all 0.2s' 
+                })}
+                aria-label="Anterior"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button 
+                onClick={nextSlide}
+                className={css({ 
+                  p: 1.5, 
+                  rounded: '2px', 
+                  border: '1px solid rgba(255, 255, 255, 0.04)', 
+                  bg: 'rgba(255, 255, 255, 0.01)', 
+                  color: 'white', 
+                  cursor: 'pointer', 
+                  _hover: { bg: 'primary', color: 'black', borderColor: 'primary' }, 
+                  transition: 'all 0.2s' 
+                })}
+                aria-label="Próximo"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className={css({ color: 'gray.600', fontFamily: 'label', fontSize: 'xs', textAlign: 'center', py: 20 })}>
+          NENHUM_PROJETO_ENCONTRADO_PARA_ESTE_NÓ
         </div>
       )}
     </section>
