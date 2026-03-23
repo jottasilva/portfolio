@@ -71,6 +71,13 @@ CREATE TABLE IF NOT EXISTS contacts (
     submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    prompt TEXT,
+    response TEXT,
+    submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 CREATE TABLE IF NOT EXISTS visits (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     visitor_id TEXT,
@@ -94,6 +101,7 @@ ALTER TABLE skills ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experiences ENABLE ROW LEVEL SECURITY;
 ALTER TABLE certifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE visits ENABLE ROW LEVEL SECURITY;
+ALTER TABLE chat_messages ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Leitura Pública About" ON about;
 CREATE POLICY "Leitura Pública About" ON about FOR SELECT USING (true);
@@ -109,6 +117,12 @@ CREATE POLICY "Leitura Pública Experiences" ON experiences FOR SELECT USING (tr
 
 DROP POLICY IF EXISTS "Leitura Pública Certifications" ON certifications;
 CREATE POLICY "Leitura Pública Certifications" ON certifications FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Leitura Pública Chat" ON chat_messages;
+CREATE POLICY "Leitura Pública Chat" ON chat_messages FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Escrita Pública Chat" ON chat_messages;
+CREATE POLICY "Escrita Pública Chat" ON chat_messages FOR INSERT WITH CHECK (true);
 
 DROP POLICY IF EXISTS "Escrita Pública Visitas" ON visits;
 CREATE POLICY "Escrita Pública Visitas" ON visits FOR INSERT WITH CHECK (true);
@@ -130,9 +144,9 @@ INSERT INTO about (id, title, subtitle, bio, resume_url, name, role, image_url) 
 
 -- --- Dados de projects ---
 INSERT INTO projects (title, description, image_url, link, github, category, node) VALUES 
-('Gerenc-AI (ZapPDV)', 'Automação inteligente para WhatsApp que funciona como um PDV completo. Gerenciamento de pedidos, estoque e relatórios.', NULL, 'https://gerencia.ogerente.site/', '', 'IA', 'Automação'),
-('Finzap', 'Plataforma de gestão financeira minimalista para controle de receitas e despesas, ideal para substituir planilhas.', NULL, 'https://finzap-one.vercel.app/', '', 'Sistemas', 'Finanças'),
-('CaseLab', 'Plataforma SaaS dedicada à personalização de capinhas de celular para B2B e B2C.', NULL, 'https://caselabb.vercel.app/', '', 'Sistemas', 'Lojas'),
+('Gerenc-AI (ZapPDV)', 'Automação inteligente para WhatsApp que funciona como um PDV completo. Gerenciamento de pedidos, estoque e relatórios.', '/projects/gerencia.png', 'https://gerencia.ogerente.site/', '', 'IA', 'Automação'),
+('Finzap', 'Plataforma de gestão financeira minimalista para controle de receitas e despesas, ideal para substituir planilhas.', '/projects/finzap.png', 'https://finzap-one.vercel.app/', '', 'Sistemas', 'Finanças'),
+('CaseLab', 'Plataforma SaaS dedicada à personalização de capinhas de celular para B2B e B2C.', '/projects/caselab.png', 'https://caselabb.vercel.app/', '', 'Sistemas', 'Lojas'),
 ('E-COMMERCE MAÇONARIA', 'Venda de artigos especializados com painel admin e integração com pagamentos.', NULL, 'https://ecomerce-rho-lyart.vercel.app/', '', 'Sistemas', 'SaaS'),
 ('INFOZAP MICRO-SAAS', 'Informações locais via Whatsapp com dados urbanos automatizados.', NULL, 'https://infozap.vercel.app/', '', 'IA', 'Automação'),
 ('EASY CONTRATO', 'Gerador de documentos pré-definidos com customização e exportação PDF.', NULL, 'https://easycontrato.vercel.app/', '', 'Sistemas', 'SaaS');

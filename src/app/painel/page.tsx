@@ -100,10 +100,15 @@ export default function PainelDashboard() {
   const handleSaveCert = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-       await supabaseService.createCertification(newCert);
-       setNewCert({ title: '', issuer: '', date: '', link: '', category: 'Geral' });
-       setEditId(null);
-       loadData();
+      if (editId) {
+        await supabaseService.updateCertification(editId, newCert);
+      } else {
+        await supabaseService.createCertification(newCert);
+      }
+      setNewCert({ title: '', issuer: '', date: '', link: '', category: 'Geral' });
+      setEditId(null);
+      toast.success('Certificação salva com sucesso!');
+      loadData();
     } catch { toast.error('Erro ao salvar certificado'); }
   };
 
@@ -139,6 +144,7 @@ export default function PainelDashboard() {
       }
       setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' });
       setEditId(null);
+      toast.success('Projeto salvo com sucesso!');
       loadData();
     } catch (error) { toast.error('Erro ao salvar projeto'); }
   };
@@ -153,6 +159,7 @@ export default function PainelDashboard() {
       }
       setNewExperience({ type: 'Trabalho', title: '', institution: '', period: '', description: '', activities: '' });
       setEditId(null);
+      toast.success('Trajetória salva com sucesso!');
       loadData();
     } catch { toast.error('Erro ao salvar trajetória'); }
   };
@@ -169,6 +176,7 @@ export default function PainelDashboard() {
       }
       setNewSkill({ name: '', category: 'Backend & APIs', value: '90%' });
       setEditId(null);
+      toast.success('Skill salva com sucesso!');
       loadData();
     } catch (error) { toast.error('Erro ao salvar skill'); }
   };
@@ -181,6 +189,7 @@ export default function PainelDashboard() {
       else if (type === 'cert') await supabaseService.deleteCertification(id);
       else if (type === 'chat') await supabaseService.deleteChatMessage(id);
       else await supabaseService.deleteExperience(id);
+      toast.success('Item excluído com sucesso!');
       loadData();
     } catch (error) { toast.error('Erro ao deletar'); }
   };
@@ -334,12 +343,12 @@ export default function PainelDashboard() {
                   <h3 className={css({ color: 'white', fontWeight: 'bold', mb: 4, fontSize: 'sm', textTransform: 'uppercase', letterSpacing: 'wider' })}>💬 Últimas Mensagens</h3>
                   <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
                     {messages.slice(0, 3).map((m) => (
-                      <div key={m.$id} className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 3, bg: 'rgba(255,255,255,0.02)', rounded: 'lg', borderLeft: '2px solid token(colors.secondary)' })}>
+                      <div key={m.id} className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 3, bg: 'rgba(255,255,255,0.02)', rounded: 'lg', borderLeft: '2px solid token(colors.secondary)' })}>
                         <div>
                           <span className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{m.name}</span>
                           <span className={css({ color: 'gray.500', fontSize: 'xs', ml: 2 })}>{m.email}</span>
                         </div>
-                        <span className={css({ color: 'gray.600', fontSize: 'xs' })}>{new Date(m.submittedAt).toLocaleDateString('pt-BR')}</span>
+                        <span className={css({ color: 'gray.600', fontSize: 'xs' })}>{new Date(m.submitted_at).toLocaleDateString('pt-BR')}</span>
                       </div>
                     ))}
                   </div>
@@ -353,10 +362,10 @@ export default function PainelDashboard() {
           {activeTab === 'messages' && !loading && (
             <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
               {messages.map((m) => (
-                <div key={m.$id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.secondary)' })}>
+                <div key={m.id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.secondary)' })}>
                   <div className={css({ display: 'flex', justifyContent: 'space-between', mb: 2 })}>
                      <span className={css({ fontWeight: 'bold', color: 'white' })}>{m.name}</span>
-                     <span className={css({ fontSize: 'xs', color: 'gray.500' })}>{new Date(m.submittedAt).toLocaleDateString()}</span>
+                     <span className={css({ fontSize: 'xs', color: 'gray.500' })}>{new Date(m.submitted_at).toLocaleDateString()}</span>
                   </div>
                   <p className={css({ fontSize: 'xs', color: 'secondary', mb: 2 })}>{m.email}</p>
                   <p className={css({ fontSize: 'sm', color: 'gray.300' })}>{m.message}</p>
@@ -371,18 +380,18 @@ export default function PainelDashboard() {
               
               {chatError && (
                 <div className={css({ bg: 'rgba(255,152,0,0.1)', p: 5, rounded: 'xl', borderLeft: '3px solid #ff9800', mb: 2 })}>
-                  <p className={css({ color: '#ff9800', fontWeight: 'bold', fontSize: 'sm', mb: 1 })}>⚠️ Configuração Pendente no Appwrite</p>
-                  <p className={css({ color: 'gray.300', fontSize: 'xs' })}>A coleção <code className={css({ color: 'primary' })}>{'chat_messages'}</code> não foi encontrada no banco <code className={css({ color: 'primary' })}>{'main'}</code>.</p>
-                  <p className={css({ color: 'gray.400', fontSize: 'xs', mt: 1 })}>Para ativar os logs, crie a coleção no seu Appwrite Dashboard com os atributos: <code className={css({ color: 'secondary' })}>{'prompt'}</code> (string) e <code className={css({ color: 'secondary' })}>{'response'}</code> (string/textarea).</p>
+                  <p className={css({ color: '#ff9800', fontWeight: 'bold', fontSize: 'sm', mb: 1 })}>⚠️ Configuração Pendente no Supabase</p>
+                  <p className={css({ color: 'gray.300', fontSize: 'xs' })}>A tabela <code className={css({ color: 'primary' })}>{'chat_messages'}</code> não foi encontrada ou não está acessível.</p>
+                  <p className={css({ color: 'gray.400', fontSize: 'xs', mt: 1 })}>Para ativar os logs, execute o script de setup mestre no seu Supabase Studio.</p>
                 </div>
               )}
 
               {chatMessages.length === 0 && !chatError && <p className={css({ color: 'gray.500', fontSize: 'sm' })}>Nenhum log de chat registrado.</p>}
               {chatMessages.map((m) => (
-                <div key={m.$id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' })}>
+                <div key={m.id} className={css({ bg: '#121212', p: 5, rounded: 'xl', borderLeft: '3px solid token(colors.primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' })}>
                   <div className={css({ flex: 1, pr: 4 })}>
                     <div className={css({ display: 'flex', justifyContent: 'space-between', mb: 1 })}>
-                       <span className={css({ fontSize: 'xs', color: 'gray.500' })}>{new Date(m.submittedAt).toLocaleString('pt-BR')}</span>
+                       <span className={css({ fontSize: 'xs', color: 'gray.500' })}>{new Date(m.submitted_at).toLocaleString('pt-BR')}</span>
                     </div>
                     <p className={css({ fontSize: 'xs', color: 'primary', fontWeight: 'bold', mb: 1 })}>Visitante:</p>
                     <p className={css({ fontSize: 'sm', color: 'white', mb: 3 })}>{m.prompt}</p>
@@ -391,7 +400,7 @@ export default function PainelDashboard() {
                     <p className={css({ fontSize: 'sm', color: 'gray.300' })}>{m.response}</p>
                   </div>
                   <button 
-                    onClick={() => handleDelete('chat', m.$id)} 
+                    onClick={() => handleDelete('chat', m.id)} 
                     className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs', ml: 4, height: 'fit-content' })}
                   >
                     Excluir
@@ -441,11 +450,11 @@ export default function PainelDashboard() {
               </form>
               <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
                   {projects.map(p => (
-                    <div key={p.$id} className={css({ bg: '#141414', p: 5, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+                    <div key={p.id} className={css({ bg: '#141414', p: 5, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
                       <div><p className={css({ fontWeight: 'bold', color: 'white' })}>{p.title}</p></div>
                       <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(p.$id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', node: p.node || '', image: p.image || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('project', p.$id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                        <button onClick={() => { setEditId(p.id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', node: p.node || '', image: p.image || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>handleDelete('project', p.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                       </div>
                     </div>
                   ))}
@@ -471,11 +480,11 @@ export default function PainelDashboard() {
               </form>
               <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
                  {skills.map(s => (
-                   <div key={s.$id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+                   <div key={s.id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
                      <div><p className={css({ color: 'white', fontSize: 'sm' })}>{s.name} <span className={css({ color: 'secondary', fontSize: '10px', ml: 2 })}>{s.category}</span></p></div>
                      <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(s.$id); setNewSkill({ name: s.name, category: s.category, value: s.value }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('skill', s.$id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                        <button onClick={() => { setEditId(s.id); setNewSkill({ name: s.name, category: s.category, value: s.value }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>handleDelete('skill', s.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                      </div>
                    </div>
                  ))}
@@ -558,14 +567,14 @@ export default function PainelDashboard() {
               </form>
               <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
                  {certifications.map(c => (
-                   <div key={c.$id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+                   <div key={c.id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
                      <div>
                        <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{c.title}</p>
                        <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{c.issuer} • {c.date} <span className={css({ color: 'secondary', ml: 1 })}>({c.category || 'Geral'})</span></p>
                      </div>
                      <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(c.$id); setNewCert({ title: c.title, issuer: c.issuer, date: c.date, link: c.link || '', category: c.category || 'Geral' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('cert', c.$id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                        <button onClick={() => { setEditId(c.id); setNewCert({ title: c.title, issuer: c.issuer, date: c.date, link: c.link || '', category: c.category || 'Geral' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>handleDelete('cert', c.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                      </div>
                    </div>
                  ))}
@@ -595,14 +604,14 @@ export default function PainelDashboard() {
 
               <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
                  {experiences.map(e => (
-                   <div key={e.$id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+                   <div key={e.id} className={css({ bg: '#141414', p: 4, rounded: 'xl', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
                      <div>
                        <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{e.title}</p>
                        <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{e.institution} • {e.period} <span className={css({ color: 'primary', ml: 1 })}>({e.type})</span></p>
                      </div>
                      <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(e.$id); setNewExperience({ type: e.type, title: e.title, institution: e.institution, period: e.period, description: e.description, activities: e.activities || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('experience', e.$id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                        <button onClick={() => { setEditId(e.id); setNewExperience({ type: e.type, title: e.title, institution: e.institution, period: e.period, description: e.description, activities: e.activities || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>handleDelete('experience', e.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: 'md', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                      </div>
                    </div>
                  ))}
