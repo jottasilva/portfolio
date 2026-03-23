@@ -2,7 +2,7 @@
 
 async function test() {
   try {
-    const res = await fetch('http://localhost:3000/api/track', {
+    const res = await fetch('http://127.0.0.1:3000/api/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

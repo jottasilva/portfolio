@@ -246,7 +246,7 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, scale: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative', mt: { lg: '-280px' } }), "group")}
+          className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative', mt: { lg: '-350px' } }), "group")}
         >
           <div className={cx(css({ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.05)', bg: 'rgba(255,255,255,0.02)' }), 'glass-panel')}>
             <img
