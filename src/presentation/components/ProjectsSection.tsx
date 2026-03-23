@@ -122,7 +122,7 @@ export default function ProjectsSection() {
           const isEven = index % 2 === 0;
           return (
             <motion.div
-              key={project.$id || `proj-${index}`}
+              key={project.id || `proj-${index}`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -131,7 +131,13 @@ export default function ProjectsSection() {
             >
               {/* Image side */}
               <div className={css({ gridColumn: { lg: 'span 7' }, order: { base: 1, lg: isEven ? 1 : 2 }, position: 'relative', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', aspectRatio: '16/10', boxShadow: '2xl', transition: 'transform 0.5s', _hover: { transform: 'scale(1.01)' } })} onClick={() => project.link !== '#' && window.open(project.link, '_blank')}>
-                <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 60vw" className={css({ objectFit: 'cover', transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)', _hover: { transform: 'scale(1.04)' } })} />
+                {(project.image || project.image_url) ? (
+                  <Image src={project.image || project.image_url} alt={project.title} fill sizes="(max-width: 768px) 100vw, 60vw" className={css({ objectFit: 'cover', transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)', _hover: { transform: 'scale(1.04)' } })} />
+                ) : (
+                  <div className={css({ position: 'absolute', inset: 0, bg: 'zinc.950', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.04)' })}>
+                    <span className={css({ color: 'primary', fontWeight: 'bold', letterSpacing: '2px', fontSize: 'sm' })}>PREVIEW EM BREVE</span>
+                  </div>
+                )}
                 <div className={css({ position: 'absolute', inset: 0, bgGradient: 'to-t', gradientFrom: 'rgba(0,0,0,0.85)', gradientVia: 'rgba(0,0,0,0.2)', gradientTo: 'transparent' })} />
               </div>
 

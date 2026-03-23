@@ -43,7 +43,7 @@ export default function Header() {
 
         {/* Logo Node */}
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 })}>
-          <Image src="/logo.svg" alt="JRSN Logo" width={48} height={48} className={css({ h: 12, w: 'auto' })} />
+          <Image src="/logo.svg" alt="JRSN Logo" width={48} height={48} priority loading="eager" className={css({ h: 12, w: 12, objectFit: 'contain' })} />
         </div>
 
         {/* Right Actions Container (Grouped to push everything right) */}
