@@ -203,7 +203,8 @@ INSERT INTO certifications (title, issuer, date, link, category) VALUES
 INSERT INTO experiences (type, title, institution, period, description, activities) VALUES 
 ('Trabalho', 'JRSN DEV', 'Fundador & Software Engineer', '2006 – Presente', '', 'Entregou aplicações web/mobile para múltiplos setores ao longo de 8+ anos.\nArquitetou APIs REST escaláveis com integrações e webhooks.\nDesenvolveu frontends modernos (React, Next) e backends robustos.'),
 ('Trabalho', 'N9 Agência Digital', 'Fundador & Senior Full Stack Engineer', '2024 – Presente', '', 'Projetou e entregou sistemas de alta performance do backend ao deploy.\nAutomatizou workflows complexos com n8n e APIs REST/Webhooks.\nDesenvolveu agente de IA para atendimento 24/7 via WhatsApp.'),
-('Acadêmico', 'CENES', 'Especialização em Engenharia de Software', '2024 – 2025', '', 'Aprofundamento em metodologias de desenvolvimento de software.\nArquitetura de sistemas distribuídos e boas práticas.');
+('Acadêmico', 'CENES', 'Especialização em Engenharia de Software', '2024 – 2025', '', 'Aprofundamento em metodologias de desenvolvimento de software.\nArquitetura de sistemas distribuídos e boas práticas.'),
+('Acadêmico', 'Centro Universitário ETEP', 'Graduação - Gestão da Tecnologia da Informação', '08/2024 – 12/2024', 'Título de Tecnólogo. Colação de Grau em 06/09/2024. Diploma registrado.', 'Gestão estratégica de TI, análise de riscos e segurança da informação.');
 
 -- ==========================================
 -- ✅ SETUP CONCLUÍDO!
