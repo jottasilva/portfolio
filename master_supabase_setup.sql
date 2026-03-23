@@ -145,8 +145,8 @@ INSERT INTO skills (name, category, value) VALUES
 ('Vue.js / TypeScript', 'Frontend & UX', 94),
 ('n8n Workflow', 'IA & Automação', 98),
 ('OpenAI API / Agentic', 'IA & Automação', 95),
-('Docker / CI/CD', 'Infra & Cloud', 92),
-('PostgreSQL / NoSQL', 'Infra & Cloud', 94);
+('Flutter / React Native', 'Mobile & Cloud', 92),
+('Docker / AWS / VPS', 'Mobile & Cloud', 94);
 
 -- --- Dados de certifications ---
 INSERT INTO certifications (title, issuer, date, link, category) VALUES 
