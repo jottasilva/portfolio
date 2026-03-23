@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Portfólio de Jefferson Silva - Arquitetura de Software, Automação com IA e Sistemas SaaS",
 };
 
-const FramerBackground = dynamic(() => import('@/presentation/components/FramerBackground'), { ssr: false });
+import ClientBackground from '@/presentation/components/ClientBackground';
 import TrackVisit from '@/presentation/components/TrackVisit';
 
 
@@ -33,6 +33,8 @@ export default function RootLayout({
       className={`dark ${spaceGrotesk.variable} ${manrope.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body style={{ position: 'relative' }}>
@@ -42,7 +44,7 @@ export default function RootLayout({
         >
           Pular para o conteúdo principal
         </a>
-        <FramerBackground />
+        <ClientBackground />
         <TrackVisit />
 
         <div id="main-content" style={{ position: 'relative', zIndex: 1 }}>
