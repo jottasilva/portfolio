@@ -179,7 +179,11 @@ INSERT INTO certifications (title, issuer, date, link, category) VALUES
 ('Identidade Visual', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
 ('Flyer Creator', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
 ('Marketing Digital', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
-('Inteligência Social', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros');
+('Inteligência Social', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Gestão de Projetos', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Trabalhando com Computadores', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Escola Virtual', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Gestão da Tecnologia da Informação (TI)', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros');
 
 -- --- Dados de experiences ---
 INSERT INTO experiences (type, title, institution, period, description, activities) VALUES 
