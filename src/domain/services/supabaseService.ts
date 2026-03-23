@@ -95,7 +95,9 @@ export const supabaseService = {
   },
 
   async updateProject(id: string, data: any) {
-    return await supabase.from('projects').update(data).eq('id', id).select().single();
+    const { data: res, error } = await supabase.from('projects').update(data).eq('id', id).select();
+    if (error) throw error;
+    return res?.[0] || null;
   },
 
   /**
@@ -117,7 +119,9 @@ export const supabaseService = {
   },
 
   async updateSkill(id: string, data: any) {
-    return await supabase.from('skills').update(data).eq('id', id).select().single();
+    const { data: res, error } = await supabase.from('skills').update(data).eq('id', id).select();
+    if (error) throw error;
+    return res?.[0] || null;
   },
 
   async deleteSkill(id: string) {
@@ -140,7 +144,9 @@ export const supabaseService = {
   },
 
   async updateCertification(id: string, data: any) {
-    return await supabase.from('certifications').update(data).eq('id', id).select().single();
+    const { data: res, error } = await supabase.from('certifications').update(data).eq('id', id).select();
+    if (error) throw error;
+    return res?.[0] || null;
   },
 
   async deleteCertification(id: string) {
@@ -185,7 +191,9 @@ export const supabaseService = {
   },
 
   async updateExperience(id: string, data: any) {
-    return await supabase.from('experiences').update(data).eq('id', id).select().single();
+    const { data: res, error } = await supabase.from('experiences').update(data).eq('id', id).select();
+    if (error) throw error;
+    return res?.[0] || null;
   },
 
   async deleteExperience(id: string) {

@@ -1,4 +1,5 @@
 import Header from '@/presentation/components/Header';
+import HeroSection from '@/presentation/components/HeroSection';
 
 import AboutSection from '@/presentation/components/AboutSection';
 import SkillsSection from '@/presentation/components/SkillsSection';
@@ -14,11 +15,14 @@ export default function Home() {
     <div style={{ color: '#e5e2e1', minHeight: '100vh', overflowX: 'hidden', position: 'relative', background: 'transparent' }}>
 
 
-      
+
 
 
       <Header />
       <main>
+        <div id="home">
+          <HeroSection />
+        </div>
         <div id="about">
           <AboutSection />
         </div>

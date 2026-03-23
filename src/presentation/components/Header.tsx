@@ -1,6 +1,6 @@
 'use client';
 
-import { css } from 'styled-system/css';
+import { css, cx } from 'styled-system/css';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
@@ -32,97 +32,99 @@ export default function Header() {
     'Contato': 'contact'
   };
 
+  const iconMap: Record<string, string> = {
+    'Início': 'home',
+    'Skills': 'terminal',
+    'Projetos': 'grid_view',
+    'Formação': 'school',
+    'Trajetória': 'timeline',
+    'Contato': 'alternate_email'
+  };
+
+  const navItems = ['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória'];
+
   return (
     <nav className={css({
-      position: 'fixed', top: 0, width: 'full', zIndex: 50,
-      bg: scrolled ? 'rgba(0,0,0,0.9)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(16px)' : 'none',
-      transition: 'all 0.3s ease'
+      position: 'fixed', left: 0, top: 0, 
+      width: { base: '100%', md: '88px' }, 
+      height: { base: scrolled ? '72px' : '88px', md: '100vh' }, 
+      zIndex: 100,
+      bg: { base: scrolled ? 'rgba(4,9,6,0.95)' : 'rgba(4,9,6,0.6)', md: 'rgba(4,9,6,0.85)' },
+      backdropFilter: 'blur(16px)',
+      borderRight: { md: '1px solid rgba(57,255,110,0.08)' },
+      borderBottom: { base: '1px solid rgba(57,255,110,0.08)', md: 'none' },
+      transition: 'all 0.3s ease',
+      display: 'flex',
+      flexDir: { base: 'row', md: 'column' },
+      alignItems: 'center',
+      justifyContent: { base: 'space-between', md: 'flex-start' },
+      py: { base: 2, md: 8 },
+      px: { base: 6, md: 2 }
     })} aria-label="Navegação principal">
-      <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', px: 8, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
+      
 
-        {/* Logo Node */}
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 })}>
-          <Image src="/logo.svg" alt="JRSN Logo" width={80} height={80} priority loading="eager" className={css({ h: 20, w: 20, objectFit: 'contain' })} />
-        </div>
 
-        {/* Right Actions Container (Grouped to push everything right) */}
-        <div className={css({ display: 'flex', alignItems: 'center', gap: 6 })}>
-          {/* Navigation Core (Desktop) */}
-          <div className={css({ display: { base: 'none', md: 'flex' }, gap: 10, alignItems: 'center' })}>
-            {['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória'].map((item) => (
-              <a
-                key={item}
-                href={`#${anchorMap[item]}`}
-                className={css({
-                  fontFamily: 'headline',
-                  fontSize: 'sm',
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: 'white',
-                  opacity: 0.6,
-                  transition: 'all 0.3s',
-                  position: 'relative',
-                  cursor: 'pointer',
-                  _hover: { opacity: 1, color: 'primary', _after: { width: 'full' } },
-                  _after: {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: '-4px',
-                    left: 0,
-                    width: '0%',
-                    height: '1px',
-                    bg: 'primary',
-                    transition: 'width 0.3s ease-out',
-                  }
-                })}
-              >
-                {item}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              className={css({
-                fontFamily: 'headline',
-                fontSize: 'sm',
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: 'primary',
-                opacity: 0.9,
-                transition: 'all 0.3s',
-                position: 'relative',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                _hover: { opacity: 1, _after: { width: 'full' } },
-                _after: {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: '-4px',
-                  left: 0,
-                  width: '0%',
-                  height: '1px',
-                  bg: 'primary',
-                  transition: 'width 0.3s ease-out',
-                }
-              })}
-            >
-              + CONECTAR
-            </a>
-          </div>
+      {/* ── NAVIGATION (DESKTOP) ── */}
+      <div className={css({ 
+        display: { base: 'none', md: 'flex' }, 
+        flexDir: 'column', 
+        gap: 8, 
+        alignItems: 'center', 
+        flex: 1, 
+        justifyContent: 'center' 
+      })}>
+        {navItems.map((item) => (
+          <a
+            key={item}
+            href={`#${anchorMap[item]}`}
+            className={css({
+              display: 'flex', flexDir: 'column', alignItems: 'center', gap: 1,
+              fontFamily: 'headline', fontSize: '9px', letterSpacing: '0.1em',
+              textTransform: 'uppercase', color: 'white', opacity: 0.6,
+              transition: 'all 0.2s', cursor: 'pointer',
+              _hover: { opacity: 1, color: 'primary', '& span': { transform: 'scale(1.1)' } }
+            })}
+          >
+            <span className={cx("material-symbols-outlined", css({ fontSize: '20px', transition: 'all 0.2s', color: 'primary' }))}>
+              {iconMap[item]}
+            </span>
+            <span className={css({ mt: 0.5 })}>{item}</span>
+          </a>
+        ))}
+        
+        {/* Contact directly in stream? */}
+        <a
+          href="#contact"
+          className={css({
+            display: 'flex', flexDir: 'column', alignItems: 'center', gap: 1,
+            fontFamily: 'headline', fontSize: '10px', letterSpacing: '0.1em',
+            textTransform: 'uppercase', color: 'primary', opacity: 0.9,
+            transition: 'all 0.2s', cursor: 'pointer', mt: 4,
+            _hover: { opacity: 1, '& span': { transform: 'scale(1.1)' } }
+          })}
+        >
+          <span className={cx("material-symbols-outlined", css({ fontSize: '22px', transition: 'all 0.2s', color: 'primary' }))}>
+            {iconMap['Contato']}
+          </span>
+          <span className={css({ fontWeight: 'bold' })}>+ CONECTAR</span>
+        </a>
+      </div>
 
-          <div className={css({ display: { base: 'flex', md: 'none' }, alignItems: 'center' })}>
-            {/* Toggle Button for Mobile */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
-              className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0,230,118,0.2)', p: 2, rounded: '2px', cursor: 'pointer' })}
-            >
-              <span className="material-symbols-outlined" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
-            </button>
-          </div>
-        </div>
+      {/* ── MOBILE ACTIONS (Right) ── */}
+      <div className={css({ display: { base: 'flex', md: 'none' }, alignItems: 'center' })}>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          className={css({ 
+            display: 'flex', alignItems: 'center', justifyContent: 'center', 
+            color: 'primary', bg: 'rgba(255,255,255,0.02)', 
+            border: '1px solid rgba(57,255,110,0.2)', p: 2, rounded: '2px', cursor: 'pointer' 
+          })}
+        >
+          <span className="material-symbols-outlined" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
+        </button>
       </div>
 
       {/* Mobile Drawer (Framer Motion) */}

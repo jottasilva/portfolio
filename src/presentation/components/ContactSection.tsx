@@ -172,6 +172,16 @@ export default function ContactSection() {
           <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
             <div className={css({ display: 'flex', alignItems: 'center', gap: 4, p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', bg: 'rgba(255,255,255,0.01)', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.03)', borderColor: 'rgba(168, 85, 247, 0.2)' } })}>
               <div className={css({ w: 10, h: 10, rounded: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.4)', color: '#a855f7', border: '1px solid rgba(255,255,255,0.03)' })}>
+                <span className="material-symbols-outlined text-md">description</span>
+              </div>
+              <div>
+                <span className={css({ display: 'block', fontFamily: 'label', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'gray.500', mb: 1 })}>Currículo</span>
+                <a href="/curriculo_senior.pdf" download className={css({ fontFamily: 'headline', fontSize: '13px', color: 'white', fontWeight: 'bold', transition: 'colors', _hover: { color: '#a855f7' } })}>Baixar PDF Sênior</a>
+              </div>
+            </div>
+
+            <div className={css({ display: 'flex', alignItems: 'center', gap: 4, p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', bg: 'rgba(255,255,255,0.01)', transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.03)', borderColor: 'rgba(168, 85, 247, 0.2)' } })}>
+              <div className={css({ w: 10, h: 10, rounded: '2px', display: 'flex', alignItems: 'center', justifyContent: 'center', bg: 'rgba(0,0,0,0.4)', color: '#a855f7', border: '1px solid rgba(255,255,255,0.03)' })}>
                 <span className="material-symbols-outlined text-md">account_tree</span>
               </div>
               <div>

@@ -6,6 +6,8 @@ import { useAuth } from '@/presentation/contexts/AuthContext';
 import { supabaseService } from '@/domain/services/supabaseService';
 import { css, cx } from 'styled-system/css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Modal } from '@/presentation/components/Modal';
+import { ConfirmModal } from '@/presentation/components/ConfirmModal';
 
 export default function PainelDashboard() {
   const { user, logout } = useAuth();
@@ -26,6 +28,8 @@ export default function PainelDashboard() {
 
   // Form States
   const [editId, setEditId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteItem, setDeleteItem] = useState<{ type: 'project' | 'skill' | 'cert' | 'experience' | 'chat'; id: string } | null>(null);
   const [newProject, setNewProject] = useState({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' });
   const [newSkill, setNewSkill] = useState({ name: '', category: 'Backend & APIs', value: '90%' });
   const [newCert, setNewCert] = useState({ title: '', issuer: '', date: '', link: '', category: 'Geral' });
@@ -181,8 +185,13 @@ export default function PainelDashboard() {
     } catch (error) { toast.error('Erro ao salvar skill'); }
   };
 
-  const handleDelete = async (type: 'project' | 'skill' | 'cert' | 'experience' | 'chat', id: string) => {
-    if (!confirm('Tem certeza?')) return;
+  const triggerDelete = (type: 'project' | 'skill' | 'cert' | 'experience' | 'chat', id: string) => {
+    setDeleteItem({ type, id });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteItem) return;
+    const { type, id } = deleteItem;
     try {
       if (type === 'project') await supabaseService.deleteProject(id);
       else if (type === 'skill') await supabaseService.deleteSkill(id);
@@ -192,6 +201,7 @@ export default function PainelDashboard() {
       toast.success('Item excluído com sucesso!');
       loadData();
     } catch (error) { toast.error('Erro ao deletar'); }
+    finally { setDeleteItem(null); }
   };
 
   return (
@@ -207,6 +217,7 @@ export default function PainelDashboard() {
         <nav className={css({ display: 'flex', flexDir: 'column', gap: 2, flex: 1 })}>
           {[
             { id: 'overview', label: 'Visão Geral' },
+            { id: 'about', label: 'Sobre' },
             { id: 'messages', label: 'Mensagens' },
             { id: 'chat', label: 'Conversas AI' },
             { id: 'projects', label: 'Projetos' },
@@ -400,7 +411,7 @@ export default function PainelDashboard() {
                     <p className={css({ fontSize: 'sm', color: 'gray.300' })}>{m.response}</p>
                   </div>
                   <button 
-                    onClick={() => handleDelete('chat', m.id)} 
+                    onClick={() => triggerDelete('chat', m.id)} 
                     className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs', ml: 4, height: 'fit-content' })}
                   >
                     Excluir
@@ -412,83 +423,120 @@ export default function PainelDashboard() {
 
           {/* Projects Management */}
           {activeTab === 'projects' && !loading && (
-            <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
-              <form onSubmit={handleSaveProject} className={css({ bg: '#141414', p: 6, rounded: '2px', display: 'flex', flexDir: 'column', gap: 4, height: 'fit-content' })}>
-                <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Projeto' : 'Adicionar Projeto'}</h3>
-                <input required value={newProject.title} onChange={e=>setNewProject({...newProject, title:e.target.value})} placeholder="Título" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <select value={newProject.category} onChange={e=>setNewProject({...newProject, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
-                   <option value="Sistemas">Sistemas</option>
-                   <option value="IA">IA & Automação</option>
-                </select>
-                <input required value={newProject.node} onChange={e=>setNewProject({...newProject, node:e.target.value})} placeholder="Subtítulo / Nó (Ex: Automação, Finanças)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <textarea required value={newProject.description} onChange={e=>setNewProject({...newProject, description:e.target.value})} placeholder="Descrição" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 32 })}/>
-                <input value={newProject.link} onChange={e=>setNewProject({...newProject, link:e.target.value})} placeholder="Link do Projeto" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <input value={newProject.github} onChange={e=>setNewProject({...newProject, github:e.target.value})} placeholder="Link GitHub" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                
-                <div>
-                  <label className={css({ color: 'gray.400', fontSize: 'xs', mb: 1, display: 'block' })}>Capa do Projeto</label>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    onChange={async (e) => {
-                      const file = e.target.files?.[0];
-                      if (!file) return;
-                      setUploading(true);
-                      try {
-                        const url = await supabaseService.uploadImage(file);
-                        setNewProject({ ...newProject, image: url });
-                      } catch { toast.error('Erro no upload'); }
-                      finally { setUploading(false); }
-                    }} 
-                  />
-                  {uploading && <span className={css({ fontSize: 'xs', color: 'primary', mt: 1, display: 'block' })}>Enviando...</span>}
-                  {newProject.image && <p className={css({ fontSize: '10px', color: 'gray.500', mt: 1, textOverflow: 'ellipsis', overflow: 'hidden' })}>{newProject.image}</p>}
-                </div>
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
+              <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 })}>
+                <p className={css({ color: 'gray.400', fontSize: 'sm' })}>{projects.length} projetos cadastrados</p>
+                <button 
+                  onClick={() => { setEditId(null); setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' }); setIsModalOpen(true); }}
+                  className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 4, py: 2, rounded: '2px', fontSize: 'sm', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.2)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}
+                >
+                  + Adicionar Projeto
+                </button>
+              </div>
 
-                <button type="submit" className={css({ bg: 'primary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'black', cursor: 'pointer' })} disabled={uploading}>{editId ? 'Salvar Alterações' : 'Salvar'}</button>
-                {editId && <button type="button" onClick={() => { setEditId(null); setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: '2px', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
-              </form>
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+              <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
+                  {projects.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic' })}>Nenhum projeto cadastrado.</p>}
                   {projects.map(p => (
-                    <div key={p.id} className={css({ bg: '#141414', p: 5, rounded: '2px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-                      <div><p className={css({ fontWeight: 'bold', color: 'white' })}>{p.title}</p></div>
+                    <div key={p.id} className={css({ bg: '#141414', p: 5, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', _hover: { bg: 'rgba(255,255,255,0.01)' } })}>
+                      <div>
+                        <p className={css({ fontWeight: 'bold', color: 'white' })}>{p.title}</p>
+                        <span className={css({ color: 'primary', fontSize: '10px', textTransform: 'uppercase' })}>{p.category}</span>
+                      </div>
                       <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(p.id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', node: p.node || '', image: p.image || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('project', p.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                        <button onClick={() => { setEditId(p.id); setNewProject({ title: p.title, description: p.description, link: p.link || '', github: p.github || '', category: p.category || 'Sistemas', node: p.node || '', image: p.image || '' }); setIsModalOpen(true); }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>triggerDelete('project', p.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
                       </div>
                     </div>
                   ))}
               </div>
+
+              {/* Modal de Formulário */}
+              <Modal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setEditId(null); }} title={editId ? 'Editar Projeto' : 'Adicionar Projeto'}>
+                <form onSubmit={async (e) => { await handleSaveProject(e); setIsModalOpen(false); }} className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+                  <input required value={newProject.title} onChange={e=>setNewProject({...newProject, title:e.target.value})} placeholder="Título" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', outline: 'none', _focus: { border: '1px solid token(colors.primary)' } })}/>
+                  <select value={newProject.category} onChange={e=>setNewProject({...newProject, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
+                     <option value="Sistemas">Sistemas</option>
+                     <option value="IA">IA & Automação</option>
+                  </select>
+                  <input required value={newProject.node} onChange={e=>setNewProject({...newProject, node:e.target.value})} placeholder="Subtítulo / Nó (Ex: Automação, Finanças)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <textarea required value={newProject.description} onChange={e=>setNewProject({...newProject, description:e.target.value})} placeholder="Descrição" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 32, resize: 'none' })}/>
+                  <input value={newProject.link} onChange={e=>setNewProject({...newProject, link:e.target.value})} placeholder="Link do Projeto" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <input value={newProject.github} onChange={e=>setNewProject({...newProject, github:e.target.value})} placeholder="Link GitHub" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  
+                  <div>
+                    <label className={css({ color: 'gray.400', fontSize: 'xs', mb: 1, display: 'block' })}>Capa do Projeto</label>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        setUploading(true);
+                        try {
+                          const url = await supabaseService.uploadImage(file);
+                          setNewProject({ ...newProject, image: url });
+                          toast.success('Upload concluído!');
+                        } catch { toast.error('Erro no upload'); }
+                        finally { setUploading(false); }
+                      }} 
+                    />
+                    {uploading && <span className={css({ fontSize: 'xs', color: 'primary', mt: 1, display: 'block' })}>Enviando...</span>}
+                    {newProject.image && <p className={css({ fontSize: '10px', color: 'gray.500', mt: 1, textOverflow: 'ellipsis', overflow: 'hidden' })}>{newProject.image}</p>}
+                  </div>
+
+                  <button type="submit" className={css({ bg: 'primary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'black', cursor: 'pointer', mt: 2 })} disabled={uploading}>
+                    {editId ? 'Salvar Alterações' : 'Salvar'}
+                  </button>
+                </form>
+              </Modal>
             </div>
           )}
 
           {/* Skills Management */}
           {activeTab === 'skills' && !loading && (
-            <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
-              <form onSubmit={handleSaveSkill} className={css({ bg: '#141414', p: 6, rounded: '2px', display: 'flex', flexDir: 'column', gap: 4, height: 'fit-content' })}>
-                <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Habilidade' : 'Adicionar Habilidade'}</h3>
-                <input required value={newSkill.name} onChange={e=>setNewSkill({...newSkill, name:e.target.value})} placeholder="Nome (Ex: Node.js)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <select value={newSkill.category} onChange={e=>setNewSkill({...newSkill, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
-                   <option value="Backend & APIs">Backend & APIs</option>
-                   <option value="Frontend & UX">Frontend & UX</option>
-                   <option value="IA & Automação">IA & Automação</option>
-                   <option value="Mobile & Cloud">Mobile & Cloud</option>
-                </select>
-                <input required value={newSkill.value} onChange={e=>setNewSkill({...newSkill, value:e.target.value})} placeholder="Porcentagem (Ex: 95%)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <button type="submit" className={css({ bg: 'secondary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'white', cursor: 'pointer' })}>{editId ? 'Salvar Alterações' : 'Salvar'}</button>
-                {editId && <button type="button" onClick={() => { setEditId(null); setNewSkill({ name: '', category: 'Backend & APIs', value: '90%' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: '2px', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
-              </form>
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
-                 {skills.map(s => (
-                   <div key={s.id} className={css({ bg: '#141414', p: 4, rounded: '2px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-                     <div><p className={css({ color: 'white', fontSize: 'sm' })}>{s.name} <span className={css({ color: 'secondary', fontSize: '10px', ml: 2 })}>{s.category}</span></p></div>
-                     <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(s.id); setNewSkill({ name: s.name, category: s.category, value: s.value }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('skill', s.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
-                     </div>
-                   </div>
-                 ))}
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
+              <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 })}>
+                <p className={css({ color: 'gray.400', fontSize: 'sm' })}>{skills.length} habilidades cadastradas</p>
+                <button 
+                  onClick={() => { setEditId(null); setNewSkill({ name: '', category: 'Backend & APIs', value: '90%' }); setIsModalOpen(true); }}
+                  className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 4, py: 2, rounded: '2px', fontSize: 'sm', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.2)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}
+                >
+                  + Adicionar Habilidade
+                </button>
               </div>
+
+              <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
+                  {skills.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic' })}>Nenhuma habilidade cadastrada.</p>}
+                  {skills.map(s => (
+                    <div key={s.id} className={css({ bg: '#141414', p: 4, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', _hover: { bg: 'rgba(255,255,255,0.01)' } })}>
+                      <div>
+                        <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{s.name}</p>
+                        <span className={css({ color: 'secondary', fontSize: '10px' })}>{s.category} ({s.value}%)</span>
+                      </div>
+                      <div className={css({ display: 'flex', gap: 2 })}>
+                        <button onClick={() => { setEditId(s.id); setNewSkill({ name: s.name, category: s.category, value: String(s.value) }); setIsModalOpen(true); }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>triggerDelete('skill', s.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Modal de Habilidade */}
+              <Modal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setEditId(null); }} title={editId ? 'Editar Habilidade' : 'Adicionar Habilidade'}>
+                <form onSubmit={async (e) => { await handleSaveSkill(e); setIsModalOpen(false); }} className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+                  <input required value={newSkill.name} onChange={e=>setNewSkill({...newSkill, name:e.target.value})} placeholder="Nome (Ex: Node.js)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', outline: 'none', _focus: { border: '1px solid token(colors.primary)' } })}/>
+                  <select value={newSkill.category} onChange={e=>setNewSkill({...newSkill, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
+                     <option value="Backend & APIs">Backend & APIs</option>
+                     <option value="Frontend & UX">Frontend & UX</option>
+                     <option value="IA & Automação">IA & Automação</option>
+                     <option value="Mobile & Cloud">Mobile & Cloud</option>
+                  </select>
+                  <input required value={newSkill.value} onChange={e=>setNewSkill({...newSkill, value:e.target.value})} placeholder="Porcentagem (Ex: 95%)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <button type="submit" className={css({ bg: 'secondary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'white', cursor: 'pointer', mt: 2 })}>
+                    {editId ? 'Salvar Alterações' : 'Salvar'}
+                  </button>
+                </form>
+              </Modal>
             </div>
           )}
 
@@ -537,7 +585,11 @@ export default function PainelDashboard() {
                   }} 
                 />
                 {uploading && <span className={css({ fontSize: 'xs', color: 'primary', mt: 1, display: 'block' })}>Enviando...</span>}
-                {(about as any).imageUrl && <p className={css({ fontSize: '10px', color: 'gray.500', mt: 1 })}>{(about as any).imageUrl}</p>}
+                {(about as any).imageUrl && (
+                  <div className={css({ mt: 2, position: 'relative', w: '100px', h: '100px', rounded: '4px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.05)' })}>
+                    <img src={(about as any).imageUrl} alt="Foto de Perfil" className={css({ w: 'full', h: 'full', objectFit: 'cover' })} />
+                  </div>
+                )}
               </div>
 
               <button type="submit" className={css({ bg: 'primary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'black', cursor: 'pointer', mt: 2 })} disabled={uploading}>Salvar Alterações</button>
@@ -546,79 +598,115 @@ export default function PainelDashboard() {
 
           {/* Certifications Management */}
           {activeTab === 'certifications' && !loading && (
-            <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
-              <form onSubmit={handleSaveCert} className={css({ bg: '#141414', p: 6, rounded: '2px', display: 'flex', flexDir: 'column', gap: 4, height: 'fit-content' })}>
-                 <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-                   <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Certificado' : 'Adicionar Certificado'}</h3>
-                   <button type="button" onClick={handleSeedCerts} className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 3, py: 1, rounded: '2px', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.3)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}>Importar Mocks</button>
-                 </div>
-                <input required value={newCert.title} onChange={e=>setNewCert({...newCert, title:e.target.value})} placeholder="Título da Certificação" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <input required value={newCert.issuer} onChange={e=>setNewCert({...newCert, issuer:e.target.value})} placeholder="Emissor (Ex: AWS, Google)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <select value={newCert.category} onChange={e=>setNewCert({...newCert, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
-                    <option value="DevSecOps & Cloud">DevSecOps & Cloud</option>
-                    <option value="Dados & IA">Dados & IA</option>
-                    <option value="Segurança da Informação">Segurança da Informação</option>
-                    <option value="Geral">Geral</option>
-                </select>
-                <input required value={newCert.date} onChange={e=>setNewCert({...newCert, date:e.target.value})} placeholder="Data (Ex: Jan 2025)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <input value={newCert.link || ''} onChange={e=>setNewCert({...newCert, link:e.target.value})} placeholder="Link do Certificado (Opcional)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <button type="submit" className={css({ bg: 'secondary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'white', cursor: 'pointer' })}>{editId ? 'Salvar Alterações' : 'Salvar'}</button>
-                {editId && <button type="button" onClick={() => { setEditId(null); setNewCert({ title: '', issuer: '', date: '', link: '', category: 'Geral' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: '2px', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
-              </form>
-              <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
-                 {certifications.map(c => (
-                   <div key={c.id} className={css({ bg: '#141414', p: 4, rounded: '2px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-                     <div>
-                       <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{c.title}</p>
-                       <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{c.issuer} • {c.date} <span className={css({ color: 'secondary', ml: 1 })}>({c.category || 'Geral'})</span></p>
-                     </div>
-                     <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(c.id); setNewCert({ title: c.title, issuer: c.issuer, date: c.date, link: c.link || '', category: c.category || 'Geral' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('cert', c.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
-                     </div>
-                   </div>
-                 ))}
-                  {certifications.length === 0 && (
-                     <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic', mt: 4 })}>Nenhuma certificação cadastrada.</p>
-                  )}
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
+              <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 })}>
+                <div className={css({ display: 'flex', gap: 3, alignItems: 'center' })}>
+                  <p className={css({ color: 'gray.400', fontSize: 'sm' })}>{certifications.length} certificados</p>
+                  <button type="button" onClick={handleSeedCerts} className={css({ bg: 'rgba(0,230,118,0.05)', color: 'primary', px: 2, py: 1, rounded: '2px', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.1)', _hover: { bg: 'rgba(0,230,118,0.1)' } })}>Importar Mocks</button>
+                </div>
+                <button 
+                  onClick={() => { setEditId(null); setNewCert({ title: '', issuer: '', date: '', link: '', category: 'Geral' }); setIsModalOpen(true); }}
+                  className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 4, py: 2, rounded: '2px', fontSize: 'sm', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.2)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}
+                >
+                  + Adicionar Certificado
+                </button>
               </div>
+
+              <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
+                  {certifications.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic' })}>Nenhum certificado cadastrado.</p>}
+                  {certifications.map(c => (
+                    <div key={c.id} className={css({ bg: '#141414', p: 4, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', _hover: { bg: 'rgba(255,255,255,0.01)' } })}>
+                      <div>
+                        <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{c.title}</p>
+                        <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{c.issuer} • {c.date} <span className={css({ color: 'secondary', ml: 1 })}>({c.category || 'Geral'})</span></p>
+                      </div>
+                      <div className={css({ display: 'flex', gap: 2 })}>
+                        <button onClick={() => { setEditId(c.id); setNewCert({ title: c.title, issuer: c.issuer, date: c.date, link: c.link || '', category: c.category || 'Geral' }); setIsModalOpen(true); }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>triggerDelete('cert', c.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+
+              {/* Modal de Certificado */}
+              <Modal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setEditId(null); }} title={editId ? 'Editar Certificado' : 'Adicionar Certificado'}>
+                <form onSubmit={async (e) => { await handleSaveCert(e); setIsModalOpen(false); }} className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+                  <input required value={newCert.title} onChange={e=>setNewCert({...newCert, title:e.target.value})} placeholder="Título da Certificação" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', outline: 'none', _focus: { border: '1px solid token(colors.primary)' } })}/>
+                  <input required value={newCert.issuer} onChange={e=>setNewCert({...newCert, issuer:e.target.value})} placeholder="Emissor (Ex: AWS, Google)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <select value={newCert.category} onChange={e=>setNewCert({...newCert, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
+                      <option value="DevSecOps & Cloud">DevSecOps & Cloud</option>
+                      <option value="Dados & IA">Dados & IA</option>
+                      <option value="Segurança da Informação">Segurança da Informação</option>
+                      <option value="Geral">Geral</option>
+                  </select>
+                  <input required value={newCert.date} onChange={e=>setNewCert({...newCert, date:e.target.value})} placeholder="Data (Ex: Jan 2025)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <input value={newCert.link || ''} onChange={e=>setNewCert({...newCert, link:e.target.value})} placeholder="Link do Certificado (Opcional)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <button type="submit" className={css({ bg: 'secondary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'white', cursor: 'pointer', mt: 2 })}>
+                    {editId ? 'Salvar Alterações' : 'Salvar'}
+                  </button>
+                </form>
+              </Modal>
             </div>
           )}
           {/* Experiences Management */}
           {activeTab === 'experiences' && !loading && (
-            <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
-              <form onSubmit={handleSaveExperience} className={css({ bg: '#141414', p: 6, rounded: '2px', display: 'flex', flexDir: 'column', gap: 4, height: 'fit-content' })}>
-                <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Trajetória' : 'Adicionar Trajetória'}</h3>
-                <select value={newExperience.type} onChange={e=>setNewExperience({...newExperience, type:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
-                    <option value="Trabalho">Experiência Profissional</option>
-                    <option value="Acadêmico">Formação Acadêmica</option>
-                </select>
-                <input required value={newExperience.title} onChange={e=>setNewExperience({...newExperience, title:e.target.value})} placeholder="Título / Cargo (Ex: Software Engineer)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <input required value={newExperience.institution} onChange={e=>setNewExperience({...newExperience, institution:e.target.value})} placeholder="Instituição / Empresa" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <input required value={newExperience.period} onChange={e=>setNewExperience({...newExperience, period:e.target.value})} placeholder="Período (Ex: 2022 - Presente)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
-                <textarea required value={newExperience.description} onChange={e=>setNewExperience({...newExperience, description:e.target.value})} placeholder="Descrição geral" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 24, resize: 'none' })}/>
-                <textarea value={newExperience.activities} onChange={e=>setNewExperience({...newExperience, activities:e.target.value})} placeholder="Atividades (Uma por linha)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 32, resize: 'none' })}/>
-                <button type="submit" className={css({ bg: 'primary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'black', cursor: 'pointer' })}>Salvar</button>
-                {editId && <button type="button" onClick={() => { setEditId(null); setNewExperience({ type: 'Trabalho', title: '', institution: '', period: '', description: '', activities: '' }) }} className={css({ bg: 'rgba(255,255,255,0.05)', p: 2, rounded: '2px', fontSize: 'xs', cursor: 'pointer' })}>Cancelar</button>}
-              </form>
+            <div className={css({ display: 'flex', flexDir: 'column', gap: 6 })}>
+              <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 })}>
+                <p className={css({ color: 'gray.400', fontSize: 'sm' })}>{experiences.length} itens na trajetória</p>
+                <button 
+                  onClick={() => { setEditId(null); setNewExperience({ type: 'Trabalho', title: '', institution: '', period: '', description: '', activities: '' }); setIsModalOpen(true); }}
+                  className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 4, py: 2, rounded: '2px', fontSize: 'sm', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.2)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}
+                >
+                  + Adicionar Trajetória
+                </button>
+              </div>
 
               <div className={css({ display: 'flex', flexDir: 'column', gap: 3 })}>
-                 {experiences.map(e => (
-                   <div key={e.id} className={css({ bg: '#141414', p: 4, rounded: '2px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
-                     <div>
-                       <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{e.title}</p>
-                       <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{e.institution} • {e.period} <span className={css({ color: 'primary', ml: 1 })}>({e.type})</span></p>
-                     </div>
-                     <div className={css({ display: 'flex', gap: 2 })}>
-                        <button onClick={() => { setEditId(e.id); setNewExperience({ type: e.type, title: e.title, institution: e.institution, period: e.period, description: e.description, activities: e.activities || '' }) }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
-                        <button onClick={()=>handleDelete('experience', e.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
-                     </div>
-                   </div>
-                 ))}
+                  {experiences.length === 0 && <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic' })}>Nenhuma experiência cadastrada.</p>}
+                  {experiences.map(e => (
+                    <div key={e.id} className={css({ bg: '#141414', p: 4, rounded: '2px', border: '1px solid rgba(255,255,255,0.02)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', _hover: { bg: 'rgba(255,255,255,0.01)' } })}>
+                      <div>
+                        <p className={css({ color: 'white', fontSize: 'sm', fontWeight: 'bold' })}>{e.title}</p>
+                        <p className={css({ color: 'gray.400', fontSize: 'xs' })}>{e.institution} • {e.period} <span className={css({ color: 'primary', ml: 1 })}>({e.type})</span></p>
+                      </div>
+                      <div className={css({ display: 'flex', gap: 2 })}>
+                        <button onClick={() => { setEditId(e.id); setNewExperience({ type: e.type, title: e.title, institution: e.institution, period: e.period, description: e.description, activities: e.activities || '' }); setIsModalOpen(true); }} className={css({ p: 2, bg: 'rgba(0,230,118,0.1)', color: 'primary', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Editar</button>
+                        <button onClick={()=>triggerDelete('experience', e.id)} className={css({ p: 2, bg: 'rgba(255,0,0,0.1)', color: '#ff4444', rounded: '2px', cursor: 'pointer', fontSize: 'xs' })}>Excluir</button>
+                      </div>
+                    </div>
+                  ))}
               </div>
+
+              {/* Modal de Experiência */}
+              <Modal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setEditId(null); }} title={editId ? 'Editar Trajetória' : 'Adicionar Trajetória'}>
+                <form onSubmit={async (e) => { await handleSaveExperience(e); setIsModalOpen(false); }} className={css({ display: 'flex', flexDir: 'column', gap: 4 })}>
+                  <select value={newExperience.type} onChange={e=>setNewExperience({...newExperience, type:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}>
+                      <option value="Trabalho">Experiência Profissional</option>
+                      <option value="Acadêmico">Formação Acadêmica</option>
+                  </select>
+                  <input required value={newExperience.title} onChange={e=>setNewExperience({...newExperience, title:e.target.value})} placeholder="Título / Cargo (Ex: Software Engineer)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', outline: 'none', _focus: { border: '1px solid token(colors.primary)' } })}/>
+                  <input required value={newExperience.institution} onChange={e=>setNewExperience({...newExperience, institution:e.target.value})} placeholder="Instituição / Empresa" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <input required value={newExperience.period} onChange={e=>setNewExperience({...newExperience, period:e.target.value})} placeholder="Período (Ex: 2022 - Presente)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white' })}/>
+                  <textarea required value={newExperience.description} onChange={e=>setNewExperience({...newExperience, description:e.target.value})} placeholder="Descrição geral" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 24, resize: 'none' })}/>
+                  <textarea value={newExperience.activities} onChange={e=>setNewExperience({...newExperience, activities:e.target.value})} placeholder="Atividades (Uma por linha)" className={css({ bg: '#1a1a1a', p: 3, rounded: '2px', border: 'none', color: 'white', h: 32, resize: 'none' })}/>
+                  <button type="submit" className={css({ bg: 'primary', p: 3, rounded: '2px', fontWeight: 'bold', color: 'black', cursor: 'pointer', mt: 2 })}>
+                    {editId ? 'Salvar Alterações' : 'Salvar'}
+                  </button>
+                </form>
+              </Modal>
             </div>
           )}
-        </motion.div>
+       </motion.div>
+
+        {/* Modais de Confirmação */}
+        <ConfirmModal 
+          isOpen={deleteItem !== null} 
+          onClose={() => setDeleteItem(null)} 
+          onConfirm={confirmDelete}
+          title="Confirmar Exclusão"
+          message="Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita."
+        />
+
       </div>
     </div>
   );

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Curriculo - Jefferson S. Paulino</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #444;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .skill-item {
+            font-size: 13px;
+        }
+
+        .skill-item strong {
+            color: #222;
+        }
+
+        .job {
+            margin-bottom: 18px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #111;
+        }
+
+        .job-date {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .job-desc {
+            font-size: 13px;
+            color: #555;
+            margin: 4px 0;
+        }
+
+        ul {
+            padding-left: 18px;
+            margin: 5px 0;
+        }
+
+        li {
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 3px;
+        }
+
+        .project {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-left: 3px solid #333;
+        }
+
+        .project-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #111;
+        }
+
+        .project-desc {
+            font-size: 12px;
+            color: #555;
+        }
+
+        @media print {
+            @page { margin: 0; }
+            body { padding: 0; }
+            .container { padding: 40px; }
+            section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jefferson S. Paulino</h1>
+            <div class="subtitle">Sênior Full Stack & Especialista em IA</div>
+            <div class="contact-info">
+                <span>São Paulo, Brasil</span>
+                <span>•</span>
+                <span>[Seu Linkedin]</span>
+                <span>•</span>
+                <span>[Seu GitHub]</span>
+            </div>
+        </header>
+
+        <section>
+            <h2>Perfil Profissional</h2>
+            <p class="job-desc">
+                Engenheiro de Software com <strong>mais de 8 anos de experiência</strong> focado na arquitetura e desenvolvimento de ecossistemas web, mobile e soluções escaláveis de <strong>Automação Inteligente (IA)</strong>. Histórico comprovado no desenho de APIs de alta performance, plataformas SaaS multi-tenant e workflows assíncronos. Focado em engenharia orientada a resultados: redução de custos operacionais, aumento de escalabilidade e eliminação de processos manuais através de arquiteturas modernas e seguras.
+            </p>
+        </section>
+
+        <section>
+            <h2>Competências Técnicas Integradas</h2>
+            <div class="skills-grid">
+                <div class="skill-item"><strong>Arquitetura & Backend:</strong> Node.js, Go (Golang), Python, Laravel, PHP, RESTful APIs, Webhooks, Clean Architecture.</div>
+                <div class="skill-item"><strong>Frontend & Mobile:</strong> Next.js, React, TypeScript, Vue.js, Angular, React Native, Flutter, Design Systems, Tailwind/Stitches.</div>
+                <div class="skill-item"><strong>IA & Automação:</strong> n8n Workflow, OpenAI API, Sistemas Agênticos, Prompt Engineering, Chatbots Reativos.</div>
+                <div class="skill-item"><strong>Infra & Bancos:</strong> Docker, AWS, Gestão VPS, Supabase, PostgreSQL, MongoDB, CI/CD, RLS.</div>
+                <div class="skill-item"><strong>Segurança:</strong> Pentest (Solyd/DESEC), Ethical Hacking, LGPD, Análise de Redes.</div>
+                <div class="skill-item"><strong>Design & Negócios:</strong> Gestão de TI, Gestão de Projetos, Identidade Visual (Canva/Design).</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Experiência Profissional</h2>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">N9 Agência Digital | <span>Fundador & Senior Full Stack Engineer</span></div>
+                    <div class="job-date">2024 – Presente</div>
+                </div>
+                <ul>
+                    <li>Projetou e entregou sistemas de alta performance do backend ao deploy com modelagem Postgres/Supabase.</li>
+                    <li>Automatizou workflows complexos com <strong>n8n e APIs REST/Webhooks</strong>.</li>
+                    <li>Desenvolveu agente de IA para atendimento 24/7 via WhatsApp sem intervenção humana.</li>
+                    <li>Reduziu latência de APIs drasticamente através de caching e arquitetura reativa.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">Seven Brindes | <span>Designer Gráfico & Programador CNC Laser</span></div>
+                    <div class="job-date">2025 – 2026</div>
+                </div>
+                <ul>
+                    <li>Desenvolvimento de layouts vetoriais precisos para displays e brindes corporativos.</li>
+                    <li>Operação, configuração e manutenção de maquinário de corte a laser.</li>
+                    <li>Criação de identidades visuais e artes gráficas para materiais promocionais.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">Delivery Much | <span>Social Media</span></div>
+                    <div class="job-date">2020 – 2021</div>
+                </div>
+                <ul>
+                    <li>Criação de materiais gráficos para campanhas promocionais de Delivery.</li>
+                    <li>Gerenciamento de redes sociais e desenvolvimento de estratégias de marketing digital.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">I9 Ingressos | <span>Designer Gráfico</span></div>
+                    <div class="job-date">2019 – 2020</div>
+                </div>
+                <ul>
+                    <li>Criação de artes para impressão e itens personalizados.</li>
+                    <li>Desenvolvimento de identidade visual para marcas e eventos.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">Zip Informática | <span>Técnico em Manutenção</span></div>
+                    <div class="job-date">2015 – 2019</div>
+                </div>
+                <ul>
+                    <li>Manutenção e reparo preventivo de computadores, notebooks e celulares.</li>
+                    <li>Diagnóstico de hardware/software e suporte técnico ao cliente.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">Freelancer & Empresas | <span>Desenvolvedor FullStack</span></div>
+                    <div class="job-date">2012 – Atual</div>
+                </div>
+                <ul>
+                    <li>Desenvolvimento de websites institucional e e-commerces.</li>
+                    <li>Automação de processos corporativos e integração de APIs.</li>
+                    <li>Gerenciamento de projetos e criação de materiais visuais.</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">JRSN DEV | <span>Fundador & Software Architect Tech</span></div>
+                    <div class="job-date">2006 – Presente (Foco 8+ anos em Eng.)</div>
+                </div>
+                <ul>
+                    <li>Arquitetou APIs REST escaláveis com integrações seguras e webhooks.</li>
+                    <li>Desenvolveu frontends modernos (React, Next) e backends robustos (Node.js, Go).</li>
+                    <li>Modelou infraestrutura completa com Docker, Linux e Nginx.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Projetos de Impacto</h2>
+            <div class="project">
+                <div class="project-title">Gerenc-AI (ZapPDV)</div>
+                <div class="project-desc">Automação e PDV inteligente no WhatsApp. Arquitetado para suportar estoque em tempo real e webhooks simultâneos.</div>
+            </div>
+            <div class="project">
+                <div class="project-title">CaseLab (SaaS B2B/B2C)</div>
+                <div class="project-desc">Plataforma de customização de produtos em lote com algoritmo de preview em canvas visual e checkout transparente.</div>
+            </div>
+            <div class="project">
+                <div class="project-title">INFOZAP - Micro-SaaS</div>
+                <div class="project-desc">Informações locais automatizadas via WhatsApp. Engenharia de prompts para respostas em milissegundos.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Certificações</h2>
+            <div class="skills-grid" style="grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                <div>
+                    <strong style="font-size:13px; display:block; margin-bottom:5px; color:#333;">Desenvolvimento & Engenharia</strong>
+                    <ul style="margin-top:0; font-size:12px;">
+                        <li>React Native Expert (NLW Trilha)</li>
+                        <li>Go (Golang) - Udemy</li>
+                        <li>PHP - Rocketseat</li>
+                        <li>Angular - Udemy</li>
+                        <li>TypeScript, Git & GitHub (Refatorando)</li>
+                        <li>Node.js & React</li>
+                        <li>Desenvolvimento Web Completo</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong style="font-size:13px; display:block; margin-bottom:5px; color:#333;">Dados, IA & Segurança</strong>
+                    <ul style="margin-top:0; font-size:12px;">
+                        <li>SQL (Motion Academy)</li>
+                        <li>Ciência de Dados & Python Avançado</li>
+                        <li>Python Masterclass & Enpowerdata</li>
+                        <li>Hacker Ético (Udemy)</li>
+                        <li>Pentest (Solyd / DESEC)</li>
+                        <li>Ameaça Hacker Cybersec / LGPD</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 20px;">
+            <h2>Educação</h2>
+            <div class="job" style="margin-bottom: 5px;">
+                <div class="job-header">
+                    <div class="job-title">Pós-Graduação em Engenharia de Software | <span>CENES</span></div>
+                    <div class="job-date">2024 – 2025</div>
+                </div>
+            </div>
+            <div class="job">
+                <div class="job-header">
+                    <div class="job-title">Graduação em Gestão da Tecnologia da Informação | <span>ETEP</span></div>
+                    <div class="job-date">2024</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
