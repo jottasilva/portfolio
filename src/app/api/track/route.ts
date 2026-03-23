@@ -38,33 +38,23 @@ export async function POST(req: NextRequest) {
       req.headers.get('x-real-ip') ||
       '0.0.0.0';
 
-    // Para testes locais em localhost (desenvolvimento): 
-    // Injetamos um IP real do Brasil para que a geolocalização funcione visualmente
-    let lookupIp = ip;
-    if (ip === '127.0.0.1' || ip === '::1' || ip === '0.0.0.0') {
-      lookupIp = '200.221.2.45'; // IP público do Brasil (UOL) para simulação local
-    }
+    // Geolocalização via Vercel Edge Headers (Produção)
+    let geoData = {
+      city: req.headers.get('x-vercel-ip-city') || 'Desconhecida',
+      country: req.headers.get('x-vercel-ip-country') || '??',
+      region: req.headers.get('x-vercel-ip-country-region') || '',
+      timezone: req.headers.get('x-vercel-ip-timezone') || '',
+    };
 
-    // Geolocalização via ip-api.com (free, sem auth, 45req/min)
-    let geoData = { city: 'Desconhecida', country: '??', region: '', timezone: '' };
-    if (lookupIp !== '127.0.0.1' && lookupIp !== '::1' && lookupIp !== '0.0.0.0') {
-      try {
-        const geoRes = await fetch(
-          `http://ip-api.com/json/${lookupIp}?fields=city,country,regionName,timezone&lang=pt-BR`,
-          { cache: 'no-store' }
-        );
-        if (geoRes.ok) {
-          const geo = await geoRes.json();
-          geoData = {
-            city: geo.city || 'Desconhecida',
-            country: geo.country || '??',
-            region: geo.regionName || '',
-            timezone: geo.timezone || '',
-          };
-        }
-      } catch {
-        // Falha silenciosa: continua sem geo
-      }
+    // Fallback para testes locais em localhost (desenvolvimento)
+    const isLocal = ip === '127.0.0.1' || ip === '::1' || ip === '0.0.0.0';
+    if (geoData.city === 'Desconhecida' && isLocal) {
+      geoData = { 
+        city: 'São Paulo', 
+        country: 'BR', 
+        region: 'SP', 
+        timezone: 'America/Sao_Paulo' 
+      };
     }
 
     // User-Agent (truncado por segurança)
@@ -103,6 +93,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error('[/api/track] Error:', error.message);
-    return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    return NextResponse.json({ error: `Internal error: ${error.message}` }, { status: 500 });
   }
 }
