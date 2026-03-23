@@ -72,42 +72,45 @@ export default function ProjectsSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(12, 1fr)' }, gap: 8, alignItems: 'end', mb: 24 })}
+        className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(12, 1fr)' }, gap: { base: 6, md: 12 }, alignItems: 'end', mb: 20 })}
       >
         <div className={css({ gridColumn: { md: 'span 8' } })}>
-          <span className={cx(css({ fontFamily: 'label', color: 'primary', letterSpacing: '0.3em', fontSize: 'xs', textTransform: 'uppercase', mb: 4, display: 'block' }), 'neon-glow')}>
-            Saída_Terminal // Projetos_Destaque
+          <span className={cx(css({ fontFamily: 'label', color: 'primary', letterSpacing: '0.3em', fontSize: 'xs', textTransform: 'uppercase', mb: 4, display: 'flex', alignItems: 'center', gap: 2 }), 'neon-glow')}>
+            <span className={css({ w: 2, h: 2, bg: 'primary', rounded: 'full', display: 'inline-block', animation: 'pulse 2s infinite' })} />
+            SAÍDA_TERMINAL // PROJETOS_DESTAQUE
           </span>
           <h1 className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '6xl', lg: '7xl' }, fontWeight: 'black', letterSpacing: 'tighter', color: 'white', lineHeight: 0.9, textTransform: 'uppercase' })}>
-            SOBREPOSIÇÃO <br /> <span className={css({ color: 'primary', fontStyle: 'italic', fontWeight: 'light', opacity: 0.8 })}>DE SISTEMA.</span>
+            SOBREPOSIÇÃO <br /> <span className={css({ color: 'primary', fontStyle: 'italic', fontWeight: 'light', opacity: 0.9 })}>DE SISTEMA.</span>
           </h1>
         </div>
         <div className={css({ gridColumn: { md: 'span 4' }, pb: 4 })}>
-          <p className={css({ color: 'gray.400', fontFamily: 'body', fontSize: 'lg', lineHeight: 'relaxed', maxW: 'sm', borderLeft: '2px solid', borderColor: 'primary', pl: 6 })}>
+          <p className={css({ color: 'gray.400', fontFamily: 'body', fontSize: 'md', lineHeight: 'relaxed', maxW: 'sm', borderLeft: '3px solid', borderColor: 'primary', pl: 6 })}>
             Workflows inteligentes e arquiteturas SaaS de alto padrão, desenhadas para eliminar gargalos e acelerar resultados.
           </p>
         </div>
       </motion.header>
 
       {/* Filters */}
-      <div className={css({ bg: 'rgba(5,5,5,0.4)', px: 8, py: 6, borderY: '1px solid rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)', mx: -8, mb: 24 })}>
-        <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' })}>
+      <div className={css({ bg: 'rgba(5,5,5,0.4)', px: 8, py: 5, borderY: '1px solid rgba(255,255,255,0.03)', backdropFilter: 'blur(16px)', mx: -8, mb: 16 })}>
+        <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', display: 'flex', flexWrap: 'wrap', gap: 4, alignItems: 'center' })}>
           {CATEGORIES.map(cat => (
             <button
               key={cat.value}
               onClick={() => setActiveCategory(cat.value)}
               className={css({
                 fontFamily: 'label',
-                fontSize: { base: 'xs', md: 'sm' },
+                fontSize: { base: 'xs', md: 'xs' },
                 letterSpacing: 'wider',
                 textTransform: 'uppercase',
-                pb: 1,
+                px: 5, py: 2,
+                rounded: 'full',
                 cursor: 'pointer',
-                borderBottom: '1px solid',
-                transition: 'all 0.3s',
-                borderColor: activeCategory === cat.value ? 'primary' : 'transparent',
-                color: activeCategory === cat.value ? 'primary' : 'gray.500',
-                _hover: { color: 'primary', transform: 'translateY(-1px)' }
+                border: '1px solid',
+                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                bg: activeCategory === cat.value ? 'rgba(0,230,118,0.08)' : 'rgba(255,255,255,0.01)',
+                borderColor: activeCategory === cat.value ? 'primary' : 'rgba(255,255,255,0.06)',
+                color: activeCategory === cat.value ? 'primary' : 'gray.400',
+                _hover: { bg: 'rgba(0,230,118,0.05)', color: 'white', transform: 'translateY(-2px)', borderColor: 'rgba(0,230,118,0.3)' }
               })}
             >
               {cat.label}
