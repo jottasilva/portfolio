@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { useAuth } from '@/presentation/contexts/AuthContext';
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 import { css, cx } from 'styled-system/css';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -40,11 +41,11 @@ export default function PainelDashboard() {
     setEditId(null); 
     try {
       if (activeTab === 'overview' || activeTab === 'messages') {
-        const msgs = await appwriteService.getContactMessages();
+        const msgs = await supabaseService.getContactMessages();
         setMessages(msgs);
       }
       if (activeTab === 'overview' || activeTab === 'chat') {
-        const chats = await appwriteService.getChatMessages();
+        const chats = await supabaseService.getChatMessages();
         if (chats && (chats as any).error === 'collection_missing') {
           setChatMessages([]);
           setChatError(true);
@@ -55,30 +56,30 @@ export default function PainelDashboard() {
       }
       if (activeTab === 'overview') {
         const [stats, visits] = await Promise.all([
-          appwriteService.getVisitStats(),
-          appwriteService.getVisits(20),
+          supabaseService.getVisitStats(),
+          supabaseService.getVisits(20),
         ]);
         setVisitStats(stats as any);
         setRecentVisits(visits);
       }
       if (activeTab === 'projects') {
-        const projs = await appwriteService.getProjects();
+        const projs = await supabaseService.getProjects();
         setProjects(projs);
       }
       if (activeTab === 'skills') {
-        const sks = await appwriteService.getSkills();
+        const sks = await supabaseService.getSkills();
         setSkills(sks);
       }
       if (activeTab === 'certifications') {
-        const certs = await appwriteService.getCertifications();
+        const certs = await supabaseService.getCertifications();
         setCertifications(certs);
       }
       if (activeTab === 'experiences') {
-        const exps = await appwriteService.getExperiences();
+        const exps = await supabaseService.getExperiences();
         setExperiences(exps);
       }
       if (activeTab === 'about') {
-        const abt = await appwriteService.getAbout();
+        const abt = await supabaseService.getAbout();
         if (abt) setAbout({ ...about, ...abt });
       }
     } catch (error) {
@@ -91,74 +92,97 @@ export default function PainelDashboard() {
   const handleSaveAbout = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await appwriteService.updateAbout(about);
-      alert('Dados de Sobre salvos com sucesso!');
-    } catch { alert('Erro ao salvar Sobre'); }
+      await supabaseService.updateAbout(about);
+      toast.success('Dados de Sobre salvos com sucesso!');
+    } catch { toast.error('Erro ao salvar Sobre'); }
   };
 
   const handleSaveCert = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-       if (editId) await appwriteService.updateCertification(editId, newCert);
-       else await appwriteService.createCertification(newCert);
+       await supabaseService.createCertification(newCert);
        setNewCert({ title: '', issuer: '', date: '', link: '', category: 'Geral' });
        setEditId(null);
        loadData();
-    } catch { alert('Erro ao salvar certificado'); }
+    } catch { toast.error('Erro ao salvar certificado'); }
+  };
+
+  const handleSeedCerts = async () => {
+    const mock = [
+      { category: 'Desenvolvimento & Engenharia de Soft.', items: ['React Native (NLW Expert - Trilha)','Go (Golang) Udemy','PHP (Rocketseat)','Angular (Udemy)','TypeScript, Git & GitHub (Refatorando)','HTML5, CSS & JS','Node.js & React','Desenvolvimento Web Completo','Cronapp Responsivo','HTML & CSS Básico'] },
+      { category: 'Dados & Inteligência Artificial', items: ['SQL (Motion Academy)','Ciência de Dados','Python Avançado','Trading com Dados Python','Python Enpowerdata','Python Masterclass'] },
+      { category: 'Segurança da Informação', items: ['Hacker Ético (Udemy)','Pentest (Solyd / DESEC)','Ameaça Hacker Cybersec','LGPD (Sebrae)','Analista de Redes','Intelbras CFTV'] },
+      { category: 'Design, Marketing & Outros', items: ['Design Gráfico','Identidade Visual','Flyer Creator','Marketing Digital','Inteligência Social','Gestão de Projetos','Trabalhando com Computadores','Escola Virtual'] }
+    ];
+    
+    try {
+      toast.loading('Importando certificados... Aguarde.');
+      for (const cat of mock) {
+        for (const item of cat.items) {
+          await supabaseService.createCertification({
+            title: item, issuer: 'Fábrica / Mock', category: cat.category, date: '2024'
+          });
+        }
+      }
+      toast.success('Certificados importados com sucesso!');
+      loadData();
+    } catch { toast.error('Erro ao importar certificados'); }
   };
 
   const handleSaveProject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (editId) {
-        await appwriteService.updateProject(editId, newProject);
+        await supabaseService.updateProject(editId, newProject);
       } else {
-        await appwriteService.createProject(newProject);
+        await supabaseService.createProject(newProject);
       }
       setNewProject({ title: '', description: '', link: '', github: '', category: 'Sistemas', node: '', image: '' });
       setEditId(null);
       loadData();
-    } catch (error) { alert('Erro ao salvar projeto'); }
+    } catch (error) { toast.error('Erro ao salvar projeto'); }
   };
 
   const handleSaveExperience = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (editId) {
-        await appwriteService.updateExperience(editId, newExperience);
+        await supabaseService.updateExperience(editId, newExperience);
       } else {
-        await appwriteService.createExperience(newExperience);
+        await supabaseService.createExperience(newExperience);
       }
       setNewExperience({ type: 'Trabalho', title: '', institution: '', period: '', description: '', activities: '' });
       setEditId(null);
       loadData();
-    } catch { alert('Erro ao salvar trajetória'); }
+    } catch { toast.error('Erro ao salvar trajetória'); }
   };
 
   const handleSaveSkill = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       if (editId) {
-        await appwriteService.updateSkill(editId, newSkill);
+        const val = parseInt(newSkill.value) || 0;
+        await supabaseService.updateSkill(editId, { ...newSkill, value: val });
       } else {
-        await appwriteService.createSkill(newSkill);
+        const val = parseInt(newSkill.value) || 0;
+        await supabaseService.createSkill({ ...newSkill, value: val });
       }
       setNewSkill({ name: '', category: 'Backend & APIs', value: '90%' });
       setEditId(null);
       loadData();
-    } catch (error) { alert('Erro ao salvar skill'); }
+    } catch (error) { toast.error('Erro ao salvar skill'); }
   };
 
   const handleDelete = async (type: 'project' | 'skill' | 'cert' | 'experience' | 'chat', id: string) => {
     if (!confirm('Tem certeza?')) return;
     try {
-      if (type === 'project') await appwriteService.deleteProject(id);
-      else if (type === 'skill') await appwriteService.deleteSkill(id);
-      else if (type === 'cert') await appwriteService.deleteCertification(id);
-      else if (type === 'chat') await appwriteService.deleteChatMessage(id);
-      else await appwriteService.deleteExperience(id);
+      if (type === 'project') await supabaseService.deleteProject(id);
+      else if (type === 'skill') await supabaseService.deleteSkill(id);
+      else if (type === 'cert') await supabaseService.deleteCertification(id);
+      else if (type === 'chat') await supabaseService.deleteChatMessage(id);
+      else await supabaseService.deleteExperience(id);
       loadData();
-    } catch (error) { alert('Erro ao deletar'); }
+    } catch (error) { toast.error('Erro ao deletar'); }
   };
 
   return (
@@ -178,7 +202,6 @@ export default function PainelDashboard() {
             { id: 'chat', label: 'Conversas AI' },
             { id: 'projects', label: 'Projetos' },
             { id: 'skills', label: 'Habilidades' },
-            { id: 'about', label: 'Sobre' },
             { id: 'certifications', label: 'Certificações' },
             { id: 'experiences', label: 'Trajetória' }
           ].map((tab) => (
@@ -211,7 +234,7 @@ export default function PainelDashboard() {
              activeTab === 'overview' ? 'Visão Geral' : activeTab === 'messages' ? 'Mensagens' : activeTab === 'chat' ? 'Conversas AI' : activeTab === 'projects' ? 'Projetos' : activeTab === 'skills' ? 'Habilidades' : activeTab === 'about' ? 'Sobre' : activeTab === 'certifications' ? 'Certificações' : 'Trajetória'
           }</h1>
 
-          {loading && <div className={css({ color: 'primary', fontSize: 'sm' })}>Buscando dados na Appwrite...</div>}
+          {loading && <div className={css({ color: 'primary', fontSize: 'sm' })}>Buscando dados no Supabase...</div>}
 
           {/* Overview — Metrics Dashboard */}
           {activeTab === 'overview' && !loading && (
@@ -287,16 +310,16 @@ export default function PainelDashboard() {
                         )}
                         {recentVisits
                           .filter(v => 
-                            v.visitorId?.toLowerCase().includes(filterText.toLowerCase()) || 
+                            v.visitor_id?.toLowerCase().includes(filterText.toLowerCase()) || 
                             v.city?.toLowerCase().includes(filterText.toLowerCase())
                           )
                           .map((v) => (
-                          <tr key={v.$id} className={css({ borderBottom: '1px solid rgba(255,255,255,0.02)', _hover: { bg: 'rgba(255,255,255,0.02)' } })}>
-                            <td className={css({ py: 3, pr: 4, color: 'gray.400', fontFamily: 'mono' })}>{v.visitorId?.slice(0, 8)}…</td>
+                          <tr key={v.id} className={css({ borderBottom: '1px solid rgba(255,255,255,0.02)', _hover: { bg: 'rgba(255,255,255,0.02)' } })}>
+                            <td className={css({ py: 3, pr: 4, color: 'gray.400', fontFamily: 'mono' })}>{v.visitor_id?.slice(0, 8)}…</td>
                             <td className={css({ py: 3, pr: 4, color: 'primary' })}>{v.city || '—'}</td>
                             <td className={css({ py: 3, pr: 4, color: 'gray.300' })}>{v.country || '—'}</td>
-                            <td className={css({ py: 3, pr: 4, color: 'gray.400' })}>{v.page}</td>
-                            <td className={css({ py: 3, color: 'gray.500' })}>{new Date(v.visitedAt).toLocaleString('pt-BR')}</td>
+                            <td className={css({ py: 3, pr: 4, color: 'gray.400' })}>{v.pathname}</td>
+                            <td className={css({ py: 3, color: 'gray.500' })}>{new Date(v.visited_at).toLocaleString('pt-BR')}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -403,9 +426,9 @@ export default function PainelDashboard() {
                       if (!file) return;
                       setUploading(true);
                       try {
-                        const url = await appwriteService.uploadImage(file);
+                        const url = await supabaseService.uploadImage(file);
                         setNewProject({ ...newProject, image: url });
-                      } catch { alert('Erro no upload'); }
+                      } catch { toast.error('Erro no upload'); }
                       finally { setUploading(false); }
                     }} 
                   />
@@ -498,9 +521,9 @@ export default function PainelDashboard() {
                     if (!file) return;
                     setUploading(true);
                     try {
-                      const url = await appwriteService.uploadImage(file);
+                      const url = await supabaseService.uploadImage(file);
                       setAbout({ ...about, imageUrl: url } as any);
-                    } catch { alert('Erro no upload'); }
+                    } catch { toast.error('Erro no upload'); }
                     finally { setUploading(false); }
                   }} 
                 />
@@ -516,7 +539,10 @@ export default function PainelDashboard() {
           {activeTab === 'certifications' && !loading && (
             <div className={css({ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: 8 })}>
               <form onSubmit={handleSaveCert} className={css({ bg: '#141414', p: 6, rounded: 'xl', display: 'flex', flexDir: 'column', gap: 4, height: 'fit-content' })}>
-                <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Certificado' : 'Adicionar Certificado'}</h3>
+                 <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center' })}>
+                   <h3 className={css({ fontWeight: 'bold', color: 'white' })}>{editId ? 'Editar Certificado' : 'Adicionar Certificado'}</h3>
+                   <button type="button" onClick={handleSeedCerts} className={css({ bg: 'rgba(0,230,118,0.1)', color: 'primary', px: 3, py: 1, rounded: 'md', fontSize: '10px', fontWeight: 'bold', cursor: 'pointer', border: '1px solid rgba(0,230,118,0.3)', _hover: { bg: 'rgba(0,230,118,0.2)' } })}>Importar Mocks</button>
+                 </div>
                 <input required value={newCert.title} onChange={e=>setNewCert({...newCert, title:e.target.value})} placeholder="Título da Certificação" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}/>
                 <input required value={newCert.issuer} onChange={e=>setNewCert({...newCert, issuer:e.target.value})} placeholder="Emissor (Ex: AWS, Google)" className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}/>
                 <select value={newCert.category} onChange={e=>setNewCert({...newCert, category:e.target.value})} className={css({ bg: '#1a1a1a', p: 3, rounded: 'md', border: 'none', color: 'white' })}>
@@ -543,6 +569,9 @@ export default function PainelDashboard() {
                      </div>
                    </div>
                  ))}
+                  {certifications.length === 0 && (
+                     <p className={css({ color: 'gray.500', fontSize: 'sm', fontStyle: 'italic', mt: 4 })}>Nenhuma certificação cadastrada.</p>
+                  )}
               </div>
             </div>
           )}

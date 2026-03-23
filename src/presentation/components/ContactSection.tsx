@@ -3,7 +3,7 @@
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', projectType: 'Geral' });
@@ -13,7 +13,7 @@ export default function ContactSection() {
     e.preventDefault();
     setLoading(true);
     try {
-      await appwriteService.sendContactMessage(formData);
+      await supabaseService.sendContactMessage(formData);
       alert('Sinal enviado com sucesso!');
       setFormData({ name: '', email: '', message: '', projectType: 'Geral' });
     } catch (error) {

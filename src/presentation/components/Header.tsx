@@ -21,12 +21,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const menuItems = ['Início', 'Sobre', 'Skills', 'Projetos', 'Contato'];
+  const menuItems = ['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória', 'Contato'];
   const anchorMap: Record<string, string> = {
     'Início': '',
-    'Sobre': 'about',
     'Skills': 'skills',
     'Projetos': 'projects',
+    'Formação': 'formacao',
+    'Trajetória': 'trajetoria',
     'Contato': 'contact'
   };
 
@@ -41,14 +42,14 @@ export default function Header() {
 
         {/* Logo Node */}
         <div className={css({ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 })}>
-          <img src="/logo.svg" alt="JRSN Logo" className={css({ h: 6, w: 'auto' })} />
+          <img src="/logo.svg" alt="JRSN Logo" className={css({ h: 12, w: 'auto' })} />
         </div>
 
         {/* Right Actions Container (Grouped to push everything right) */}
         <div className={css({ display: 'flex', alignItems: 'center', gap: 6 })}>
           {/* Navigation Core (Desktop) */}
           <div className={css({ display: { base: 'none', md: 'flex' }, gap: 10, alignItems: 'center' })}>
-            {['Início', 'Sobre', 'Skills', 'Projetos'].map((item) => (
+            {['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória'].map((item) => (
               <a
                 key={item}
                 href={`#${anchorMap[item]}`}

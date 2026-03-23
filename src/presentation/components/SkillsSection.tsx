@@ -3,7 +3,7 @@
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 
 const DEFAULT_CATEGORIES = [
   { title: 'Backend & APIs', skills: [] },
@@ -19,7 +19,7 @@ export default function SkillsSection() {
   useEffect(() => {
     async function fetchSkills() {
       try {
-        const skillsFromDB = await appwriteService.getSkills();
+        const skillsFromDB = await supabaseService.getSkills();
         
         if (skillsFromDB.length > 0) {
            const grouped = [
@@ -96,12 +96,12 @@ export default function SkillsSection() {
                 <div key={skill.name}>
                   <div className={css({ display: 'flex', justifyContent: 'space-between', mb: 1 })}>
                     <span className={css({ fontFamily: 'body', fontSize: 'xs', color: 'gray.300' })}>{skill.name}</span>
-                    <span className={css({ fontFamily: 'label', fontSize: '10px', color: 'secondary' })}>{skill.value}</span>
+                    <span className={css({ fontFamily: 'label', fontSize: '10px', color: 'secondary' })}>{String(skill.value).endsWith('%') ? skill.value : `${skill.value}%`}</span>
                   </div>
                   <div className={css({ h: '3px', bg: 'rgba(255,255,255,0.05)', rounded: 'full', overflow: 'hidden' })}>
                     <motion.div 
                       initial={{ width: 0 }}
-                      whileInView={{ width: skill.value }}
+                      whileInView={{ width: String(skill.value).endsWith('%') ? skill.value : `${skill.value}%` }}
                       viewport={{ once: true }}
                       transition={{ duration: 1, ease: 'easeOut' }}
                       className={css({ h: 'full', bgGradient: 'to-r', gradientFrom: 'secondary', gradientTo: 'purple.500' })}

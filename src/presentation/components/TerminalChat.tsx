@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { css, cx } from 'styled-system/css';
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 
 interface Message {
   role: 'user' | 'system' | 'ai';
@@ -60,9 +60,13 @@ export default function TerminalChat() {
       const aiMsg: Message = { role: 'ai', content: aiResponseText, timestamp: new Date().toLocaleTimeString() };
       setMessages(prev => [...prev, aiMsg]);
 
-      // Salva Log no Appwrite (Silencioso em caso de erro)
+      // Salva Log no Supabase (Silencioso em caso de erro)
       try {
-        await appwriteService.sendChatMessage({ prompt: input, response: aiResponseText });
+        const res = await supabaseService.sendChatMessage({ prompt: input, response: aiResponseText });
+        if (res && ((res as any).error === 'collection_missing' || (res as any).error === 'insert_failed')) {
+          // Silencioso em caso de erro de configuração das tabelas
+          return;
+        }
       } catch (err) {
         console.error('Log Chat Error:', err);
       }

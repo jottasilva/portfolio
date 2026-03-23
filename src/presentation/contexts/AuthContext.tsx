@@ -1,11 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { account } from '@/infrastructure/appwrite';
-import { Models } from 'appwrite';
+import { supabase } from '@/infrastructure/supabase';
+import { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
-  user: Models.User<Models.Preferences> | null;
+  user: User | null;
   loading: boolean;
   login: (email: string, pass: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -14,7 +14,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<Models.User<Models.Preferences> | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,8 +23,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkUser = async () => {
     try {
-      const currentUser = await account.get();
-      setUser(currentUser);
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
     } catch (error) {
       setUser(null);
     } finally {
@@ -34,22 +34,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, pass: string) => {
     try {
-      // Cria sessão
-      await account.createEmailPasswordSession(email, pass);
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password: pass,
+      });
+      if (error) throw error;
+      await checkUser();
     } catch (error: any) {
-      if (error.code === 412) {
-        // Erro 412 = Sessão já está ativa para este cliente.
-        // Significa que já está logado, podemos apenas dar checkUser().
-        await checkUser();
-        return;
-      }
       throw error;
     }
-    await checkUser();
   };
 
   const logout = async () => {
-    await account.deleteSession('current');
+    await supabase.auth.signOut();
     setUser(null);
   };
 
@@ -62,6 +59,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth deve ser dentro de AuthProvider');
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
   return context;
 };

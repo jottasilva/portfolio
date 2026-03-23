@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
 
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 
 const HARDCODED_PROJECTS = [
   {
@@ -44,7 +44,7 @@ export default function ProjectsSection() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const projs = await appwriteService.getProjects();
+        const projs = await supabaseService.getProjects();
         setProjects(projs.length > 0 ? projs : HARDCODED_PROJECTS);
       } catch (err) {
         console.error(err);

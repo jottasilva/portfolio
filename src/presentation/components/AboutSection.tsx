@@ -102,7 +102,7 @@ const academicEducation = [
     period: '08/2024 – 12/2024',
     title: 'Centro Universitário ETEP',
     role: 'Graduação - Gestão da Tecnologia da Informação',
-    description: 'Título de Tecnólogo. Colação de Grau em 06/09/2024. Diploma registrado.',
+    description: 'Título de Tecnólogo. Colação de Grau em 06/09/2024. Diploma registrado (Cód Validação: 5669.5669.c9d5294d8cfb2bfcb89b925f4a22131f44).',
     activities: [
       'Gestão estratégica de TI, análise de riscos e segurança da informação.',
       'Otimização de processos operacionais com tecnologias de ponta.',
@@ -111,60 +111,8 @@ const academicEducation = [
   }
 ];
 
-const certifications = [
-  {
-    category: 'Desenvolvimento & Engenharia de Soft.',
-    items: [
-      'React Native (NLW Expert - Trilha)',
-      'Go (Golang) Udemy - Do Zero ao Avançado',
-      'PHP (Rocketseat)',
-      'Angular (Udemy)',
-      'TypeScript, Git & GitHub (Refatorando)',
-      'HTML5, CSS & JS (Microsoft / Udemy / Onebite)',
-      'Node.js & React (Aplicativo do Zero ao Avançado)',
-      'Desenvolvimento Web Completo (20 projetos)',
-      'Cronapp Responsivo',
-      'HTML & CSS Básico (Refatorando)'
-    ]
-  },
-  {
-    category: 'Dados & Inteligência Artificial',
-    items: [
-      'SQL (Motion Academy)',
-      'Ciência de Dados (Santander Academy)',
-      'Python Avançado (Data Science)',
-      'Trading com Dados Python',
-      'Python Enpowerdata / Motion Academy / ATN',
-      'Python Masterclass (MadeIn-PR)'
-    ]
-  },
-  {
-    category: 'Segurança da Informação',
-    items: [
-      'Hacker Ético (Udemy)',
-      'Pentest (Solyd / DESEC)',
-      'Ameaça Hacker Cybersec',
-      'LGPD (Sebrae / Online)',
-      'Analista de Redes (Hackone / Marco Zero)',
-      'Intelbras CFTV'
-    ]
-  },
-  {
-    category: 'Design, Marketing & Outros',
-    items: [
-      'Design Gráfico do Zero ao Avançado (Udemy)',
-      'Identidade Visual e Logotipos de Valor',
-      'Flyer Creator',
-      'Marketing Digital',
-      'Inteligência Social',
-      'Gestão de Projetos (Siderea)',
-      'Trabalhando com Computadores (Microsoft)',
-      'Escola Virtual - Fundação Bradesco'
-    ]
-  }
-];
 
-import { appwriteService } from '@/domain/services/appwriteService';
+import { supabaseService } from '@/domain/services/supabaseService';
 
 export default function AboutSection() {
   const [githubStats, setGithubStats] = useState({ repos: '...', commits: '...', loading: true });
@@ -175,14 +123,11 @@ export default function AboutSection() {
   useEffect(() => {
     const fetchGitHub = async () => {
       try {
-        const u = await fetch('https://api.github.com/users/jottasilva').then(r => r.json());
-        const c = await fetch('https://api.github.com/search/commits?q=author:jottasilva', {
-          headers: { Accept: 'application/vnd.github.cloak-preview' }
-        }).then(r => r.json());
-
+        const data = await fetch('/api/github').then(r => r.json());
+        
         setGithubStats({
-          repos: String(u.public_repos || 0),
-          commits: String(c.total_count || '1.2k+'),
+          repos: String(data.repos || 0),
+          commits: String(data.commits || '1.2k+'),
           loading: false
         });
       } catch (e) {
@@ -192,11 +137,11 @@ export default function AboutSection() {
 
     const fetchAppwrite = async () => {
        try {
-         const abt = await appwriteService.getAbout();
+         const abt = await supabaseService.getAbout();
          if (abt) setAboutData(abt);
-         const certs = await appwriteService.getCertifications();
+         const certs = await supabaseService.getCertifications();
          setDynCerts(certs);
-         const exps = await appwriteService.getExperiences();
+         const exps = await supabaseService.getExperiences();
          setDynExps(exps);
        } catch {}
     };
@@ -204,6 +149,14 @@ export default function AboutSection() {
     fetchGitHub();
     fetchAppwrite();
   }, []);
+
+  const groupedCerts = dynCerts.reduce((acc: any, cert: any) => {
+    const cat = cert.category || 'Geral';
+    if (!acc[cat]) acc[cat] = { category: cat, items: [] };
+    acc[cat].items.push(cert.title);
+    return acc;
+  }, {});
+  const finalCerts = Object.values(groupedCerts);
 
   return (
     <section id="about" className={css({ pt: { base: 20, md: 40 }, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', position: 'relative' })}>
@@ -344,9 +297,9 @@ export default function AboutSection() {
         </div>
 
         {/* [02] Academic Education */}
-        <h3 className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, pt: 12, borderTop: '1px solid rgba(255,255,255,0.03)' })}>
+        <h3 id="formacao" className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, pt: 12, borderTop: '1px solid rgba(255,255,255,0.03)', scrollMarginTop: '120px' })}>
           <span className={css({ h: '1px', w: 10, bg: 'primary' })}></span>
-          [02] Formação_Acadêmica
+          [02] Formação_Acadêmica_&_Certificações
         </h3>
 
         <div className={css({ display: 'flex', flexDir: 'column', gap: 10, pt: 4, mb: 16 })}>
@@ -367,18 +320,13 @@ export default function AboutSection() {
           ))}
         </div>
 
-        {/* [03] Certifications Grid */}
-        <h3 className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, pt: 12, borderTop: '1px solid rgba(255,255,255,0.03)' })}>
-          <span className={css({ h: '1px', w: 10, bg: 'primary' })}></span>
-          [03] Certificações_Técnicas
-        </h3>
-
+        {/* Certifications Dynamic Grid */}
         <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }, gap: 6, pt: 4 })}>
-          {certifications.map((cert, index) => (
+          {finalCerts.map((cert: any, index: number) => (
             <div key={index} className={css({ p: 5, bg: 'rgba(255,255,255,0.02)', rounded: 'xl', border: '1px solid rgba(255,255,255,0.04)', display: 'flex', flexDir: 'column', gap: 3, transition: 'all 0.3s', _hover: { bg: 'rgba(255,255,255,0.04)', transform: 'translateY(-2px)' } })}>
               <h4 className={css({ fontFamily: 'headline', fontSize: 'sm', color: 'primary', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 'wider' })}>{cert.category}</h4>
               <ul className={css({ display: 'flex', flexDir: 'column', gap: 1.5, listStyle: 'none' })}>
-                {cert.items.map((item, idx) => (
+                {cert.items.map((item: string, idx: number) => (
                   <li key={idx} className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.300', display: 'flex', alignItems: 'start', gap: 2, letterSpacing: 'wider' })}>
                     <span className={css({ color: 'primary', mt: 0.5 })}>▸</span> {item}
                   </li>
@@ -386,19 +334,6 @@ export default function AboutSection() {
               </ul>
             </div>
           ))}
-
-          {dynCerts.length > 0 && (
-            <div className={css({ p: 5, bg: 'rgba(0,230,118,0.03)', rounded: 'xl', border: '1px solid rgba(0,230,118,0.1)', display: 'flex', flexDir: 'column', gap: 3, transition: 'all 0.3s', _hover: { bg: 'rgba(0,230,118,0.06)', transform: 'translateY(-2px)' } })}>
-              <h4 className={css({ fontFamily: 'headline', fontSize: 'sm', color: 'primary', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 'wider' })}>Acreditações Digitais</h4>
-              <ul className={css({ display: 'flex', flexDir: 'column', gap: 1.5, listStyle: 'none' })}>
-                {dynCerts.map((cert, idx) => (
-                  <li key={idx} className={css({ fontFamily: 'body', fontSize: 'sm', color: 'gray.300', display: 'flex', alignItems: 'start', gap: 2, letterSpacing: 'wider' })}>
-                    <span className={css({ color: 'primary', mt: 0.5 })}>▸</span> {cert.title} <span className={css({ fontSize: '10px', color: 'gray.500' })}>({cert.issuer})</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       </motion.div>
     </section>
