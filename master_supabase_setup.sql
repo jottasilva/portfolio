@@ -150,13 +150,36 @@ INSERT INTO skills (name, category, value) VALUES
 
 -- --- Dados de certifications ---
 INSERT INTO certifications (title, issuer, date, link, category) VALUES 
-('React Native (NLW Expert)', 'Rocketseat', '2024', NULL, 'Desenvolvimento'),
-('Go (Golang) Expert', 'Udemy', '2024', NULL, 'Desenvolvimento'),
-('PHP Advanced', 'Rocketseat', '2024', NULL, 'Desenvolvimento'),
-('SQL & Banco de Dados', 'Motion Academy', '2024', NULL, 'Dados & IA'),
-('Python Avançado', 'Udemy', '2024', NULL, 'Dados & IA'),
-('Hacker Ético', 'Udemy', '2024', NULL, 'Segurança'),
-('Pentest Avançado', 'Solyd', '2024', NULL, 'Segurança');
+('React Native (NLW Expert - Trilha)', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('Go (Golang) Udemy', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('PHP (Rocketseat)', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('Angular (Udemy)', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('TypeScript, Git & GitHub (Refatorando)', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('HTML5, CSS & JS', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('Node.js & React', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('Desenvolvimento Web Completo', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('Cronapp Responsivo', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+('HTML & CSS Básico', 'Fábrica / Mock', '2024', NULL, 'Desenvolvimento'),
+
+('SQL (Motion Academy)', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+('Ciência de Dados', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+('Python Avançado', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+('Trading com Dados Python', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+('Python Enpowerdata', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+('Python Masterclass', 'Fábrica / Mock', '2024', NULL, 'Dados & IA'),
+
+('Hacker Ético (Udemy)', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+('Pentest (Solyd / DESEC)', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+('Ameaça Hacker Cybersec', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+('LGPD (Sebrae)', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+('Analista de Redes', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+('Intelbras CFTV', 'Fábrica / Mock', '2024', NULL, 'Segurança'),
+
+('Design Gráfico', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Identidade Visual', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Flyer Creator', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Marketing Digital', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros'),
+('Inteligência Social', 'Fábrica / Mock', '2024', NULL, 'Design, Marketing & Outros');
 
 -- --- Dados de experiences ---
 INSERT INTO experiences (type, title, institution, period, description, activities) VALUES 
