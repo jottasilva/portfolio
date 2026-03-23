@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 import { supabaseService } from '@/domain/services/supabaseService';
 
@@ -130,7 +131,7 @@ export default function ProjectsSection() {
             >
               {/* Image side */}
               <div className={css({ gridColumn: { lg: 'span 7' }, order: { base: 1, lg: isEven ? 1 : 2 }, position: 'relative', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.06)', cursor: 'pointer', aspectRatio: '16/10', boxShadow: '2xl', transition: 'transform 0.5s', _hover: { transform: 'scale(1.01)' } })} onClick={() => project.link !== '#' && window.open(project.link, '_blank')}>
-                <img src={project.image} alt={project.title} className={css({ w: 'full', h: 'full', objectFit: 'cover', transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)', _hover: { transform: 'scale(1.04)' } })} />
+                <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 60vw" className={css({ objectFit: 'cover', transition: 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)', _hover: { transform: 'scale(1.04)' } })} />
                 <div className={css({ position: 'absolute', inset: 0, bgGradient: 'to-t', gradientFrom: 'rgba(0,0,0,0.85)', gradientVia: 'rgba(0,0,0,0.2)', gradientTo: 'transparent' })} />
               </div>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Manrope } from "next/font/google";
+import dynamic from 'next/dynamic';
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   description: "Portfólio de Jefferson Silva - Arquitetura de Software, Automação com IA e Sistemas SaaS",
 };
 
-import FramerBackground from '@/presentation/components/FramerBackground';
+const FramerBackground = dynamic(() => import('@/presentation/components/FramerBackground'), { ssr: false });
 import TrackVisit from '@/presentation/components/TrackVisit';
 
 

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { css, cx } from 'styled-system/css';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const workExperiences = [
   {
@@ -249,10 +250,12 @@ export default function AboutSection() {
           className={cx(css({ gridColumn: { lg: 'span 5' }, order: { base: 1, lg: 2 }, position: 'relative', mt: { lg: '-214px' } }), "group")}
         >
           <div className={cx(css({ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', rounded: 'xl', border: '1px solid rgba(255,255,255,0.05)', bg: 'rgba(255,255,255,0.02)' }), 'glass-panel')}>
-            <img
+            <Image
               src={aboutData?.imageUrl || '/img-profile.png'}
               alt="Jefferson Silva"
-              className={css({ w: 'full', h: 'full', objectFit: 'cover', filter: 'grayscale(100%) brightness(0.8)', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)', _groupHover: { transform: 'scale(1.05)', filter: 'grayscale(0) brightness(1)' } })}
+              fill
+              sizes="(max-width: 768px) 100vw, 40vw"
+              className={css({ objectFit: 'cover', filter: 'grayscale(100%) brightness(0.8)', transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)', _groupHover: { transform: 'scale(1.05)', filter: 'grayscale(0) brightness(1)' } })}
             />
             <div className={css({ position: 'absolute', inset: 0, bgGradient: 'to-t', gradientFrom: 'black', gradientVia: 'transparent', gradientTo: 'transparent', opacity: 0.8 })}></div>
           </div>

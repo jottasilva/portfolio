@@ -1,4 +1,5 @@
 import { css } from 'styled-system/css';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className={css({ display: 'flex', flexDirection: { base: 'column', md: 'row' }, justifyContent: 'space-between', alignItems: 'center', px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto', gap: 6 })}>
         
         <div className={css({ display: 'flex', alignItems: 'center', gap: 3 })}>
-          <img src="/logo.svg" alt="JRSN Logo" className={css({ h: 5, w: 'auto', filter: 'brightness(0.8)' })} />
+          <Image src="/logo.svg" alt="JRSN Logo" width={24} height={24} className={css({ h: 5, w: 'auto', filter: 'brightness(0.8)' })} />
           <span className={css({ h: '12px', w: '1px', bg: 'rgba(255,255,255,0.1)' })} />
           <span className={css({ fontFamily: 'label', fontSize: '9px', letterSpacing: '0.2em', color: 'gray.500', textTransform: 'uppercase' })}>
             Software Engineer // JRSN DEV
