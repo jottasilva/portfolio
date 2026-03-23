@@ -35,10 +35,16 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body style={{ position: 'relative' }}>
+        <a
+          href="#main-content"
+          className="skip-link"
+        >
+          Pular para o conteúdo principal
+        </a>
         <FramerBackground />
         <TrackVisit />
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div id="main-content" style={{ position: 'relative', zIndex: 1 }}>
           {children}
         </div>
       </body>

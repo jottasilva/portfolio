@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
       city: city,
       region: region,
       country: country,
+      org: '',
       pathname: data.page || '/', // TrackVisit.tsx envia 'page'
       referer: data.referrer || '', // TrackVisit.tsx envia 'referrer'
       user_agent: userAgent,

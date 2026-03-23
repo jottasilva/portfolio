@@ -3,6 +3,7 @@
 import { css } from 'styled-system/css';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,7 +38,7 @@ export default function Header() {
       bg: scrolled ? 'rgba(0,0,0,0.9)' : 'transparent',
       backdropFilter: scrolled ? 'blur(16px)' : 'none',
       transition: 'all 0.3s ease'
-    })}>
+    })} aria-label="Navegação principal">
       <div className={css({ maxW: { base: '90vw', md: '70vw' }, mx: 'auto', px: 8, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}>
 
         {/* Logo Node */}
@@ -113,9 +114,12 @@ export default function Header() {
             {/* Toggle Button for Mobile */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
               className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary', bg: 'rgba(255,255,255,0.02)', border: '1px solid rgba(0,230,118,0.2)', p: 2, rounded: 'md', cursor: 'pointer' })}
             >
-              <span className="material-symbols-outlined">{menuOpen ? 'close' : 'menu'}</span>
+              <span className="material-symbols-outlined" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
@@ -139,12 +143,16 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu de navegação mobile"
+              id="mobile-menu"
               className={css({ position: 'fixed', top: 0, right: 0, width: '280px', height: '100vh', bg: '#0b0b0b', zIndex: 100, borderLeft: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDir: 'column', p: 8, gap: 8, shadow: '-10px 0 30px rgba(0,0,0,0.5)' })}
             >
               <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'center', pb: 6, borderBottom: '1px solid rgba(255,255,255,0.03)' })}>
                 <span className={css({ fontFamily: 'label', color: 'primary', fontSize: 'xs', letterSpacing: '0.2em' })}>NAVEGAÇÃO</span>
-                <button onClick={() => setMenuOpen(false)} className={css({ color: 'white', bg: 'transparent', border: 'none', cursor: 'pointer' })}>
-                  <span className="material-symbols-outlined">close</span>
+                <button onClick={() => setMenuOpen(false)} aria-label="Fechar menu" className={css({ color: 'white', bg: 'transparent', border: 'none', cursor: 'pointer' })}>
+                  <span className="material-symbols-outlined" aria-hidden="true">close</span>
                 </button>
               </div>
 

@@ -5,15 +5,52 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { supabaseService } from '@/domain/services/supabaseService';
 
+function sanitizeInput(input: string): string {
+  return input
+    .replace(/[<>]/g, '')
+    .trim()
+    .slice(0, 2000);
+}
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 export default function ContactSection() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', projectType: 'Geral' });
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const newErrors: { name?: string; email?: string; message?: string } = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Nome é obrigatório';
+    }
+    if (!validateEmail(formData.email)) {
+      newErrors.email = 'Email inválido';
+    }
+    if (!formData.message.trim()) {
+      newErrors.message = 'Mensagem é obrigatória';
+    }
+    
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    
+    setErrors({});
     setLoading(true);
     try {
-      await supabaseService.sendContactMessage(formData);
+      await supabaseService.sendContactMessage({
+        name: sanitizeInput(formData.name),
+        email: formData.email.toLowerCase().trim(),
+        message: sanitizeInput(formData.message),
+        projectType: formData.projectType
+      });
       alert('Sinal enviado com sucesso!');
       setFormData({ name: '', email: '', message: '', projectType: 'Geral' });
     } catch (error) {
@@ -24,7 +61,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className={css({ minH: '100vh', pt: 8, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto' })}>
+    <section id="contact" aria-labelledby="contact-heading" className={css({ minH: '100vh', pt: 8, pb: 24, px: 8, maxW: { base: '90vw', md: '70vw' }, mx: 'auto' })}>
       <motion.header 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +75,7 @@ export default function ContactSection() {
             Protocolo: Comunicação
           </span>
         </div>
-        <h1 className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '5xl', lg: '6xl' }, letterSpacing: 'tight', color: 'white', fontWeight: 'bold' })}>
+        <h1 id="contact-heading" className={css({ fontFamily: 'headline', fontSize: { base: '4xl', md: '5xl', lg: '6xl' }, letterSpacing: 'tight', color: 'white', fontWeight: 'bold' })}>
           Inicializar <br/>
           <span className={cx(css({ color: 'transparent', bgClip: 'text', bgGradient: 'to-r', gradientFrom: 'primary', gradientTo: 'secondary' }), 'neon-glow')}>
             Conectividade.
@@ -55,23 +92,60 @@ export default function ContactSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className={css({ gridColumn: { lg: 'span 7' }, w: 'full' })}
         >
-          <form onSubmit={handleSubmit} className={cx(css({ display: 'flex', flexDir: 'column', gap: 10, p: { base: 8, lg: 12 }, rounded: 'xl', position: 'relative', overflow: 'hidden', bg: 'rgba(15,15,15,0.4)', border: '1px solid rgba(255,255,255,0.02)' }), 'glass-panel')}>
+          <form onSubmit={handleSubmit} aria-label="Formulário de contato" className={cx(css({ display: 'flex', flexDir: 'column', gap: 10, p: { base: 8, lg: 12 }, rounded: 'xl', position: 'relative', overflow: 'hidden', bg: 'rgba(15,15,15,0.4)', border: '1px solid rgba(255,255,255,0.02)' }), 'glass-panel')}>
+            <div aria-live="polite" aria-atomic="true">
+              {Object.keys(errors).length > 0 && (
+                <div role="alert" className={css({ mb: 4, p: 3, rounded: 'md', bg: 'rgba(255,0,0,0.1)', border: '1px solid rgba(255,0,0,0.3)' })}>
+                  <span className={css({ color: 'red.400', fontSize: 'sm' })}>Por favor, corrija os erros abaixo.</span>
+                </div>
+              )}
+            </div>
             <div className={css({ position: 'absolute', top: 0, left: 0, w: 'full', h: '2px', bgGradient: 'to-r', gradientFrom: 'transparent', gradientVia: 'primary', gradientTo: 'transparent' })}></div>
             
             <div className={css({ display: 'grid', gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)' }, gap: 8 })}>
               <div className="relative group">
-                <label className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Identificador do Usuário</label>
-                <input type="text" required value={formData.name} onChange={e=>setFormData({...formData, name: e.target.value})} placeholder="Nome..." className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} />
+                <label htmlFor="contact-name" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Identificador do Usuário</label>
+                <input 
+                  id="contact-name"
+                  type="text" 
+                  required 
+                  value={formData.name} 
+                  onChange={e=>setFormData({...formData, name: e.target.value})} 
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                  placeholder="Nome..." 
+                  className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.name ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} 
+                />
+                {errors.name && <span id="name-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.name}</span>}
               </div>
               <div className="relative group">
-                <label className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Canal de Retorno</label>
-                <input type="email" required value={formData.email} onChange={e=>setFormData({...formData, email: e.target.value})} placeholder="usuario@servidor.com" className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} />
+                <label htmlFor="contact-email" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Canal de Retorno</label>
+                <input 
+                  id="contact-email"
+                  type="email" 
+                  required 
+                  value={formData.email} 
+                  onChange={e=>setFormData({...formData, email: e.target.value})} 
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  placeholder="usuario@servidor.com" 
+                  className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.email ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })} 
+                />
+                {errors.email && <span id="email-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.email}</span>}
               </div>
             </div>
 
             <div className="relative group">
-              <label className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Dados de Transmissão</label>
-              <textarea rows={5} required value={formData.message} onChange={e=>setFormData({...formData, message: e.target.value})} placeholder="Descreva os detalhes..." className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })}></textarea>
+              <label htmlFor="contact-message" className={css({ display: 'block', fontFamily: 'label', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(200,255,0,0.7)', mb: 3 })}>Dados de Transmissão</label>
+              <textarea 
+                id="contact-message"
+                rows={5} 
+                required 
+                value={formData.message} 
+                onChange={e=>setFormData({...formData, message: e.target.value})} 
+                aria-describedby={errors.message ? 'message-error' : undefined}
+                placeholder="Descreva os detalhes..." 
+                className={css({ w: 'full', bg: 'rgba(0,0,0,0.6)', border: errors.message ? '1px solid red' : '1px solid rgba(255,255,255,0.06)', rounded: 'lg', py: 3, px: 4, color: 'white' })}
+              ></textarea>
+              {errors.message && <span id="message-error" role="alert" className={css({ color: 'red.400', fontSize: 'xs', mt: 1, display: 'block' })}>{errors.message}</span>}
             </div>
 
             <div className={css({ pt: 4 })}>
