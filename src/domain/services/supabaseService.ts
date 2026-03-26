@@ -61,6 +61,16 @@ export const supabaseService = {
     }
   },
 
+  async updateContactMessage(id: string, data: any) {
+    const { data: res, error } = await supabase.from('contacts').update(data).eq('id', id).select();
+    if (error) throw error;
+    return res?.[0] || null;
+  },
+
+  async deleteContactMessage(id: string) {
+    return await supabase.from('contacts').delete().eq('id', id);
+  },
+  
   /**
    * 2. CRUD Projetos
    */
@@ -72,16 +82,23 @@ export const supabaseService = {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      return data || [];
+      
+      return (data || []).map((p: any) => ({
+        ...p,
+        image: p.image_url
+      }));
     } catch (error) {
       console.error('Erro ao buscar projetos:', error);
       return [];
     }
   },
 
-  async createProject(data: { title: string; description: string; image_url?: string; link?: string; github?: string; category: string; node?: string }) {
+  async createProject(data: any) {
     try {
-      const { data: res, error } = await supabase.from('projects').insert(data).select().single();
+      const { image, ...rest } = data;
+      const payload = { ...rest, image_url: image };
+
+      const { data: res, error } = await supabase.from('projects').insert(payload).select().single();
       if (error) throw error;
       return res;
     } catch (error) {
@@ -95,7 +112,11 @@ export const supabaseService = {
   },
 
   async updateProject(id: string, data: any) {
-    const { data: res, error } = await supabase.from('projects').update(data).eq('id', id).select();
+    const { image, ...rest } = data;
+    const payload: any = { ...rest };
+    if (image !== undefined) payload.image_url = image;
+
+    const { data: res, error } = await supabase.from('projects').update(payload).eq('id', id).select();
     if (error) throw error;
     return res?.[0] || null;
   },

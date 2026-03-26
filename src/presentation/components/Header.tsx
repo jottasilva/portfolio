@@ -9,18 +9,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setScrollProgress(progress);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const [activeSection, setActiveSection] = useState('');
 
   const menuItems = ['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória', 'Contato'];
   const anchorMap: Record<string, string> = {
@@ -42,6 +31,47 @@ export default function Header() {
   };
 
   const navItems = ['Início', 'Skills', 'Projetos', 'Formação', 'Trajetória'];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+
+      if (window.scrollY < 100) {
+        setActiveSection('');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -40% 0px',
+      threshold: 0.1,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const ids = Object.values(anchorMap).filter(Boolean);
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <nav className={css({
@@ -73,24 +103,29 @@ export default function Header() {
         flex: 1, 
         justifyContent: 'center' 
       })}>
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href={`#${anchorMap[item]}`}
-            className={css({
-              display: 'flex', flexDir: 'column', alignItems: 'center', gap: 1,
-              fontFamily: 'headline', fontSize: '9px', letterSpacing: '0.1em',
-              textTransform: 'uppercase', color: 'white', opacity: 0.6,
-              transition: 'all 0.2s', cursor: 'pointer',
-              _hover: { opacity: 1, color: 'primary', '& span': { transform: 'scale(1.1)' } }
-            })}
-          >
-            <span className={cx("material-symbols-outlined", css({ fontSize: '20px', transition: 'all 0.2s', color: 'primary' }))}>
-              {iconMap[item]}
-            </span>
-            <span className={css({ mt: 0.5 })}>{item}</span>
-          </a>
-        ))}
+        {navItems.map((item) => {
+          const isActive = anchorMap[item] === activeSection || (item === 'Início' && !activeSection);
+          return (
+            <a
+              key={item}
+              href={`#${anchorMap[item]}`}
+              className={css({
+                display: 'flex', flexDir: 'column', alignItems: 'center', gap: 1,
+                fontFamily: 'headline', fontSize: '9px', letterSpacing: '0.1em',
+                textTransform: 'uppercase', 
+                color: isActive ? 'primary' : 'gray.400', 
+                opacity: 1,
+                transition: 'all 0.2s', cursor: 'pointer',
+                _hover: { opacity: 1, color: 'primary', '& span': { transform: 'scale(1.1)' } }
+              })}
+            >
+              <span className={cx("material-symbols-outlined", css({ fontSize: '20px', transition: 'all 0.2s', color: isActive ? 'primary' : 'gray.400', transform: isActive ? 'scale(1.1)' : 'none' }))}>
+                {iconMap[item]}
+              </span>
+              <span className={css({ mt: 0.5 })}>{item}</span>
+            </a>
+          );
+        })}
         
         {/* Contact directly in stream? */}
         <a
@@ -98,15 +133,20 @@ export default function Header() {
           className={css({
             display: 'flex', flexDir: 'column', alignItems: 'center', gap: 1,
             fontFamily: 'headline', fontSize: '10px', letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: 'primary', opacity: 0.9,
-            transition: 'all 0.2s', cursor: 'pointer', mt: 4,
+            textTransform: 'uppercase', 
+            color: activeSection === 'contact' ? '#fff' : 'primary', 
+            opacity: activeSection === 'contact' ? 1 : 0.9,
+            bg: activeSection === 'contact' ? 'rgba(0,230,118,0.1)' : 'transparent',
+            p: activeSection === 'contact' ? '4px 8px' : '0px',
+            rounded: '4px',
+            transition: 'all 0.2s', cursor: 'pointer', mt: activeSection === 'contact' ? 3 : 4,
             _hover: { opacity: 1, '& span': { transform: 'scale(1.1)' } }
           })}
         >
           <span className={cx("material-symbols-outlined", css({ fontSize: '22px', transition: 'all 0.2s', color: 'primary' }))}>
             {iconMap['Contato']}
           </span>
-          <span className={css({ fontWeight: 'bold' })}>+ CONECTAR</span>
+          <span className={css({ fontWeight: 'bold' })}>{activeSection === 'contact' ? 'ATIVO' : '+ CONECTAR'}</span>
         </a>
       </div>
 
@@ -159,16 +199,24 @@ export default function Header() {
               </div>
 
               <div className={css({ display: 'flex', flexDir: 'column', alignItems: 'flex-end', gap: 5 })}>
-                {menuItems.map((item) => (
-                  <a
-                    key={item}
-                    href={`#${anchorMap[item]}`}
-                    onClick={() => setMenuOpen(false)}
-                    className={css({ fontFamily: 'headline', fontSize: 'md', color: 'white', letterSpacing: '0.05em', _hover: { color: 'primary' }, transition: 'colors' })}
-                  >
-                    {item}
-                  </a>
-                ))}
+                {menuItems.map((item) => {
+                  const isActive = anchorMap[item] === activeSection || (item === 'Início' && !activeSection);
+                  return (
+                    <a
+                      key={item}
+                      href={`#${anchorMap[item]}`}
+                      onClick={() => setMenuOpen(false)}
+                      className={css({ 
+                        fontFamily: 'headline', fontSize: 'md', 
+                        color: isActive ? 'primary' : 'gray.400', 
+                        fontWeight: isActive ? 'bold' : 'normal',
+                        letterSpacing: '0.05em', _hover: { color: 'primary' }, transition: 'colors' 
+                      })}
+                    >
+                      {item}
+                    </a>
+                  );
+                })}
               </div>
 
               <a

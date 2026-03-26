@@ -1,23 +1,40 @@
 import { NextResponse } from 'next/server';
-
-// Sistema Anti-Flood em Memória (3 segundos de cooldown por IP)
-const limitCache = new Map<string, number>();
+import { supabase } from '@/infrastructure/supabase';
 
 export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
 
-    // Anti-Flood Guard
+    // Anti-Flood Guard robusto (Supabase DB)
     const forwardHeader = req.headers.get('x-forwarded-for');
     const userIP = forwardHeader ? forwardHeader.split(',')[0] : 'local-node';
-    const now = Date.now();
     
-    if (limitCache.has(userIP) && now - (limitCache.get(userIP) || 0) < 3000) {
-      return NextResponse.json({ 
-        response: '[SISTEMA]: Tráfego bloqueado. Anti-Flood ativo. Aguarde 3s para nova transmissão.' 
-      });
+    // Verifica a última requisição do IP
+    const { data: rateData } = await supabase
+      .from('api_rate_limits')
+      .select('last_request_at')
+      .eq('ip', userIP)
+      .single();
+
+    const now = new Date();
+    if (rateData && rateData.last_request_at) {
+      const lastReq = new Date(rateData.last_request_at);
+      const diffMs = now.getTime() - lastReq.getTime();
+      
+      // Cooldown de 4 segundos
+      if (diffMs < 4000) {
+        return NextResponse.json({ 
+          response: '[SISTEMA]: Tráfego bloqueado. Anti-Flood ativo. Aguarde alguns segundos.' 
+        });
+      }
     }
-    limitCache.set(userIP, now);
+
+    // Registra a nova requisição
+    await supabase.from('api_rate_limits').upsert({
+      ip: userIP,
+      last_request_at: now.toISOString(),
+      request_count: 1
+    }, { onConflict: 'ip' });
 
     // Endpoint Groq
     const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';

@@ -36,9 +36,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, message: 'Visit tracked on Supabase' });
 
   } catch (error: any) {
-    console.error('[/api/track] Error:', error);
+    console.error('[/api/track] Error:', error.message || error);
     return NextResponse.json(
-      { error: 'Tracking failed', details: error.message },
+      { error: 'System busy, tracking temporarily unavailable.' },
       { status: 500 }
     );
   }

@@ -194,7 +194,7 @@ export default function AboutSection() {
         className={css({ borderTop: '1px solid rgba(255,255,255,0.03)', pt: 20 })}
       >
         {/* [01] Work Experience */}
-        <h3 id="trajetoria" className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, scrollMarginTop: '120px' })}>
+        <h3 id="trajetoria" className={css({ fontFamily: 'headline', fontSize: { base: 'lg', md: '2xl' }, fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, scrollMarginTop: '120px', wordBreak: 'break-word', whiteSpace: 'normal' })}>
           <span className={css({ h: '1px', w: 10, bg: 'primary' })}></span>
           [01] Trajetória_Profissional
         </h3>
@@ -219,7 +219,7 @@ export default function AboutSection() {
               </div>
               <div className={css({ h: '1px', bg: 'rgba(255,255,255,0.04)', my: 2 })} />
               <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.400', fontFamily: 'body', fontSize: 'xs', listStyle: 'none' })}>
-                {(job.activities && typeof job.activities === 'string' ? job.activities.split('\n') : (job as any).activities || []).map((act: string, idx: number) => (
+                {((job.activities && typeof job.activities === 'string' ? job.activities.split('\n') : (job as any).activities || []) as string[]).flatMap((act: string) => act.split('\\n')).map((act: string, idx: number) => (
                   <li key={idx} className={css({ display: 'flex', gap: 2, lineHeight: 'relaxed' })}><span className={css({ color: 'primary' })}>▸</span> {act}</li>
                 ))}
               </ul>
@@ -228,7 +228,7 @@ export default function AboutSection() {
         </div>
 
         {/* [02] Academic Education */}
-        <h3 id="formacao" className={css({ fontFamily: 'headline', fontSize: '2xl', fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, pt: 12, borderTop: '1px solid rgba(255,255,255,0.03)', scrollMarginTop: '120px' })}>
+        <h3 id="formacao" className={css({ fontFamily: 'headline', fontSize: { base: 'lg', md: '2xl' }, fontWeight: 'bold', color: 'white', mb: 12, display: 'flex', alignItems: 'center', gap: 3, pt: 12, borderTop: '1px solid rgba(255,255,255,0.03)', scrollMarginTop: '120px', wordBreak: 'break-word', whiteSpace: 'normal' })}>
           <span className={css({ h: '1px', w: 10, bg: 'primary' })}></span>
           [02] Formação_Acadêmica_&_Certificações
         </h3>
@@ -244,7 +244,7 @@ export default function AboutSection() {
               </div>
               <div className={css({ h: '1px', bg: 'rgba(255,255,255,0.04)', my: 2 })} />
               <ul className={css({ display: 'flex', flexDir: 'column', gap: 2, color: 'gray.400', fontFamily: 'body', fontSize: 'xs', listStyle: 'none' })}>
-                {(edu.activities && typeof edu.activities === 'string' ? edu.activities.split('\n') : (edu as any).activities || []).map((act: string, idx: number) => (
+                {((edu.activities && typeof edu.activities === 'string' ? edu.activities.split('\n') : (edu as any).activities || []) as string[]).flatMap((act: string) => act.split('\\n')).map((act: string, idx: number) => (
                   <li key={idx} className={css({ display: 'flex', gap: 2, lineHeight: 'relaxed' })}><span className={css({ color: 'primary' })}>▸</span> {act}</li>
                 ))}
               </ul>

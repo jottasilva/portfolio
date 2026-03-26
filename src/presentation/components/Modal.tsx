@@ -36,7 +36,7 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             onClick={(e) => e.stopPropagation()}
             className={css({
-              bg: '#141414', border: '1px solid rgba(255,255,255,0.06)', rounded: '4px',
+              bg: '#111111', border: '1px solid rgba(255,255,255,0.06)', rounded: '4px',
               w: '100%', maxW: 'lg', maxH: '90vh', overflowY: 'auto', position: 'relative',
               boxShadow: '0 20px 25px -5px rgba(0,0,0,0.5)'
             })}
